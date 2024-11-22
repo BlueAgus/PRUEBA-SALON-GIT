@@ -1,0 +1,15 @@
+[ {
+  "nombre" : "Julieta",
+  "apellido" : "Fazzio",
+  "dni" : "44131250",
+  "genero" : "F",
+  "telefono" : "2234563416",
+  "contraseña" : "contra123"
+}, {
+  "nombre" : "Cecilia",
+  "apellido" : "Cerimelli",
+  "dni" : "48789685",
+  "genero" : "F",
+  "telefono" : "2235822093",
+  "contraseña" : "contra555"
+} ]
