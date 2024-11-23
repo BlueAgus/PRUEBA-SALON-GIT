@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class MenuAdministrador {
 
     Scanner scanner = new Scanner(System.in);
-
+/*
     public void mostrarMenu(String dni, GestorCliente clientes, GestorProfesional profesionales, GestorRecepcionista recepcionista, GestorAdministrador administradores, GestorPestania pestania, GestorDepilacion depilacion, GestorManicura manicura, GestorTurno turnos, GestorFactura facturas) {
 
         int opcion;
@@ -1102,6 +1102,6 @@ public class MenuAdministrador {
     public static String convertirFechaAString(LocalDate fecha) {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Puedes ajustar el formato según necesites
         return fecha.format(formatoFecha);
-    }
+    }*/
 
 }

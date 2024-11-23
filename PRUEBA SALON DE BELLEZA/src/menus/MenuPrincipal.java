@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class MenuPrincipal {
     Scanner scanner = new Scanner(System.in);
-
+/*
     static String archivoPrecios = "precios.json";
     static String archivoServicios = "servicios.json";
     static String archivoTurnos = "turnos.json";

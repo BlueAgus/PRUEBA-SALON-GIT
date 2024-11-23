@@ -1,0 +1,16 @@
+{
+  "Depilacion": {
+    "LASER": 18000.0,
+    "CERA": 12000.0
+  },
+  "Manicura": {
+    "ESCULPIDAS": 20000.0,
+    "SEMIPERMANENTE": 10000.0,
+    "GEL": 13000.0
+  },
+  "Pestanias": {
+    "CLASICAS": 14000.0,
+    "TRES_D": 20000.0,
+    "DOS_D": 16000.0
+  }
+}

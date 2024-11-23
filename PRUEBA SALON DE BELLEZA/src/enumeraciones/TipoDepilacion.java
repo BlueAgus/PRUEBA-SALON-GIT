@@ -2,5 +2,9 @@ package enumeraciones;
 
 public enum TipoDepilacion {
     CERA,
-    LASER
+    LASER;
+
+    public String getNombre() {
+        return name().toLowerCase(); // O cualquier otra lógica de formato
+    }
 }

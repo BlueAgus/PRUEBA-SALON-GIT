@@ -220,11 +220,14 @@ public class Main {
  */
 
  // Gestor Precios, no lo pude probar todavbia
-  /*      System.out.println(GestorPrecios.verPrecios());
+      System.out.println(GestorPrecios.verPrecios());
+     // "LASER": 18000.0,
+        GestorPrecios.modificarPrecio(Depilacion.class, TipoDepilacion.LASER, 20000);
+        GestorPrecios.guardarPreciosEnArchivo();
+        System.out.println("---------------------------------------");
+        //GestorPrecios.cargarPreciosDesdeArchivo();
 
-        GestorPrecios.escribirPreciosEnEnJson();
+       // System.out.println(GestorPrecios.verPrecios());
 
-        GestorPrecios.leerArchivoPrecios();
-*/
     }
 }

@@ -1,11 +1,16 @@
 package gestores;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import enumeraciones.TipoDepilacion;
 import enumeraciones.TipoManicura;
 import enumeraciones.TipoPestanias;
 import excepciones.CodigoNoEncontradoException;
 import model.*;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -30,7 +35,28 @@ public class GestorPrecios {
     private static final double precioPestanias2D = 16000.0;
     private static final double precioPestaniasClasic = 14000.0;
     private static String archivoPrecios = "precios.json";
-    private static Gson gson = new Gson();
+
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeHierarchyAdapter(Class.class, new TypeAdapter<Class<?>>() {
+                @Override
+                public void write(JsonWriter out, Class<?> value) throws IOException {
+                    out.value(value.getSimpleName()); // Guarda solo el nombre simple de la clase
+                }
+                @Override
+                public Class<?> read(JsonReader in) throws IOException {
+                    String className = in.nextString();
+                    try {
+                        // Ajusta el paquete aquí según tu proyecto, si las clases están en el paquete "model"
+                        return Class.forName("model." + className);
+                    } catch (ClassNotFoundException e) {
+                        throw new IOException("Clase no encontrada: " + e.getMessage(), e);
+                    }
+                }
+            })
+            .setPrettyPrinting()
+            .create();
+
+
     // mapa anidado
     private static Map<Class<?>, Map<Enum<?>, Double>> precios = new HashMap<>();
 
@@ -155,6 +181,35 @@ public class GestorPrecios {
         // Retornar el valor del descuento aplicado
     }
 
+    private static Map<String, Map<String, Double>> convertirMapaParaJSON() {
+        Map<String, Map<String, Double>> mapaJSON = new HashMap<>();
+
+        for (Map.Entry<Class<?>, Map<Enum<?>, Double>> entrada : precios.entrySet()) {
+            String nombreClase = entrada.getKey().getSimpleName(); // Convierte la clase a su nombre simple
+            Map<String, Double> preciosPorTipo = new HashMap<>();
+
+            for (Map.Entry<Enum<?>, Double> subEntrada : entrada.getValue().entrySet()) {
+                preciosPorTipo.put(subEntrada.getKey().name(), subEntrada.getValue()); // Usa el nombre del enum
+            }
+
+            mapaJSON.put(nombreClase, preciosPorTipo);
+        }
+
+        return mapaJSON;
+    }
+
+    public static void guardarPreciosEnArchivo() {
+        try (FileWriter writer = new FileWriter("precios.json")) {
+            Map<String, Map<String, Double>> mapaParaJSON = convertirMapaParaJSON();
+            String json = gson.toJson(mapaParaJSON); // Serializa el mapa convertido
+            writer.write(json);
+            System.out.println("Precios guardados exitosamente en precios.json");
+        } catch (IOException e) {
+            System.err.println("Error al guardar precios en el archivo: " + e.getMessage());
+        }
+    }
+
+/*
     public static void escribirPreciosEnEnJson() {
         try (FileWriter writer = new FileWriter(archivoPrecios)) {
             gson.toJson(precios, writer);
@@ -164,9 +219,41 @@ public class GestorPrecios {
         } catch (IOException e) {
             System.out.println("No se puede guardar el archivo de precios: " + e.getMessage());
         }
+    }*/
+/*
+    public static void guardarPreciosEnArchivo() {
+        try (FileWriter writer = new FileWriter(archivoPrecios)) {
+            String json = gson.toJson(precios); // Usa el Gson con el adaptador
+            writer.write(json); // Escribe el JSON en el archivo
+            System.out.println("Precios guardados exitosamente en el archivo: " + archivoPrecios);
+        } catch (IOException e) {
+            System.err.println("Error al guardar precios en el archivo: " + e.getMessage());
+        }
+    }*/
+
+
+    public static void cargarPreciosDesdeArchivo() {
+        try (FileReader reader = new FileReader(archivoPrecios)) {
+            // Leer y deserializar el archivo JSON al mapa de precios
+            Type tipoMapa = new TypeToken<Map<Class<?>, Map<Enum<?>, Double>>>() {}.getType();
+            precios = gson.fromJson(reader, tipoMapa);
+
+            if (precios == null) {
+                precios = new HashMap<>(); // Si no hay datos, inicializa el mapa vacío
+            }
+
+            System.out.println("Precios cargados correctamente desde el archivo JSON.");
+        } catch (FileNotFoundException e) {
+            System.out.println("Archivo JSON no encontrado. Se creará uno nuevo al guardar.");
+            precios = new HashMap<>(); // Inicializa el mapa si el archivo no existe
+        } catch (IOException e) {
+            System.out.println("Error al leer los precios: " + e.getMessage());
+        }
     }
 
-    public static void leerArchivoPrecios() {
+
+
+    /*  public static void leerArchivoPrecios() {
         try (FileReader reader = new FileReader(archivoPrecios)) {
             Type tipoMapa = new TypeToken<Map<Class<?>, Map<Enum<?>, Double>>>() {
             }.getType();
@@ -177,38 +264,40 @@ public class GestorPrecios {
             System.out.println("No se puede leer el archivo de clientes: " + e.getMessage());
         }
     }
+*/
+
 
     public static String verPrecios() {
         return
-                "Depilacion con cera: " + precioDepiCera +
-                        "Depilacion con Laser: " + precioDepiLaser +
-                        "Manicura con gel : " + precioManiGel +
-                        "Manicura con esculpidas: " + precioManiEsculpidas +
-                        "Manicura semipermanentes: " + precioManiSemi +
-                        "Precio extra diseño : " + precioDisenio +
-                        "Pestañas 2D: " + precioPestanias2D +
-                        "Pestañas 3d: " + precioPestanias3D +
+                "Depilacion con cera: " + precioDepiCera +"\n"+
+                        "Depilacion con Laser: " + precioDepiLaser +"\n"+
+                        "Manicura con gel : " + precioManiGel +"\n"+
+                        "Manicura con esculpidas: " + precioManiEsculpidas +"\n"+
+                        "Manicura semipermanentes: " + precioManiSemi +"\n"+
+                        "Precio extra diseño : " + precioDisenio +"\n"+
+                        "Pestañas 2D: " + precioPestanias2D +"\n"+
+                        "Pestañas 3d: " + precioPestanias3D +"\n"+
                         "Pestañas clasicas: " + precioPestaniasClasic;
     }
 
     public static String verPrecioDepi() {
         return
-                "Depilacion con cera: " + precioDepiCera +
+                "Depilacion con cera: " + precioDepiCera +"\n"+
                         "Depilacion con Laser: " + precioDepiLaser;
 
     }
 
     public static String verPrecioPestanias() {
         return
-                "Pestañas 2D: " + precioPestanias2D +
-                        "Pestañas 3d: " + precioPestanias3D +
+                "Pestañas 2D: " + precioPestanias2D +"\n"+
+                        "Pestañas 3d: " + precioPestanias3D +"\n"+
                         "Pestañas clasicas: " + precioPestaniasClasic;
     }
 
     public static String verPreciosManicura() {
-        return "Manicura con gel : " + precioManiGel +
-                "Manicura con esculpidas: " + precioManiEsculpidas +
-                "Manicura semipermanentes: " + precioManiSemi +
+        return "Manicura con gel : " + precioManiGel + "\n"+
+                "Manicura con esculpidas: " + precioManiEsculpidas +"\n"+
+                "Manicura semipermanentes: " + precioManiSemi +"\n"+
                 "Precio extra diseño : " + precioDisenio;
 
     }
