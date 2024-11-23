@@ -3,6 +3,7 @@ package model;
 import abstractas.Servicio;
 import enumeraciones.TipoDepilacion;
 import enumeraciones.TipoServicio;
+import gestores.GestorPrecios;
 
 import java.time.LocalDate;
 
@@ -12,10 +13,9 @@ public class Depilacion extends Servicio {
 
     //////////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////////////
 
-    public Depilacion(String duracion, TipoDepilacion tipoDepilacion, double precio) {
-        super(TipoServicio.DEPILACION, duracion, precio);
+    public Depilacion(String duracion, TipoDepilacion tipoDepilacion) {
+        super(TipoServicio.DEPILACION, duracion);
         this.tipoDepilacion = tipoDepilacion;
-        this.precio=precio;
     }
 
     /////////////////////////////////////// metodos extr ////////////////////////////////////////////////////
@@ -25,9 +25,18 @@ public class Depilacion extends Servicio {
     }
 
     public double calcularPrecio() {
-       // return GestorPrecios.obtenerPrecio(Depilacion.class, this.tipoDepilacion);
-    return 0;
+       return this.precio = GestorPrecios.obtenerPrecio(Depilacion.class, this.tipoDepilacion);
+
     }
+    @Override
+    public void setPrecio(double precio) {
+        super.setPrecio(precio);
+        GestorPrecios.modificarPrecio(Manicura.class, this.tipoDepilacion, precio);
+        //Actualizamos el gestor, esto porque en algunos lados se actualiza el precio
+        //usando el set y esto lo va a modificar en el gestor para que tengan el mismo valor
+
+    }//En el get de servicio llamamos a calcular precio para cada ves que se quiere ver no aseguramos de que esta actualizado
+
 
 
     /////////////////////////////////GET Y SET ////////////////////////////////////////////////////

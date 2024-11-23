@@ -40,13 +40,22 @@ public class GestorManicura {
         this.almacenServicios = almacenServicios;
     }
 
+
     public void agregarServicio() {
         double precio = pedirPrecio();
         String duracion = pedirDuracion();
-        double disenio = pedirDisenio();
+        double precioDisenio = pedirDisenio(); //si pone que si devuelve un valor, si pone que no devuelve 0
         TipoManicura tipoManicura = pedirTipoManicura();
 
-        Manicura manicura = new Manicura(duracion, tipoManicura, precio, disenio);
+        //Ingresamos el precio al gestor que despues sera calculado en la llamada de este en las clases
+        GestorPrecios.modificarPrecio(Manicura.class, tipoManicura, precio);
+        boolean tieneDisenio = precioDisenio > 0;
+        if(tieneDisenio){
+            GestorPrecios.setPrecioDisenio(precioDisenio);
+        }
+
+        Manicura manicura = new Manicura(duracion, tipoManicura, tieneDisenio); //saque esto (, precio, disenio);
+
         almacenServicios.add(manicura);
         System.out.println(manicura);
         verificarCarga(manicura);
@@ -119,7 +128,8 @@ public class GestorManicura {
 
             switch (opcion) {
                 case 1:
-                    servicio.setPrecio(pedirPrecio());
+                   servicio.setPrecio(pedirPrecio());
+
                     break;
                 case 2:
                     servicio.setDuracion(pedirDuracion());
@@ -164,6 +174,7 @@ public class GestorManicura {
                     break;
                 case 4:
                     servicio.setPrecioDisenio(pedirDisenio());
+
                     break;
                 case 0:
                     continuarModificando = false;
@@ -248,10 +259,11 @@ public class GestorManicura {
                 precio = scanner.nextDouble();
                 scanner.nextLine();
 
+
                 if (precio <= 0) {
                     System.out.println("El precio debe ser mayor a 0.");
                 }
-            } catch (InputMismatchException a) {
+            } catch (InputMismatchException | NullPointerException a) {
                 System.out.println("Solo es posible ingresar numeros");
                 scanner.nextLine();
             }
@@ -345,6 +357,7 @@ public class GestorManicura {
 
         if (opcion == 1) {
             disenio = pedirPrecio();
+
         } else {
             disenio = 0;
         }

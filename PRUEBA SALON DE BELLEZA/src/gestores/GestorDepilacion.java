@@ -6,6 +6,7 @@ import enumeraciones.TipoDepilacion;
 import enumeraciones.TipoServicio;
 import excepciones.CodigoNoEncontradoException;
 import model.Depilacion;
+import model.Pestanias;
 import model.Turno;
 
 import java.io.FileReader;
@@ -36,9 +37,12 @@ public class GestorDepilacion {
         TipoServicio tipoService = TipoServicio.DEPILACION;
         double precio = pedirPrecio();
         String duracion = pedirDuracion();
-
         TipoDepilacion tipoDepilacion = pedirTipoDepilacion();
-        Depilacion depilacion = new Depilacion(duracion, tipoDepilacion, precio);
+
+        GestorPrecios.modificarPrecio(Depilacion.class, tipoDepilacion , precio);
+
+        //Cuando se instancie depilacion llamara a calcular precio y obtendra el precio ingresado arriba
+        Depilacion depilacion = new Depilacion(duracion, tipoDepilacion);
         almacenServicios.add(depilacion);
         System.out.println(depilacion);
         verificarCarga(depilacion);

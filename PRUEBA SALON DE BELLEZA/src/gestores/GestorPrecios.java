@@ -63,6 +63,7 @@ public class GestorPrecios {
     }
 
     public static void modificarPrecio(Class<?> claseServicio, Enum<?> tipo, double nuevoPrecio) {
+        //aca obtenemos una referencia, no una copia
         Map<Enum<?>, Double> mapaPrecios = precios.get(claseServicio);
         if (mapaPrecios == null) {
             throw new IllegalArgumentException("No se encontró un mapa de precios para la clase: " + claseServicio.getName());

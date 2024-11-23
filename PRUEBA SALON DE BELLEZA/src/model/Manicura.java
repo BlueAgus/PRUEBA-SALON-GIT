@@ -3,29 +3,27 @@ package model;
 import abstractas.Servicio;
 import enumeraciones.TipoManicura;
 import enumeraciones.TipoServicio;
+import gestores.GestorPrecios;
 
 import java.time.LocalTime;
 
 public class Manicura extends Servicio {
+
     private TipoManicura tipoManicura;
     private boolean disenio;
-    //private static double precioDisenio = GestorPrecios.getPrecioDisenio();
     private double precioDisenio;
+    //private static double precioDisenio = GestorPrecios.getPrecioDisenio();
 
 
     //////////////////////////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////////////
-
-    public Manicura(String duracion, TipoManicura tipoManicura, double precio, double precioDisenio) {
-        super(TipoServicio.MANICURA, duracion, precio);
+  /// saque esto double precio, double precioDisenio prque a se calcula con el gestor
+    public Manicura(String duracion, TipoManicura tipoManicura, boolean disenio) {
+        super(TipoServicio.MANICURA, duracion);
         this.tipoManicura = tipoManicura;
-        this.precioDisenio = precioDisenio;
-        this.precio = calcularPrecio();
-        if (precioDisenio > 0) {
-            disenio = true;
-        } else {
+        this.precioDisenio = GestorPrecios.getPrecioDisenio();
+        //this.precio = calcularPrecio(); esto esta en servicio
+        this.disenio = disenio;
 
-            disenio = false;
-        }
     }
 
     //////////////////////////////////////////////////////// metodos extr ////////////////////////////////////////////////////
@@ -33,10 +31,19 @@ public class Manicura extends Servicio {
 
     @Override
     public double calcularPrecio() {
-
-        return precio + precioDisenio;
+        double precioBase = GestorPrecios.obtenerPrecio(Manicura.class, tipoManicura);
+        this.precio = precioBase + (disenio ? precioDisenio : 0);
+        return this.precio;
     }
 
+    @Override
+    public void setPrecio(double precio) {
+        super.setPrecio(precio);
+        GestorPrecios.modificarPrecio(Manicura.class, this.tipoManicura, precio);
+        //Actualizamos el gestor, esto porque en algunos lados se actualiza el precio
+        //usando el set y esto lo va a modificar en el gestor para que tengan el mismo valor
+
+    }//En el get de servicio llamamos a calcular precio para cada ves que se quiere ver no aseguramos de que esta actualizado
     ////////////////////////////////////GET Y SET //////////////////////////////////////////////////
 
     public TipoManicura getTipoManicura() {
@@ -55,6 +62,7 @@ public class Manicura extends Servicio {
         this.disenio = disenio;
     }
 
+
     public double getPrecioDisenio() {
         return precioDisenio;
     }
@@ -70,7 +78,7 @@ public class Manicura extends Servicio {
     public String toString() {
         return "| MANICURA: " + tipoManicura +
                 (disenio ? " con diseño " : " sin diseño ")+
-                " \n| Precio: " + calcularPrecio() +
+                " \n| Precio: " + precio +
                 " \n| Duracion: " + duracion;
     }
 

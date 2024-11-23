@@ -13,16 +13,21 @@ public abstract class Servicio implements CrearID {
 
     //////////////////////////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////////////
 
-    public Servicio(TipoServicio tipoService, String duracion, double precio) {
+    public Servicio(TipoServicio tipoService, String duracion) {
 
         this.tipoService = tipoService;
         this.duracion = duracion;
-        this.precio= precio;
+        this.precio= calcularPrecio();
         this.codigo_servicio = this.generarIDEunico();
     }
 
     //////////////////////////////////////////////////////// metodos extr ////////////////////////////////////////////////////
     public abstract double calcularPrecio();
+
+    public double getPrecio() {
+        calcularPrecio(); // aseguramos que el precio este actualizado.
+        return precio;
+    }
 
     //@Override // aca modificamos el metodo de la interfaz
     public String generarIDEunico() {
@@ -61,11 +66,9 @@ public abstract class Servicio implements CrearID {
         this.duracion = duracion;
     }
 
-    public double getPrecio() {
-        return precio;
-    }
 
     public void setPrecio(double precio) {
         this.precio = precio;
+
     }
 }

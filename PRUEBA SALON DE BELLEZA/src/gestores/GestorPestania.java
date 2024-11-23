@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import enumeraciones.TipoPestanias;
 import excepciones.CodigoNoEncontradoException;
+import model.Manicura;
 import model.Pestanias;
 
 import java.io.FileReader;
@@ -32,10 +33,13 @@ public class GestorPestania {
 
         double precio = pedirPrecio();
         String duracion = pedirDuracion();
-
-
         TipoPestanias tipoPestanias = pedirTipoPestanias();
-        Pestanias pestanias = new Pestanias(duracion, tipoPestanias, precio);
+
+        GestorPrecios.modificarPrecio(Pestanias.class, tipoPestanias , precio);
+
+        //Cuando se instancie pestanias llamara a calcular precio y obtendra el precio ingresado arriba
+        Pestanias pestanias = new Pestanias(duracion, tipoPestanias);
+
         almacenServicios.add(pestanias);
         System.out.println(pestanias);
         verificarCarga(pestanias);
