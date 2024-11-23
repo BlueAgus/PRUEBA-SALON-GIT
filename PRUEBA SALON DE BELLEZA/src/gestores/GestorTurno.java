@@ -687,7 +687,7 @@ public class GestorTurno {
                 ;
     }
 
-    public void guardarEnArchivoTurnos(HashMap<String, List<Turno>> listaTurnos) {
+    public void guardarEnArchivoTurnos() {
         // Crear instancia de Gson para convertir a JSON con formato bonito
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
