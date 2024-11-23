@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class MenuPrincipal {
     Scanner scanner = new Scanner(System.in);
-/*
+
     static String archivoPrecios = "precios.json";
     static String archivoServicios = "servicios.json";
     static String archivoTurnos = "turnos.json";
@@ -28,6 +28,7 @@ public class MenuPrincipal {
     GestorManicura gestorManicura;
 
     GestorTurno gestorTurno;
+    GestorFactura gestorFactura;
 
 
     public void menuPrincipal() {
@@ -62,7 +63,7 @@ public class MenuPrincipal {
                         System.out.println("Bienvenido administrador ");
                         String dni = iniciarSesion();
                         if (dni != null) {
-                            menuAdministrador.mostrarMenu(dni, clientes, profesionales, recepcionistas, administradores, servicios, turnos, facturas);
+                            menuAdministrador.mostrarMenu(dni, clientes, profesionales, recepcionistas, administradores, gestorPestania,gestorDepilacion,gestorManicura, gestorTurno,gestorFactura);
                         }
                     }
                     break;
@@ -74,7 +75,7 @@ public class MenuPrincipal {
                         String dni1 = iniciarSesion();
                         if (dni1 != null) {
                             System.out.println("Bienvenido Recepcionista !");
-                            menuRecepcionista.menuRecepcionistas(clientes, profesionales, recepcionistas, administradores, servicios, turnos, facturas);
+                            menuRecepcionista.menuRecepcionistas(clientes, profesionales, recepcionistas, administradores, gestorDepilacion,gestorManicura,gestorPestania, gestorTurno, gestorFactura);
                         }
                     }
                     break;
@@ -86,7 +87,7 @@ public class MenuPrincipal {
                         String dni3 = iniciarSesion();
                         if (dni3 != null) {
                             System.out.println("Bienvenido profesional! ");
-                            menuProfesional.menuProfesional(clientes, turnos, dni3, servicios);
+                            menuProfesional.menuProfesional(clientes, gestorTurno, dni3, gestorDepilacion, gestorManicura, gestorPestania );
                         }
                     }
                     break;
@@ -131,7 +132,6 @@ public class MenuPrincipal {
         //pero no entendi si querias los dos o solo el de clientes
         gestorTurno = new GestorTurno(gestorDepilacion, gestorPestania, gestorManicura, clientes);
 
-
         profesionales.leerProfesionalesDesdeJson();
         administradores.leerDesdeJSON();
         recepcionistas.leerDesdeJson();
@@ -143,7 +143,8 @@ public class MenuPrincipal {
 
         gestorTurno.leerArchivoTurnos();
 
-///FALTA FACTURA
+        gestorFactura.leerArchivoFacturas();
+
     }
 
 
@@ -159,14 +160,14 @@ public class MenuPrincipal {
         gestorManicura.escribirServiciosEnJson();
 
         gestorTurno.guardarEnArchivoTurnos();
+        gestorFactura.escribirFacturasEnEnJson();
 
-        ///FALTA FACTURAA
         System.out.println("Se ha cerrado el sistema. ");
     }
 
     public void llenarAdministrador() {
 
-        administradores.guardarArchivoAdministradores(administradores.getAdministradores());
+        administradores.guardarArchivoAdministradores();
         System.out.println("Bienvenido administrador ! ");
     }
 

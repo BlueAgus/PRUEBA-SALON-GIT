@@ -6,12 +6,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import enumeraciones.TipoPestanias;
 import excepciones.CodigoNoEncontradoException;
+import model.ConvertirFechaHoras;
 import model.Manicura;
 import model.Pestanias;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -363,6 +365,18 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
         }
     }
 
+    public void reportarFalla(GestorCliente cliente, GestorTurno gestorTurno) {
+        Pestanias pestanias= null;
+        try {
+            pestanias = buscarServicio();
+        } catch (CodigoNoEncontradoException e) {
+            System.out.println(e.getMessage());
+        }
+        // String hoy = Turno.convertirLocalDateAString(LocalDate.now());
+        String hoy = ConvertirFechaHoras.convertirFechaAString(LocalDate.now());
+
+        gestorTurno.cancelarTurnosXdia(hoy, pestanias.getCodigo_servicio());
+    }
 
     /////////////ARCHIVOS.
     public void escribirServiciosEnJson() {

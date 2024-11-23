@@ -177,7 +177,6 @@ public class GestorTurno {
                 System.out.println("OPCION: (o escriba 'salir' para cancelar) ");
                 String opcElegida = scanner.nextLine();
 
-
                 if (opcElegida.equalsIgnoreCase("salir")) {
                     System.out.println("Operación cancelada por el usuario.");
                     return null;
@@ -208,7 +207,6 @@ public class GestorTurno {
             if (t.getCodigo_servicio().equals(codServicio)) {
                 Cliente cliente = null;
                 try {
-                    // cliente = (Cliente) gestorPersona.buscarPersona(t.getDni_cliente());
                     cliente = gestorCliente.buscarPersona(t.getDni_cliente());
                 } catch (DNInoEncontradoException e) {
                     System.out.println(e.getMessage());
@@ -222,6 +220,7 @@ public class GestorTurno {
     public Turno buscarTurnoXclienteFechaHorario() {
 
         String codigoTurno = buscarCodigoTurno();
+
         for (List<Turno> e : listaTurnos.getMapa().values()) {
             for (Turno t : e) {
                 if (t.getCod_turno().equals(codigoTurno)) {
@@ -354,7 +353,6 @@ public class GestorTurno {
         } else {
             System.out.println("vaciaaaaaaaaa");
         }
-
         return turnosVigentes;
     }
 
@@ -400,7 +398,6 @@ public class GestorTurno {
                // LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
                 LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
 
-
                 if (t.getDni_profesional().equals(dniProfesional) && (fecha.isAfter(LocalDate.now()) || fecha.isEqual(LocalDate.now()))) {
                     turnos.add(t);
                 }
@@ -445,7 +442,6 @@ public class GestorTurno {
 /////////////////////////////////////////////MANEJO DE SERVICIOS!!!!////////////////////////////////////////
 
     public String pedirCodServicio(TipoServicio tipoServicio) {
-        int opc = 0;
 
         String codServicio = null;
 

@@ -228,7 +228,6 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                 System.out.println("OPCION: (o escriba 'salir' para cancelar) ");
                 String opcElegida = scanner.nextLine();
 
-
                 if (opcElegida.equalsIgnoreCase("salir")) {
                     System.out.println("Operación cancelada por el usuario.");
                     return null;

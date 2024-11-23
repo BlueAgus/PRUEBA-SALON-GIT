@@ -3,6 +3,7 @@ import abstractas.Servicio;
 import enumeraciones.TipoDepilacion;
 import enumeraciones.TipoServicio;
 import gestores.*;
+import menus.MenuPrincipal;
 import model.Depilacion;
 
 import java.util.ArrayList;
@@ -12,6 +13,10 @@ import java.util.List;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+
+        MenuPrincipal menuPrincipal=new MenuPrincipal();
+        
+        menuPrincipal.menuPrincipal();
         //probando si guarda bien - agu
         //soy cei
   /*

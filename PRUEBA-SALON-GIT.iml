@@ -43,5 +43,9 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="jackson-core-2.18.1" level="project" />
+    <orderEntry type="library" name="jackson-annotations-2.18.1" level="project" />
+    <orderEntry type="library" name="jackson-databind-2.18.1" level="project" />
+    <orderEntry type="library" name="gson-2.11.0" level="project" />
   </component>
 </module>
