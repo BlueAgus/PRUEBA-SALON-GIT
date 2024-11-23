@@ -44,14 +44,9 @@ public class Factura implements CrearID {
 
         LocalDate fechaActual = LocalDate.now();
         this.fecha = convertirFechaAString(fechaActual);
-
         LocalTime horaActual = LocalTime.now();
-
-
+        this.hora = convertirHoraAString(horaActual);
         this.gestores = Arrays.asList(new GestorDepilacion(), new GestorManicura(), new GestorPestania());
-
-        // this.hora = convertirFechaAString(horaActual); hacer que este metodo trabaje con horas
-     //   this.gestorServicio = gestorServicio;
     }
 
     //////////////////////////////////////////////////////// metodos extr ////////////////////////////////////////////////////
