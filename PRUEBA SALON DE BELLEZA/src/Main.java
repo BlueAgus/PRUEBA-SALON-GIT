@@ -6,6 +6,7 @@ import gestores.*;
 public class Main {
     public static void main(String[] args) {
         //probando si guarda bien - agu
+        //soy cei 
   /*
         ///DEPILACION
         GestorDepilacion gestorDepilacion = new GestorDepilacion();
