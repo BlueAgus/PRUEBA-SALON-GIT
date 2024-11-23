@@ -17,6 +17,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static model.ConvertirFechaHoras.convertirFechaAString;
+import static model.ConvertirFechaHoras.convertirHoraAString;
+
 public class Factura implements CrearID {
 
     private String codigoFactura;
@@ -51,14 +54,6 @@ public class Factura implements CrearID {
 
     //////////////////////////////////////////////////////// metodos extr ////////////////////////////////////////////////////
 
-    public static String convertirFechaAString(LocalDate fecha) {
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Puedes ajustar el formato según necesites
-        return fecha.format(formatoFecha);
-    }
-    public static String convertirHoraAString(LocalTime hora) {
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss"); // Puedes ajustar el formato según necesites
-        return hora.format(formatoHora);
-    }
 
     private Servicio buscarServicioEnGestores(String codigoServicio) throws CodigoNoEncontradoException {
         for (IBuscarPorCodigo<? extends Servicio> gestor : gestores) {
@@ -186,6 +181,7 @@ public class Factura implements CrearID {
         return fecha;
     }
 
+
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
@@ -220,6 +216,7 @@ public class Factura implements CrearID {
                         "| Servicios aplicados : " + detallesDeServicios() + "\n" +
                         "| Datos del cliente : " + cliente.datosClienteSinGenero() + "\n" +
                         "| Fecha : " + fecha + "\n" +
+                        "| Hora : " + hora+ "\n" +
 
                         "=========================================\n";
     }

@@ -219,10 +219,12 @@ public class Main {
 
  */
 
+ // Gestor Precios, no lo pude probar todavbia
+  /*      System.out.println(GestorPrecios.verPrecios());
 
-        GestorPrecios gestor = new GestorPrecios();
+        GestorPrecios.escribirPreciosEnEnJson();
 
-        gestor.verPrecios();
-
+        GestorPrecios.leerArchivoPrecios();
+*/
     }
 }

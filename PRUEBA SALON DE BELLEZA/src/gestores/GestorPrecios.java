@@ -145,7 +145,6 @@ public class GestorPrecios {
         double precioOriginal = facturaEncontrada.getPrecioFinal();
         double descuento = precioOriginal * (porcentajeDescuento / 100);
 
-        // Actualizar el precio final en la factura
         double nuevoPrecioFinal = precioOriginal - descuento;
         facturaEncontrada.setPrecioFinal(nuevoPrecioFinal);
         facturaEncontrada.setDescuento(descuento);
@@ -159,6 +158,9 @@ public class GestorPrecios {
     public static void escribirPreciosEnEnJson() {
         try (FileWriter writer = new FileWriter(archivoPrecios)) {
             gson.toJson(precios, writer);
+            writer.close();
+            System.out.println("Historial de precio cargados con exito!");
+
         } catch (IOException e) {
             System.out.println("No se puede guardar el archivo de precios: " + e.getMessage());
         }
