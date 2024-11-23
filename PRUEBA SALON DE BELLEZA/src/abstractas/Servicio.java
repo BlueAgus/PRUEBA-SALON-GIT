@@ -17,7 +17,7 @@ public abstract class Servicio implements CrearID {
 
         this.tipoService = tipoService;
         this.duracion = duracion;
-        this.precio= calcularPrecio();
+        this.precio= precio;
         this.codigo_servicio = this.generarIDEunico();
     }
 

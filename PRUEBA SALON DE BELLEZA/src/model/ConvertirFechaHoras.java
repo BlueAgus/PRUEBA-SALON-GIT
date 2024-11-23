@@ -36,6 +36,16 @@ public class ConvertirFechaHoras {
         }
     }
 
+    public static LocalTime convertirStringALocalTime(String timeString) {
+        try {
+            // Asegúrate de que no haya espacios adicionales
+            timeString = timeString.trim();
+            return LocalTime.parse(timeString, DateTimeFormatter.ofPattern("HH:mm"));
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Error al convertir el string a LocalTime: " + timeString, e);
+        }
+    }
+
 
 }
 

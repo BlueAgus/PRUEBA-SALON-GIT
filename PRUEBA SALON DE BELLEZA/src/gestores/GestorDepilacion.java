@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import enumeraciones.TipoDepilacion;
 import enumeraciones.TipoServicio;
 import excepciones.CodigoNoEncontradoException;
+import model.ConvertirFechaHoras;
 import model.Depilacion;
 import model.Pestanias;
 import model.Turno;
@@ -20,7 +21,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class GestorDepilacion implements IBuscarPorCodigo {
+public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
 
     private static final Scanner scanner = new Scanner(System.in);
     private List<Depilacion> almacenServicios;
@@ -41,10 +42,12 @@ public class GestorDepilacion implements IBuscarPorCodigo {
         String duracion = pedirDuracion();
         TipoDepilacion tipoDepilacion = pedirTipoDepilacion();
 
-        GestorPrecios.modificarPrecio(Depilacion.class, tipoDepilacion , precio);
+
+        GestorPrecios.modificarPrecio(Depilacion.class, tipoDepilacion, precio);
 
         //Cuando se instancie depilacion llamara a calcular precio y obtendra el precio ingresado arriba
         Depilacion depilacion = new Depilacion(duracion, tipoDepilacion);
+
         almacenServicios.add(depilacion);
         System.out.println(depilacion);
         verificarCarga(depilacion);
@@ -221,7 +224,7 @@ public class GestorDepilacion implements IBuscarPorCodigo {
         int opc;
         while (true) {
 
-            try {
+            try { //EHHH no entiendo
                 System.out.println("OPCION: (o escriba 'salir' para cancelar) ");
                 String opcElegida = scanner.nextLine();
 
@@ -289,19 +292,17 @@ public class GestorDepilacion implements IBuscarPorCodigo {
         String duracion = String.format("%02d:%02d", h, m);
         return duracion;
     }
-
     public TipoDepilacion pedirTipoDepilacion() {
-
         TipoDepilacion tipo = null;
 
-        int opcion=-1;
-        do {
+        while (tipo == null) {
             try {
                 System.out.println("Selecciona el tipo de depilación:");
                 System.out.println("1. Cera");
                 System.out.println("2. Láser");
+                System.out.print("Elige una opción: ");
 
-                opcion = scanner.nextInt();
+                int opcion = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (opcion) {
@@ -312,19 +313,17 @@ public class GestorDepilacion implements IBuscarPorCodigo {
                         tipo = TipoDepilacion.LASER;
                         break;
                     default:
-                        System.out.println("Opción no válida, selecciona nuevamente.");
-                        break;
+                        System.out.println("Por favor, selecciona una opción válida (1 o 2).");
                 }
-            } catch (InputMismatchException a) {
-
-                System.out.println("Opción no válida, selecciona nuevamenteeee");
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada no válida. Por favor, introduce un número (1 o 2).");
                 scanner.nextLine();
             }
-        } while (opcion != 1 && opcion != 2);
-
+        }
 
         return tipo;
     }
+
 
 
     public TipoServicio pedirTipoServicio() {
@@ -370,7 +369,8 @@ public class GestorDepilacion implements IBuscarPorCodigo {
         } catch (CodigoNoEncontradoException e) {
             System.out.println(e.getMessage());
         }
-        String hoy= Turno.convertirLocalDateAString(LocalDate.now());
+       // String hoy= Turno.convertirLocalDateAString(LocalDate.now());
+        String hoy = ConvertirFechaHoras.convertirFechaAString(LocalDate.now());
         gestorTurno.cancelarTurnosXdia(hoy, depilacion.getCodigo_servicio());
     }
 

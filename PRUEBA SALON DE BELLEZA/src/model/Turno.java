@@ -49,27 +49,6 @@ public class Turno {
         return Objects.equals(fecha, turno.fecha) && Objects.equals(horario, turno.horario) && Objects.equals(codigo_servicio, turno.codigo_servicio) && Objects.equals(dni_profesional, turno.dni_profesional) && Objects.equals(dni_cliente, turno.dni_cliente);
     }
 
-    public static LocalDate convertirStringALocalDate(String fecha) {
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return LocalDate.parse(fecha, formatoFecha);
-    }
-
-    public static LocalTime convertirStringALocalTime(String hora) {
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-        return LocalTime.parse(hora, formatoHora);
-    }
-
-    public static String convertirLocalTimeAString(LocalTime hora) {
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-        return hora.format(formatoHora);
-    }
-    public static String convertirLocalDateAString(LocalDate fecha) {
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return fecha.format(formatoFecha);
-    }
-
-
-
 
     ////////////////////////////////////////////////////////GET Y SET ////////////////////////////////////////////////////
 
@@ -142,3 +121,22 @@ public class Turno {
 
     }
 }
+
+/*public static LocalDate convertirStringALocalDate(String fecha) {
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(fecha, formatoFecha);
+    }
+
+    public static LocalTime convertirStringALocalTime(String hora) {
+        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return LocalTime.parse(hora, formatoHora);
+    }
+
+    public static String convertirLocalTimeAString(LocalTime hora) {
+        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return hora.format(formatoHora);
+    }
+    public static String convertirLocalDateAString(LocalDate fecha) {
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return fecha.format(formatoFecha);
+    }*/

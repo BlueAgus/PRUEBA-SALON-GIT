@@ -60,7 +60,7 @@ public class GestorTurno {
         TipoServicio tipoServicio = gestorDepilacion.pedirTipoServicio();
         String codServicio =pedirCodServicio(tipoServicio);
 
-
+//
 
         if (codServicio == null) {
             return false;
@@ -341,7 +341,9 @@ public class GestorTurno {
         if (!(listaTurnos == null && listaTurnos.getMapa().isEmpty())) {
             for (List<Turno> list : listaTurnos.getMapa().values()) {
                 for (Turno t : list) {
-                    LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+                   // LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+                    LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
+
                     if (fecha.isAfter(LocalDate.now()) || fecha.isEqual(LocalDate.now())) {
                         System.out.println(i + "-" + t.toString(buscarTipoServicio(t.getCodigo_servicio()), gestorCliente, gestorProfesional));
                         turnosVigentes.add(t);
@@ -360,7 +362,9 @@ public class GestorTurno {
         int i = 0;
         for (List<Turno> list : listaTurnos.getMapa().values()) {
             for (Turno t : list) {
-                LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+              //  LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+                LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
+
                 if (fecha.isBefore(LocalDate.now())) {
                     System.out.println(i + "-" + t.toString(buscarTipoServicio(t.getCodigo_servicio()), gestorCliente, gestorProfesional));
                     i++;
@@ -375,7 +379,9 @@ public class GestorTurno {
 
         for (List<Turno> list : listaTurnos.getMapa().values()) {
             for (Turno t : list) {
-                LocalTime horario = Turno.convertirStringALocalTime(t.getHorario());
+                //LocalTime horario = Turno.convertirStringALocalTime(t.getHorario());
+                LocalTime horario = ConvertirFechaHoras.convertirStringAHora(t.getHorario());
+
                 if (t.getDni_cliente().equals(dniCliente) && (horario.isAfter(LocalTime.now()) || horario.equals(LocalTime.now()))) {
                     turnos.add(t);
                 }
@@ -390,7 +396,11 @@ public class GestorTurno {
 
         for (List<Turno> list : listaTurnos.getMapa().values()) {
             for (Turno t : list) {
-                LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+               // LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
+               // LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+                LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
+
+
                 if (t.getDni_profesional().equals(dniProfesional) && (fecha.isAfter(LocalDate.now()) || fecha.isEqual(LocalDate.now()))) {
                     turnos.add(t);
                 }
@@ -405,7 +415,9 @@ public class GestorTurno {
 
         for (List<Turno> list : listaTurnos.getMapa().values()) {
             for (Turno t : list) {
-                LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+               // LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+                LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
+
                 if (t.getDni_cliente().equals(dniCliente) && fecha.isBefore(LocalDate.now())) {
                     turnos.add(t);
                 }
@@ -420,7 +432,8 @@ public class GestorTurno {
 
         for (List<Turno> list : listaTurnos.getMapa().values()) {
             for (Turno t : list) {
-                LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+                //LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+                LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
                 if (t.getDni_profesional().equals(dniProfesional) && fecha.isBefore(LocalDate.now())) {
                     turnos.add(t);
                 }
@@ -495,9 +508,11 @@ public class GestorTurno {
 /////////////////////////////////////////////MANEJO DE FECHAS!!!!////////////////////////////////////////
 
     ///retorna un turno con la fecha y el horario elegido
+    //aca se rompe pero no se porque
     public Turno elegirFechaYhorario(String cod_servicio, TipoServicio tipoServicio) {
 
-        String fecha = Turno.convertirLocalDateAString(pedirFecha());
+        String fecha = ConvertirFechaHoras.convertirFechaAString(pedirFecha());
+        //aca use la clase de convertir fecha pero antes con el otro metodo tambien se rompia
         if (fecha == null) {
             return null;
         }
@@ -548,7 +563,8 @@ public class GestorTurno {
             }
         }
 
-        String horario = Turno.convertirLocalTimeAString(horariosDisponibles.get(indiceHorario));
+       // String horario = Turno.convertirLocalTimeAString(horariosDisponibles.get(indiceHorario));
+        String horario = ConvertirFechaHoras.convertirHoraAString(horariosDisponibles.get(indiceHorario));
         Turno turno = new Turno(fecha, horario);
         ///System.out.println(turno);
         return turno;
@@ -605,19 +621,26 @@ public class GestorTurno {
         try {
             switch (tipoServicio) {
                 case TipoServicio.DEPILACION:
-                    duracion = Turno.convertirStringALocalTime(gestorDepilacion.buscarPorCodigo(cod_servicio).getDuracion());
+                 // duracion = Turno.convertirStringALocalTime(gestorDepilacion.buscarPorCodigo(cod_servicio).getDuracion());
+                   // con el de arriba tiraba error y con el de abajo noo
+                    duracion = ConvertirFechaHoras.convertirStringALocalTime(gestorDepilacion.buscarPorCodigo(cod_servicio).getDuracion());
                     break;
                 case TipoServicio.MANICURA:
-                    duracion = Turno.convertirStringALocalTime(gestorManicura.buscarPorCodigo(cod_servicio).getDuracion());
+                    //duracion = Turno.convertirStringALocalTime(gestorManicura.buscarPorCodigo(cod_servicio).getDuracion());
+                    duracion = ConvertirFechaHoras.convertirStringAHora(gestorManicura.buscarPorCodigo(cod_servicio).getDuracion());
+
                     break;
                 case TipoServicio.PESTANIAS:
-                    duracion = Turno.convertirStringALocalTime(gestorPestania.buscarPorCodigo(cod_servicio).getDuracion());
+                   // duracion = Turno.convertirStringALocalTime(gestorPestania.buscarPorCodigo(cod_servicio).getDuracion());
+                    duracion = ConvertirFechaHoras.convertirStringAHora(gestorPestania.buscarPorCodigo(cod_servicio).getDuracion());
+
                     break;
             }
+
             hora = (long) duracion.getHour();
             minutos = (long) duracion.getMinute();
 
-        } catch (CodigoNoEncontradoException e) {
+        } catch (CodigoNoEncontradoException  e) {
             System.out.println(e.getMessage());
         }
 

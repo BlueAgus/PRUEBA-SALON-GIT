@@ -13,7 +13,8 @@ public class Pestanias extends Servicio {
     public Pestanias(String duracion, TipoPestanias tipoPestanias) {
         super(TipoServicio.PESTANIAS, duracion);
         this.tipoPestanias = tipoPestanias;
-      //  this.precio=precio; No le pasamos el precio porque una vez que se instancia se calcula con el metodo
+        this.precio = calcularPrecio(); // es importante que esto este luego de que se defina el tipo
+
     }
 
     ////////////////////////////////// metodos extr //////////////////////////////////////////////

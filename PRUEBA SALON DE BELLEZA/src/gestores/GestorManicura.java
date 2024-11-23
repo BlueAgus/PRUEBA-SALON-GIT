@@ -7,10 +7,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import enumeraciones.TipoManicura;
 import excepciones.CodigoNoEncontradoException;
-import model.Depilacion;
-import model.Manicura;
-import model.Pestanias;
-import model.Turno;
+import model.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,7 +20,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class GestorManicura implements IBuscarPorCodigo {
+public class GestorManicura implements IBuscarPorCodigo<Servicio> {
     private static Scanner scanner = new Scanner(System.in);
     private List<Manicura> almacenServicios;
     Gson gson = new Gson();
@@ -50,14 +47,16 @@ public class GestorManicura implements IBuscarPorCodigo {
         TipoManicura tipoManicura = pedirTipoManicura();
 
         //Ingresamos el precio al gestor que despues sera calculado en la llamada de este en las clases
-        GestorPrecios.modificarPrecio(Manicura.class, tipoManicura, precio);
         boolean tieneDisenio = precioDisenio > 0;
-        if(tieneDisenio){
-            GestorPrecios.setPrecioDisenio(precioDisenio);
-        }
+
 
         Manicura manicura = new Manicura(duracion, tipoManicura, tieneDisenio); //saque esto (, precio, disenio);
 
+
+        GestorPrecios.modificarPrecio(Manicura.class, tipoManicura, precio);
+        if(tieneDisenio){
+            GestorPrecios.setPrecioDisenio(precioDisenio);
+        }
         almacenServicios.add(manicura);
         System.out.println(manicura);
         verificarCarga(manicura);
@@ -223,7 +222,7 @@ public class GestorManicura implements IBuscarPorCodigo {
     public String pedirCodServicio() {
         //muestra servicios y devuelve el codigo
         for (int i = 0; i < almacenServicios.size(); i++) {
-            System.out.println(i + "- \n" + almacenServicios.get(i));
+            System.out.println(i + ". \n" + almacenServicios.get(i));
         }
         int opc = 0;
         while (true) {
@@ -375,7 +374,9 @@ public class GestorManicura implements IBuscarPorCodigo {
         } catch (CodigoNoEncontradoException e) {
             System.out.println(e.getMessage());
         }
-        String hoy = Turno.convertirLocalDateAString(LocalDate.now());
+       // String hoy = Turno.convertirLocalDateAString(LocalDate.now());
+        String hoy = ConvertirFechaHoras.convertirFechaAString(LocalDate.now());
+
         gestorTurno.cancelarTurnosXdia(hoy, manicura.getCodigo_servicio());
     }
 

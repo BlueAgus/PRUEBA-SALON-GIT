@@ -7,9 +7,9 @@ import com.google.gson.stream.JsonWriter;
 import enumeraciones.TipoDepilacion;
 import enumeraciones.TipoManicura;
 import enumeraciones.TipoPestanias;
+import enumeraciones.TipoServicio;
 import excepciones.CodigoNoEncontradoException;
 import model.*;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -23,17 +23,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class GestorPrecios {
 
-    private static final double precioDepiCera = 12000.0;
-    private static final double precioDepiLaser = 18000.0;
-
-    private static final double precioManiGel = 13000.0;
-    private static final double precioManiEsculpidas = 20000.0;
-    private static final double precioManiSemi = 10000.0;
-    private static double precioDisenio = 2000.0;
-
-    private static final double precioPestanias3D = 20000.0;
-    private static final double precioPestanias2D = 16000.0;
-    private static final double precioPestaniasClasic = 14000.0;
+    private static double precioDisenio = 0;
     private static String archivoPrecios = "precios.json";
 
     private static final Gson gson = new GsonBuilder()
@@ -65,31 +55,32 @@ public class GestorPrecios {
         precios.put(Depilacion.class, new HashMap<>());
         precios.put(Manicura.class, new HashMap<>());
         precios.put(Pestanias.class, new HashMap<>());
-        //clave   vaaaaloooooor
-        // aca le asignamos su otro mapa anidado Mapa(  clase, (enum, precio) );
-        //depilacion                                           clave, valor
-        precios.get(Depilacion.class).put(TipoDepilacion.CERA, precioDepiCera);
-        precios.get(Depilacion.class).put(TipoDepilacion.LASER, precioDepiLaser);
 
-        // manicura
-        precios.get(Manicura.class).put(TipoManicura.GEL, precioManiGel);
-        precios.get(Manicura.class).put(TipoManicura.ESCULPIDAS, precioManiEsculpidas);
-        precios.get(Manicura.class).put(TipoManicura.SEMIPERMANENTE, precioManiSemi);
+        precios.get(Depilacion.class).put(TipoDepilacion.CERA, 0.0);
+        precios.get(Depilacion.class).put(TipoDepilacion.LASER, 0.0);
 
-        //
-        precios.get(Pestanias.class).put(TipoPestanias.TRES_D, precioPestanias3D);
-        precios.get(Pestanias.class).put(TipoPestanias.DOS_D, precioPestanias2D);
-        precios.get(Pestanias.class).put(TipoPestanias.CLASICAS, precioPestaniasClasic);
+        precios.get(Manicura.class).put(TipoManicura.GEL, 0.0);
+        precios.get(Manicura.class).put(TipoManicura.ESCULPIDAS, 0.0);
+        precios.get(Manicura.class).put(TipoManicura.SEMIPERMANENTE, 0.0);
+
+        precios.get(Pestanias.class).put(TipoPestanias.TRES_D, 0.0);
+        precios.get(Pestanias.class).put(TipoPestanias.DOS_D, 0.0);
+        precios.get(Pestanias.class).put(TipoPestanias.CLASICAS, 0.0);
     }
 
 
     public static double obtenerPrecio(Class<?> claseServicio, Enum<?> tipo) {
-        return precios.get(claseServicio).get(tipo);
-        //sacamos primero el valor de la clave "clase" que el mapa anidado, y luego sacamos el valor del segundo mapa que es el precio
+        Map<Enum<?>, Double> mapaPrecios = precios.get(claseServicio);
+
+        if (mapaPrecios == null || !mapaPrecios.containsKey(tipo)) {
+            throw new IllegalArgumentException("No se encontró un precio para el tipo " + tipo + " en la clase " + claseServicio.getName());
+        }
+
+        return mapaPrecios.get(tipo); // Ahora sabemos que el valor no será null
     }
 
     public static void modificarPrecio(Class<?> claseServicio, Enum<?> tipo, double nuevoPrecio) {
-        //aca obtenemos una referencia, no una copia
+
         Map<Enum<?>, Double> mapaPrecios = precios.get(claseServicio);
         if (mapaPrecios == null) {
             throw new IllegalArgumentException("No se encontró un mapa de precios para la clase: " + claseServicio.getName());
@@ -99,8 +90,24 @@ public class GestorPrecios {
         }
         mapaPrecios.put(tipo, nuevoPrecio);
     }
+/*
+    public static void modificarPrecio(Class<?> claseServicio, Enum<?> tipo, double nuevoPrecio) {
+        // Asegurar que exista un mapa para la clase
+        precios.putIfAbsent(claseServicio, new HashMap<>());
 
-    // solo va a usarse para  manicura
+        Map<Enum<?>, Double> mapaPrecios = precios.get(claseServicio);
+
+        // Si el tipo no está presente, inicialízalo (si es válido hacerlo)
+        if (!mapaPrecios.containsKey(tipo)) {
+            System.out.println("El tipo " + tipo + " no estaba registrado. Inicializándolo con el nuevo precio.");
+        }
+
+        // Actualizar o añadir el precio
+        mapaPrecios.put(tipo, nuevoPrecio);
+        System.out.println("Precio actualizado: " + nuevoPrecio + " para tipo " + tipo + " en " + claseServicio.getSimpleName());
+    }
+*/
+
     public static double agregarDisenio(Enum<?> tipo) {
         if (!(tipo instanceof TipoManicura)) {
             throw new IllegalArgumentException("El diseño solo aplica a servicios de manicura.");
@@ -125,13 +132,8 @@ public class GestorPrecios {
 
         double aumento = 1 + (porcentaje / 100);
 
-        // se usa este en vez de un for porque no es facil de usar con un mapa anidado y no queda lindo
-
-        //               clave,        valor(o sea el mapa anidado)
-        precios.forEach((claseIndice, mapaPreciosIndice) -> {//itera sobre todos los pares clave-valor de precios
-            // y aca iteramos sobre el mapa aniado que contiene el enum y el precio para actualizar
+        precios.forEach((claseIndice, mapaPreciosIndice) -> {
             mapaPreciosIndice.replaceAll((tipoIndice, precioIndice) -> precioIndice * aumento);
-            //este metodo actualiza los valores del map, toma los valores actuales y modifica
         });
     }
 
@@ -141,8 +143,7 @@ public class GestorPrecios {
         }
         double aumento = 1 + (porcentaje / 100);
 
-        // Verificamos si la clase existe en el mapa de precios
-        Map<Enum<?>, Double> mapaPrecios = precios.get(servicio); // obtenemos el valor de precios (la clase anidada)
+        Map<Enum<?>, Double> mapaPrecios = precios.get(servicio);
         if (mapaPrecios != null) {
             // el metodo replaceAll reemplaza todos los valores de una
             mapaPrecios.replaceAll((tipoIndice, precioIndice) -> precioIndice * aumento);
@@ -152,7 +153,6 @@ public class GestorPrecios {
     }
 
     public static void aplicarDescuento(String codigoFactura, double porcentajeDescuento, List<Factura> facturas) throws CodigoNoEncontradoException {
-        // Validar el porcentaje de descuento
         if (porcentajeDescuento < 0 || porcentajeDescuento > 100) {
             throw new IllegalArgumentException("El porcentaje de descuento debe estar entre 0 y 100.");
         }
@@ -161,7 +161,7 @@ public class GestorPrecios {
         for (Factura factura : facturas) {
             if (factura.getCodigoFactura().equals(codigoFactura)) {
                 facturaEncontrada = factura;
-                break; // Salimos del bucle al encontrar la factura
+                break;
             }
         }
         if (facturaEncontrada == null) {
@@ -175,21 +175,19 @@ public class GestorPrecios {
         facturaEncontrada.setPrecioFinal(nuevoPrecioFinal);
         facturaEncontrada.setDescuento(descuento);
 
-        // Mostrar mensaje informativo (opcional)
         System.out.println("Descuento del " + porcentajeDescuento + "% aplicado. Descuento: " + descuento + ". Nuevo precio final: " + nuevoPrecioFinal);
 
-        // Retornar el valor del descuento aplicado
     }
 
     private static Map<String, Map<String, Double>> convertirMapaParaJSON() {
         Map<String, Map<String, Double>> mapaJSON = new HashMap<>();
 
         for (Map.Entry<Class<?>, Map<Enum<?>, Double>> entrada : precios.entrySet()) {
-            String nombreClase = entrada.getKey().getSimpleName(); // Convierte la clase a su nombre simple
+            String nombreClase = entrada.getKey().getSimpleName();
             Map<String, Double> preciosPorTipo = new HashMap<>();
 
             for (Map.Entry<Enum<?>, Double> subEntrada : entrada.getValue().entrySet()) {
-                preciosPorTipo.put(subEntrada.getKey().name(), subEntrada.getValue()); // Usa el nombre del enum
+                preciosPorTipo.put(subEntrada.getKey().name(), subEntrada.getValue());
             }
 
             mapaJSON.put(nombreClase, preciosPorTipo);
@@ -201,7 +199,12 @@ public class GestorPrecios {
     public static void guardarPreciosEnArchivo() {
         try (FileWriter writer = new FileWriter("precios.json")) {
             Map<String, Map<String, Double>> mapaParaJSON = convertirMapaParaJSON();
-            String json = gson.toJson(mapaParaJSON); // Serializa el mapa convertido
+
+            if (precioDisenio != 0.0) {
+                mapaParaJSON.put("PrecioDiseño", Map.of("Diseño", precioDisenio));
+            }
+
+            String json = gson.toJson(mapaParaJSON);
             writer.write(json);
             System.out.println("Precios guardados exitosamente en precios.json");
         } catch (IOException e) {
@@ -209,96 +212,119 @@ public class GestorPrecios {
         }
     }
 
-/*
-    public static void escribirPreciosEnEnJson() {
-        try (FileWriter writer = new FileWriter(archivoPrecios)) {
-            gson.toJson(precios, writer);
-            writer.close();
-            System.out.println("Historial de precio cargados con exito!");
-
-        } catch (IOException e) {
-            System.out.println("No se puede guardar el archivo de precios: " + e.getMessage());
-        }
-    }*/
-/*
-    public static void guardarPreciosEnArchivo() {
-        try (FileWriter writer = new FileWriter(archivoPrecios)) {
-            String json = gson.toJson(precios); // Usa el Gson con el adaptador
-            writer.write(json); // Escribe el JSON en el archivo
-            System.out.println("Precios guardados exitosamente en el archivo: " + archivoPrecios);
-        } catch (IOException e) {
-            System.err.println("Error al guardar precios en el archivo: " + e.getMessage());
-        }
-    }*/
-
 
     public static void cargarPreciosDesdeArchivo() {
         try (FileReader reader = new FileReader(archivoPrecios)) {
-            // Leer y deserializar el archivo JSON al mapa de precios
-            Type tipoMapa = new TypeToken<Map<Class<?>, Map<Enum<?>, Double>>>() {}.getType();
-            precios = gson.fromJson(reader, tipoMapa);
+            Type tipoMapaJSON = new TypeToken<Map<String, Map<String, Double>>>() {}.getType();
+            Map<String, Map<String, Double>> mapaJSON = gson.fromJson(reader, tipoMapaJSON);
 
-            if (precios == null) {
-                precios = new HashMap<>(); // Si no hay datos, inicializa el mapa vacío
+            if (mapaJSON == null) {
+                precios = new HashMap<>();
+                return;
+            }
+
+            for (Map.Entry<String, Map<String, Double>> entrada : mapaJSON.entrySet()) {
+                String tipoServicio = entrada.getKey();
+                Map<String, Double> mapaInterno = entrada.getValue();
+
+                if (tipoServicio.equals("PrecioDiseño")) {
+                    precioDisenio = mapaInterno.getOrDefault("Diseño", 0.0);
+                    continue;
+                }
+
+                try {
+                    TipoServicio servicioEnum = TipoServicio.valueOf(tipoServicio.toUpperCase());
+                    Map<Enum<?>, Double> mapaConvertido = new HashMap<>();
+                    for (Map.Entry<String, Double> subEntrada : mapaInterno.entrySet()) {
+                        mapaConvertido.put(servicioEnum, subEntrada.getValue());
+                    }
+                    precios.put(servicioEnum.getClass(), mapaConvertido);
+                } catch (IllegalArgumentException e) {
+                    System.err.println("El tipo de servicio " + tipoServicio + " no corresponde a un valor de TipoServicio.");
+                }
             }
 
             System.out.println("Precios cargados correctamente desde el archivo JSON.");
         } catch (FileNotFoundException e) {
             System.out.println("Archivo JSON no encontrado. Se creará uno nuevo al guardar.");
-            precios = new HashMap<>(); // Inicializa el mapa si el archivo no existe
+            precios = new HashMap<>();
         } catch (IOException e) {
-            System.out.println("Error al leer los precios: " + e.getMessage());
+            System.err.println("Error al leer los precios: " + e.getMessage());
         }
     }
-
-
-
-    /*  public static void leerArchivoPrecios() {
-        try (FileReader reader = new FileReader(archivoPrecios)) {
-            Type tipoMapa = new TypeToken<Map<Class<?>, Map<Enum<?>, Double>>>() {
-            }.getType();
-                precios = gson.fromJson(reader, tipoMapa);
-            System.out.println("Archivo de precios leído exitosamente.");
-
-        } catch (IOException e) {
-            System.out.println("No se puede leer el archivo de clientes: " + e.getMessage());
-        }
-    }
-*/
-
 
     public static String verPrecios() {
-        return
-                "Depilacion con cera: " + precioDepiCera +"\n"+
-                        "Depilacion con Laser: " + precioDepiLaser +"\n"+
-                        "Manicura con gel : " + precioManiGel +"\n"+
-                        "Manicura con esculpidas: " + precioManiEsculpidas +"\n"+
-                        "Manicura semipermanentes: " + precioManiSemi +"\n"+
-                        "Precio extra diseño : " + precioDisenio +"\n"+
-                        "Pestañas 2D: " + precioPestanias2D +"\n"+
-                        "Pestañas 3d: " + precioPestanias3D +"\n"+
-                        "Pestañas clasicas: " + precioPestaniasClasic;
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Precios de los servicios:");
+        sb.append("\n--------------------------\n");
+        for (Map.Entry<Class<?>, Map<Enum<?>, Double>> entrada : precios.entrySet()) {
+            Class<?> clase = entrada.getKey();
+            Map<Enum<?>, Double> mapaInterno = entrada.getValue();
+
+            for (Map.Entry<Enum<?>, Double> subEntrada : mapaInterno.entrySet()) {
+                String tipoServicio = subEntrada.getKey().toString().replace("_", " ").toLowerCase();
+                double precio = subEntrada.getValue();
+                sb.append(clase.getSimpleName()).append(" ").append(tipoServicio).append(": ").append(precio).append("\n");
+            }
+        }
+        sb.append("Precio Diseño: ").append(precioDisenio);
+        sb.append("\n--------------------------\n");
+        return sb.toString();
     }
 
     public static String verPrecioDepi() {
-        return
-                "Depilacion con cera: " + precioDepiCera +"\n"+
-                        "Depilacion con Laser: " + precioDepiLaser;
+        StringBuilder sb = new StringBuilder();
+        Map<Enum<?>, Double> mapaDepi = precios.get(Depilacion.class);
 
+        sb.append("Precios de los servicios de depilacion:");
+        sb.append("\n--------------------------\n");
+        if (mapaDepi != null) {
+            for (Map.Entry<Enum<?>, Double> entrada : mapaDepi.entrySet()) {
+                sb.append("Depilación ").append(entrada.getKey().toString().toLowerCase())
+                        .append(": ").append(entrada.getValue()).append("\n");
+            }
+        }
+        sb.append("\n--------------------------\n");
+        return sb.toString();
     }
 
+
+
     public static String verPrecioPestanias() {
-        return
-                "Pestañas 2D: " + precioPestanias2D +"\n"+
-                        "Pestañas 3d: " + precioPestanias3D +"\n"+
-                        "Pestañas clasicas: " + precioPestaniasClasic;
+        StringBuilder sb = new StringBuilder();
+        Map<Enum<?>, Double> mapaPestanias = precios.get(Pestanias.class);
+
+        sb.append("Precios de los servicios de pestañas:");
+        sb.append("\n--------------------------\n");
+        if (mapaPestanias != null) {
+            for (Map.Entry<Enum<?>, Double> entrada : mapaPestanias.entrySet()) {
+                sb.append("Pestañas ").append(entrada.getKey().toString().replace("_", " ").toLowerCase())
+                        .append(": ").append(entrada.getValue()).append("\n");
+            }
+        }
+        sb.append("\n--------------------------\n");
+        return sb.toString();
     }
 
     public static String verPreciosManicura() {
-        return "Manicura con gel : " + precioManiGel + "\n"+
-                "Manicura con esculpidas: " + precioManiEsculpidas +"\n"+
-                "Manicura semipermanentes: " + precioManiSemi +"\n"+
-                "Precio extra diseño : " + precioDisenio;
+        StringBuilder sb = new StringBuilder();
+        Map<Enum<?>, Double> mapaManicura = precios.get(Manicura.class);
 
+        sb.append("Precios de los servicios de manicura :");
+        sb.append("\n--------------------------\n");
+        if (mapaManicura != null) {
+            for (Map.Entry<Enum<?>, Double> entrada : mapaManicura.entrySet()) {
+                sb.append("Manicura con ").append(entrada.getKey().toString().toLowerCase())
+                        .append(": ").append(entrada.getValue()).append("\n");
+            }
+        }
+        sb.append("Precio Diseño: ").append(precioDisenio);
+        sb.append("\n--------------------------\n");
+        return sb.toString();
     }
+
+
+
+
 }

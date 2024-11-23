@@ -5,7 +5,4 @@ public enum TipoServicio {
     PESTANIAS,
     DEPILACION;
 
-    public String getNombre() {
-        return name().toLowerCase(); // O cualquier otra lógica de formato
-    }
 }

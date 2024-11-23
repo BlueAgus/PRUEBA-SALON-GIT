@@ -16,6 +16,8 @@ public class Depilacion extends Servicio {
     public Depilacion(String duracion, TipoDepilacion tipoDepilacion) {
         super(TipoServicio.DEPILACION, duracion);
         this.tipoDepilacion = tipoDepilacion;
+        this.precio = calcularPrecio(); // es importante que esto este luego de que se defina el tipo
+
     }
 
     /////////////////////////////////////// metodos extr ////////////////////////////////////////////////////

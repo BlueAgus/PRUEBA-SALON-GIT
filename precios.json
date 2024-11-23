@@ -12,5 +12,8 @@
     "CLASICAS": 14000.0,
     "TRES_D": 20000.0,
     "DOS_D": 16000.0
+  },
+  "PrecioDiseño": {
+    "Diseño": 10000.0
   }
 }

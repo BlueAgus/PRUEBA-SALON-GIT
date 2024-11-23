@@ -20,6 +20,7 @@ public class Manicura extends Servicio {
     public Manicura(String duracion, TipoManicura tipoManicura, boolean disenio) {
         super(TipoServicio.MANICURA, duracion);
         this.tipoManicura = tipoManicura;
+        this.precio = calcularPrecio(); // es importante que esto este luego de que se defina el tipo
         this.precioDisenio = GestorPrecios.getPrecioDisenio();
         //this.precio = calcularPrecio(); esto esta en servicio
         this.disenio = disenio;

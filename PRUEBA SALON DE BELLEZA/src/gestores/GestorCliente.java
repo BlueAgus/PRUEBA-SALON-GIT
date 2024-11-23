@@ -167,7 +167,7 @@ public class GestorCliente {
     public void verificarCarga(Cliente cliente ) {
         int opcion = -1;
         do {
-            System.out.println("¿Deseas modificar algo del servicio?");
+            System.out.println("¿Deseas modificar algo del cliente?");
             System.out.println("1. Sí");
             System.out.println("2. No");
 

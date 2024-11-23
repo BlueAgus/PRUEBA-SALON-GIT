@@ -17,7 +17,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class GestorPestania implements IBuscarPorCodigo {
+public class GestorPestania implements IBuscarPorCodigo<Servicio> {
 
     private static final Scanner scanner = new Scanner(System.in);
     private List<Pestanias> almacenServicios;
@@ -37,7 +37,7 @@ public class GestorPestania implements IBuscarPorCodigo {
         String duracion = pedirDuracion();
         TipoPestanias tipoPestanias = pedirTipoPestanias();
 
-        GestorPrecios.modificarPrecio(Pestanias.class, tipoPestanias , precio);
+        GestorPrecios.modificarPrecio(Pestanias.class, tipoPestanias , precio);// no mover
 
         //Cuando se instancie pestanias llamara a calcular precio y obtendra el precio ingresado arriba
         Pestanias pestanias = new Pestanias(duracion, tipoPestanias);
