@@ -127,7 +127,9 @@ public class MenuPrincipal {
         gestorPestania = new GestorPestania();
         gestorManicura = new GestorManicura();
 
-        gestorTurno = new GestorTurno(gestorDepilacion, gestorPestania, gestorManicura, profesionales);
+        //aca le estabas pasando profesionales pero el constructor espera clientes en gestoTurno,
+        //pero no entendi si querias los dos o solo el de clientes
+        gestorTurno = new GestorTurno(gestorDepilacion, gestorPestania, gestorManicura, clientes);
 
 
         profesionales.leerProfesionalesDesdeJson();

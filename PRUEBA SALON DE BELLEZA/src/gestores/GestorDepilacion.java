@@ -1,5 +1,7 @@
 package gestores;
 
+import Interfaces.IBuscarPorCodigo;
+import abstractas.Servicio;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import enumeraciones.TipoDepilacion;
@@ -18,7 +20,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class GestorDepilacion {
+public class GestorDepilacion implements IBuscarPorCodigo {
 
     private static final Scanner scanner = new Scanner(System.in);
     private List<Depilacion> almacenServicios;
@@ -86,7 +88,10 @@ public class GestorDepilacion {
     }
 
     ///con codigo
-    public Depilacion buscarServicioCodigo(String codServicio) throws CodigoNoEncontradoException {
+
+
+    @Override
+    public Depilacion buscarPorCodigo(String codServicio) throws CodigoNoEncontradoException {
         Depilacion depilacion = null;
         for (Depilacion s : almacenServicios) {
             if (s.getCodigo_servicio().equals(codServicio)) {
@@ -98,7 +103,6 @@ public class GestorDepilacion {
         }
         return depilacion;
     }
-
 
     public void modificarServicio() {
 
@@ -367,7 +371,7 @@ public class GestorDepilacion {
             System.out.println(e.getMessage());
         }
         String hoy= Turno.convertirLocalDateAString(LocalDate.now());
-        gestorTurno.cancelarTurnosXdia(hoy, cliente, depilacion.getCodigo_servicio());
+        gestorTurno.cancelarTurnosXdia(hoy, depilacion.getCodigo_servicio());
     }
 
     ////////////////////////////////////////GET Y SET////////////////////////////////////////////////////

@@ -1,12 +1,11 @@
 package gestores;
 
+import Interfaces.IBuscarPorCodigo;
+import abstractas.Servicio;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import enumeraciones.TipoServicio;
-import excepciones.DNInoEncontradoException;
-import excepciones.DNIyaCargadoException;
-import excepciones.GeneroInvalidoException;
-import excepciones.TelefonoInvalidoException;
+import excepciones.*;
 import model.Profesional;
 
 import java.io.FileNotFoundException;
@@ -209,6 +208,24 @@ public class GestorProfesional {
         }
         throw new DNInoEncontradoException("\nDNI no encontrado!!");
     }
+/*
+// Asi se veria implementando la interfaz y generalizamos el CodigoNoEncontrado, que seria lo mismo que dni no encontrado
+//-Agus
+//Igual la interfaz extiende de servicio pero se podria sacar o hacer otro que extienda de Persona
+//esto serviria porque si todas las personas usan una interfaz quiza facilitaria algunos metodos de busqueda o no se
+
+     @Override
+    public Profesional buscarPorCodigo(String dni) throws CodigoNoEncontradoException{
+        for (Profesional p : profesionales) {
+            if (p.getDni().equals(dni)) {
+                return p;
+            }
+        }
+        throw new CodigoNoEncontradoException("\nDNI no encontrado!!");
+    }
+
+*/
+
     //------------------------------------------------------------------------------------------------------------
 
     public boolean buscarPersonas(String dni) throws DNInoEncontradoException {
@@ -219,6 +236,9 @@ public class GestorProfesional {
         }
         throw new DNInoEncontradoException("DNI no encontrado!!");
     }
+
+
+
     //------------------------------------------------------------------------------------------------------------
 
     public String pedirTelefono() {

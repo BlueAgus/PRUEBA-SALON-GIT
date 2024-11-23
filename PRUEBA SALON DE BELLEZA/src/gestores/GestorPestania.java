@@ -1,5 +1,7 @@
 package gestores;
 
+import Interfaces.IBuscarPorCodigo;
+import abstractas.Servicio;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import enumeraciones.TipoPestanias;
@@ -15,7 +17,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class GestorPestania {
+public class GestorPestania implements IBuscarPorCodigo {
 
     private static final Scanner scanner = new Scanner(System.in);
     private List<Pestanias> almacenServicios;
@@ -83,7 +85,8 @@ public class GestorPestania {
 
     }
 
-    public Pestanias buscarServicioCodigo(String codServicio) throws CodigoNoEncontradoException {
+    @Override
+    public Pestanias buscarPorCodigo(String codServicio) throws CodigoNoEncontradoException {
         Pestanias servicio = null;
         for (Pestanias s : almacenServicios) {
             if (s.getCodigo_servicio().equals(codServicio)) {
@@ -95,7 +98,6 @@ public class GestorPestania {
         }
         return servicio;
     }
-
 
     // Función que permite modificar un servicio existente
     public void modificarServicio() {

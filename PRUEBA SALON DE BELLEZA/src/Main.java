@@ -47,7 +47,7 @@ public class Main {
         gestorPestania.escribirServiciosEnJson();
   */
 
- /*       ///MANICURA
+      ///MANICURA
         GestorManicura gestorManicura= new GestorManicura();
 
 
@@ -65,7 +65,7 @@ public class Main {
         gestorManicura.mostrarServicios();
 
         gestorManicura.escribirServiciosEnJson();
-*/
+
 
         ///CLIENTE
 /*
@@ -146,7 +146,7 @@ public class Main {
 
 
         ////ADMINISTRADOR!
-
+/*
         GestorAdministrador gestorAdministrador= new GestorAdministrador();
 
         gestorAdministrador.leerDesdeJSON();
@@ -164,8 +164,59 @@ public class Main {
         gestorAdministrador.mostrarTodos();
 
 
-        gestorAdministrador.guardarArchivoAdministradores();
 
+
+        gestorAdministrador.guardarArchivoAdministradores();
+*/
+
+/*
+
+        GestorDepilacion gestorDepilacion = new GestorDepilacion();
+        gestorDepilacion.leerServiciosDesdeJson();
+
+        GestorPestania gestorPestania = new GestorPestania();
+        gestorPestania.leerServiciosDesdeJson();
+
+        GestorManicura gestorManicura = new GestorManicura();
+        gestorManicura.leerServiciosDesdeJson();
+
+        GestorCliente gestorCliente = new GestorCliente();
+        gestorCliente.leerArchivoClientes();
+
+
+        GestorTurno gestorTurno= new GestorTurno(gestorDepilacion, gestorPestania, gestorManicura,gestorCliente);
+        GestorProfesional gestorProfesional =  new GestorProfesional(gestorTurno);
+
+
+        gestorTurno.pedirGestorProfesionales(gestorProfesional);
+
+
+
+        gestorProfesional.leerProfesionalesDesdeJson();
+
+        gestorTurno.cargarTurnosDesdeArchivo();
+
+
+        gestorPestania.mostrarServicios();
+        gestorTurno.mostrarHistorialTurnos();
+
+        System.out.println("MOSTRAR TURNOS");
+        gestorTurno.mostrarTurnosVigentes();
+
+
+
+
+        System.out.println("AGREGAR ADMIN");
+        gestorTurno.agregarTurno();
+
+        System.out.println("ELIMINAR ADMIN");
+        gestorTurno.eliminarTurno();
+
+
+
+        gestorTurno.guardarTurnosEnArchivo();
+
+ */
 
     }
 }

@@ -1,17 +1,23 @@
 package model;
 
+import Interfaces.CrearID;
+import Interfaces.IBuscarPorCodigo;
 import abstractas.Servicio;
 import excepciones.CodigoNoEncontradoException;
 import excepciones.FacturaSinTurnosException;
 import excepciones.TurnoExistenteException;
 import excepciones.TurnoNoExistenteException;
 import enumeraciones.*;
+import gestores.GestorDepilacion;
+import gestores.GestorManicura;
+import gestores.GestorPestania;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class Factura {
+public class Factura implements CrearID {
 
     private String codigoFactura;
     private TipoDePago tipoPago;
@@ -22,7 +28,7 @@ public class Factura {
     private double ajuste = 0.0;
     private String fecha;
     private String hora;
-    //private GestorServicio gestorServicio;
+    private List<IBuscarPorCodigo<? extends Servicio>> gestores;
 
     //////////////////////////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////////////
 
@@ -35,10 +41,16 @@ public class Factura {
         this.ajuste = 0.0;
         this.turnosPorCliente = new ArrayList<>();
         this.cliente = cliente;
+
         LocalDate fechaActual = LocalDate.now();
-        LocalTime horaActual = LocalTime.now();
         this.fecha = convertirFechaAString(fechaActual);
-       // this.hora = convertirFechaAString(horaActual); hacer que este metodo trabaje con horas
+
+        LocalTime horaActual = LocalTime.now();
+
+
+        this.gestores = Arrays.asList(new GestorDepilacion(), new GestorManicura(), new GestorPestania());
+
+        // this.hora = convertirFechaAString(horaActual); hacer que este metodo trabaje con horas
      //   this.gestorServicio = gestorServicio;
     }
 
@@ -48,6 +60,21 @@ public class Factura {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Puedes ajustar el formato según necesites
         return fecha.format(formatoFecha);
     }
+    public static String convertirHoraAString(LocalTime hora) {
+        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss"); // Puedes ajustar el formato según necesites
+        return hora.format(formatoHora);
+    }
+
+    private Servicio buscarServicioEnGestores(String codigoServicio) throws CodigoNoEncontradoException {
+        for (IBuscarPorCodigo<? extends Servicio> gestor : gestores) {
+            try {
+                return gestor.buscarPorCodigo(codigoServicio);
+            } catch (CodigoNoEncontradoException e) {
+                //si no lo encuentre sigue con el otro
+            }
+        }
+        throw new CodigoNoEncontradoException("Servicio no encontrado en ningún gestor para el código: " + codigoServicio);
+    }
 
     public String detallesDeServicios() {
         StringBuilder detalles = new StringBuilder();
@@ -55,25 +82,20 @@ public class Factura {
 
         for (Turno turno : turnosPorCliente) {
             try {
-                // Obtener el servicio correspondiente al código
-                Servicio servicio = gestorServicio.buscarServicioCodigo(turno.getCodigo_servicio());
+                Servicio servicio = buscarServicioEnGestores(turno.getCodigo_servicio());
                 TipoServicio tipoServicio = servicio.getTipoService();
 
-                // Incrementar la cantidad de este servicio
                 cantidadPorServicio.put(tipoServicio, cantidadPorServicio.getOrDefault(tipoServicio, 0) + 1);
             } catch (CodigoNoEncontradoException e) {
                 detalles.append("Servicio no encontrado para el código: ").append(turno.getCodigo_servicio()).append("\n");
             }
         }
-
-        // Construir el string de detalles
         for (Map.Entry<TipoServicio, Integer> entry : cantidadPorServicio.entrySet()) {
             detalles.append(entry.getKey().name().toLowerCase())
                     .append(" x")
                     .append(entry.getValue())
                     .append("\n");
         }
-
         return detalles.toString();
     }
 
@@ -82,18 +104,15 @@ public class Factura {
 
         for (Turno turno : turnosPorCliente) {
             try {
-                // Obtener el servicio correspondiente al código
-                Servicio servicio = gestorServicio.buscarServicioCodigo(turno.getCodigo_servicio());
+                Servicio servicio = buscarServicioEnGestores(turno.getCodigo_servicio());
                 precioBase += servicio.calcularPrecio();
             } catch (CodigoNoEncontradoException e) {
                 System.out.println("Servicio no encontrado para el código: " + turno.getCodigo_servicio());
             }
         }
+
         this.precioFinal = tipoPago.calcularPagoTotal(precioBase);
-
-        // Calcula explícitamente el ajuste para mostrarlo en la factura
         this.ajuste = this.precioFinal - precioBase;
-
         return this.precioFinal;
     }
 
@@ -122,11 +141,6 @@ public class Factura {
         }*/
     }
 
-    @Override
-    public String generarIDEunico() {
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        return uuid.substring(0, 15);
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,5 +1,7 @@
 package gestores;
 
+import Interfaces.IBuscarPorCodigo;
+import abstractas.Servicio;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -21,7 +23,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class GestorManicura {
+public class GestorManicura implements IBuscarPorCodigo {
     private static Scanner scanner = new Scanner(System.in);
     private List<Manicura> almacenServicios;
     Gson gson = new Gson();
@@ -73,7 +75,8 @@ public class GestorManicura {
         return false;
     }
 
-    public Manicura buscarServicioCodigo(String codServicio) throws CodigoNoEncontradoException {
+    @Override
+    public Manicura buscarPorCodigo(String codServicio) throws CodigoNoEncontradoException {
         Manicura servicio = null;
         for (Manicura s : almacenServicios) {
             if (s.getCodigo_servicio().equals(codServicio)) {
@@ -373,7 +376,7 @@ public class GestorManicura {
             System.out.println(e.getMessage());
         }
         String hoy = Turno.convertirLocalDateAString(LocalDate.now());
-        gestorTurno.cancelarTurnosXdia(hoy, cliente, manicura.getCodigo_servicio());
+        gestorTurno.cancelarTurnosXdia(hoy, manicura.getCodigo_servicio());
     }
 
     ////////////////////////////////////////GET ////////////////////////////////////////////////////
