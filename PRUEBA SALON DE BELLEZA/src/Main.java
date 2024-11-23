@@ -388,5 +388,5 @@ Exception in thread "main" java.lang.NullPointerException: Cannot invoke "gestor
 	at gestores.GestorTurno.agregarTurno(GestorTurno.java:84)
 	at Main.main(Main.java:255)
 
-Process finished with exit code 1 // bueno llegue hasta y se rompio tod no se porque 
+Process finished with exit code 1 // bueno llegue hasta y se rompio tod no se porque
 */
