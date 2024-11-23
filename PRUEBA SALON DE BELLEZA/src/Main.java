@@ -47,7 +47,7 @@ public class Main {
         gestorPestania.escribirServiciosEnJson();
   */
 
-      ///MANICURA
+  /*    ///MANICURA
         GestorManicura gestorManicura= new GestorManicura();
 
 
@@ -65,7 +65,7 @@ public class Main {
         gestorManicura.mostrarServicios();
 
         gestorManicura.escribirServiciosEnJson();
-
+*/
 
         ///CLIENTE
 /*
@@ -217,6 +217,11 @@ public class Main {
         gestorTurno.guardarTurnosEnArchivo();
 
  */
+
+
+        GestorPrecios gestor = new GestorPrecios();
+
+        gestor.verPrecios();
 
     }
 }
