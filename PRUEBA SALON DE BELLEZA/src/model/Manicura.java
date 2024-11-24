@@ -30,11 +30,16 @@ public class Manicura extends Servicio {
     //////////////////////////////////////////////////////// metodos extr ////////////////////////////////////////////////////
 
 
-    @Override
+    /*@Override
     public double calcularPrecio() {
         double precioBase = GestorPrecios.obtenerPrecio(Manicura.class, tipoManicura);
         this.precio = precioBase + (disenio ? precioDisenio : 0);
         return this.precio;
+    }*/
+
+    @Override
+    public double calcularPrecio() {
+        return this.precio+precioDisenio;
     }
 
     @Override
@@ -79,9 +84,17 @@ public class Manicura extends Servicio {
     public String toString() {
         return "| MANICURA: " + tipoManicura +
                 (disenio ? " con diseño " : " sin diseño ")+
-                " \n| Precio: " + precio +
+                " \n| Precio: " + calcularPrecio() +
                 " \n| Duracion: " + duracion;
     }
+
+    /*@Override
+    public String toString() {
+        return "| MANICURA: " + tipoManicura +
+                (disenio ? " con diseño " : " sin diseño ")+
+                " \n| Precio: " + precio +
+                " \n| Duracion: " + duracion;
+    }*/
 
 
 }
