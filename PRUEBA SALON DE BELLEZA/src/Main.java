@@ -19,8 +19,8 @@ public class Main {
         menuPrincipal.menuPrincipal();
         //probando si guarda bien - agu
         //soy cei
-  /*
-        ///DEPILACION
+
+       /* ///DEPILACION
         GestorDepilacion gestorDepilacion = new GestorDepilacion();
 
         System.out.println("DEPILACIONES: ");
@@ -28,7 +28,7 @@ public class Main {
         gestorDepilacion.leerServiciosDesdeJson();
         gestorDepilacion.mostrarServicios();
 
-        System.out.println("AGREGAR SERVICIO");
+        /*System.out.println("AGREGAR SERVICIO");
         gestorDepilacion.agregarServicio();
 
         System.out.println("ELIMINAR SERVICIO");
@@ -37,18 +37,19 @@ public class Main {
         System.out.println("MOSTRAR SERVICIOS");
         gestorDepilacion.mostrarServicios();
 
-        gestorDepilacion.escribirServiciosEnJson();
-  */
+       gestorDepilacion.escribirServiciosEnJson();
 
-  /*
+
+
         /// PESTAÑAS
         GestorPestania gestorPestania = new GestorPestania();
 
         gestorPestania.leerServiciosDesdeJson();
 
+        System.out.println("PESTAÑASSSSS");
         gestorPestania.mostrarServicios();
 
-        System.out.println("AGREGAR SERVICIO");
+        /*System.out.println("AGREGAR SERVICIO");
         gestorPestania.agregarServicio();
 
         System.out.println("ELIMINAR SERVICIO");
@@ -57,17 +58,17 @@ public class Main {
         System.out.println("MOSTRAR SERVICIOS");
         gestorPestania.mostrarServicios();
 
-        gestorPestania.escribirServiciosEnJson();
-  */
+       gestorPestania.escribirServiciosEnJson();
 
-  /*    ///MANICURA
+
+     ///MANICURA
         GestorManicura gestorManicura= new GestorManicura();
-
 
         gestorManicura.leerServiciosDesdeJson();
 
+        System.out.println("MANICURAAAAA");
         gestorManicura.mostrarServicios();
-
+/*
         System.out.println("AGREGAR SERVICIO");
         gestorManicura.agregarServicio();
 
@@ -78,17 +79,18 @@ public class Main {
         gestorManicura.mostrarServicios();
 
         gestorManicura.escribirServiciosEnJson();
-*/
+
 
         ///CLIENTE
-/*
+
         GestorCliente gestorCliente= new GestorCliente();
 
         gestorCliente.leerArchivoClientes();
 
+        System.out.println("CLIENTESSS");
         gestorCliente.mostrarTodos();
 
-        System.out.println("AGREGAR CLIENTE");
+        /*System.out.println("AGREGAR CLIENTE");
         gestorCliente.agregarPersona();
 
         System.out.println("ELIMINAR CLIENTE");
@@ -98,33 +100,23 @@ public class Main {
         gestorCliente.mostrarTodos();
 
         gestorCliente.escribirClientesEnJson();
-*/
-
-        ///PROFESIONAL
-        ///crea y guarda todas las listas del archivo en cada gestor
- /*      GestorDepilacion gestorDepilacion = new GestorDepilacion();
-        gestorDepilacion.leerServiciosDesdeJson();
-
-        GestorPestania gestorPestania = new GestorPestania();
-        gestorPestania.leerServiciosDesdeJson();
-
-        GestorManicura gestorManicura= new GestorManicura();
-        gestorManicura.leerServiciosDesdeJson();
 
 
+
+////PROFESIONALESSSSSSSSS
 
         GestorProfesional gestorProfesional=null;
 
-        GestorTurno gestorTurno= new GestorTurno(gestorDepilacion, gestorPestania, gestorManicura, gestorProfesional);
+        GestorTurno gestorTurno= new GestorTurno(gestorDepilacion, gestorPestania, gestorManicura, gestorCliente);
 
         gestorProfesional= new GestorProfesional(gestorTurno);
 
+        gestorTurno.pedirGestorProfesionales(gestorProfesional);
+
         gestorProfesional.leerProfesionalesDesdeJson();
+        gestorTurno.cargarTurnosDesdeArchivo();
 
-        gestorProfesional.mostrarTodos();
-
-
-        System.out.println("AGREGAR PROFESIONAL");
+        /*System.out.println("AGREGAR PROFESIONAL");
         gestorProfesional.agregarPersona();
 
         System.out.println("ELIMINAR PROFESIONAL");
@@ -133,18 +125,18 @@ public class Main {
         System.out.println("MOSTRAR PROFESIONALES");
         gestorProfesional.mostrarTodos();
 
-        gestorProfesional.escribirProfesionalesEnJson();
+       gestorProfesional.escribirProfesionalesEnJson();
 
-/*
+
         ///RECEPCIONISTAS
 
         GestorRecepcionista gestorRecepcionista= new GestorRecepcionista();
 
         gestorRecepcionista.leerDesdeJson();
-
+        System.out.println("RECEPCIOOO");
         gestorRecepcionista.mostrarTodos();
 
-
+/*
         System.out.println("AGREGAR RECEP");
         gestorRecepcionista.agregarPersona();
 
@@ -155,81 +147,58 @@ public class Main {
         gestorRecepcionista.mostrarTodos();
 
 
-        gestorRecepcionista.escribirArchivoRecepcionistas();*/
+        gestorRecepcionista.escribirArchivoRecepcionistas();
 
 
         ////ADMINISTRADOR!
-/*
+
         GestorAdministrador gestorAdministrador= new GestorAdministrador();
 
         gestorAdministrador.leerDesdeJSON();
 
+        System.out.println("ADMINISTRADORES");
         gestorAdministrador.mostrarTodos();
 
-
-        System.out.println("AGREGAR RECEP");
+/*
+        System.out.println("AGREGAR ADMIN");
         gestorAdministrador.agregarAdministrador();
 
-        System.out.println("ELIMINAR RECEP");
+        System.out.println("ELIMINAR ADMIN");
         gestorAdministrador.eliminarAdministradorDeLaLista("45131280");
 
-        System.out.println("MOSTRAR RECEPS");
+        System.out.println("MOSTRAR ADMINS");
         gestorAdministrador.mostrarTodos();
 
 
 
 
         gestorAdministrador.guardarArchivoAdministradores();
-*/
 
-/*
+        //gestorPestania.mostrarServicios();
 
-        GestorDepilacion gestorDepilacion = new GestorDepilacion();
-        gestorDepilacion.leerServiciosDesdeJson();
-
-        GestorPestania gestorPestania = new GestorPestania();
-        gestorPestania.leerServiciosDesdeJson();
-
-        GestorManicura gestorManicura = new GestorManicura();
-        gestorManicura.leerServiciosDesdeJson();
-
-        GestorCliente gestorCliente = new GestorCliente();
-        gestorCliente.leerArchivoClientes();
-
-
-        GestorTurno gestorTurno= new GestorTurno(gestorDepilacion, gestorPestania, gestorManicura,gestorCliente);
-        GestorProfesional gestorProfesional =  new GestorProfesional(gestorTurno);
-
-
-        gestorTurno.pedirGestorProfesionales(gestorProfesional);
-
-
-
-        gestorProfesional.leerProfesionalesDesdeJson();
-
-        gestorTurno.cargarTurnosDesdeArchivo();
-
-
-        gestorPestania.mostrarServicios();
-        gestorTurno.mostrarHistorialTurnos();
 
         System.out.println("MOSTRAR TURNOS");
+        gestorTurno.mostrarHistorialTurnos();
         gestorTurno.mostrarTurnosVigentes();
 
 
-
-
-        System.out.println("AGREGAR ADMIN");
+        System.out.println("AGREGAR TURNO");
         gestorTurno.agregarTurno();
 
-        System.out.println("ELIMINAR ADMIN");
+        System.out.println("ELIMINAR TURNO");
         gestorTurno.eliminarTurno();
 
 
 
         gestorTurno.guardarTurnosEnArchivo();
+        gestorDepilacion.escribirServiciosEnJson();
+        gestorPestania.escribirServiciosEnJson();
+        gestorManicura.escribirServiciosEnJson();
+        gestorCliente.escribirClientesEnJson();
+        gestorProfesional.escribirProfesionalesEnJson();
+        gestorRecepcionista.escribirArchivoRecepcionistas();
+        gestorAdministrador.guardarArchivoAdministradores();*/
 
- */
 /*
  // Gestor Precios, no lo pude probar todavbia
 

@@ -539,7 +539,7 @@ public class GestorRecepcionista {
 
         try {
             objectMapper.writeValue(new File(archivoRecepcionista), almacenPersonas);
-            System.out.println("Datos guardados en " + archivoRecepcionista);
+
         } catch (IOException e) {
             System.out.println("Error al guardar los datos: " + e.getMessage());
         }
@@ -555,7 +555,7 @@ public class GestorRecepcionista {
                 // Asegurar que los datos deserializados sean asignados a una lista mutable
                 Recepcionista[] recepcionistasArray = objectMapper.readValue(file, Recepcionista[].class);
                 almacenPersonas = new ArrayList<>(List.of(recepcionistasArray)); // Convertir a ArrayList
-                System.out.println("Datos cargados desde " + archivoRecepcionista);
+
             } else {
                 System.out.println("El archivo no existe.");
             }

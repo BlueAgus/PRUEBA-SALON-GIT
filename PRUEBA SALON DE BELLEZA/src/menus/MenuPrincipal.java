@@ -4,6 +4,7 @@ import excepciones.DNInoEncontradoException;
 import gestores.*;
 import model.Administrador;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,7 +40,7 @@ public class MenuPrincipal {
 
         inicioSistema();
 
-        int opcion;
+        int opcion = -1;
         do {
 
             System.out.println("Bienvenido a Estetica Queens!\n");
@@ -51,8 +52,12 @@ public class MenuPrincipal {
             System.out.println("0. Salir ");
             System.out.println("--------------------");
             System.out.print("Ingrese una opción: ");
-            opcion = scanner.nextInt();
-
+            try {
+                opcion = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Opcion invalida: ingrese numeros del 0 al 3");
+                scanner.nextLine();
+            }
 
             switch (opcion) {
                 case 1:
@@ -61,9 +66,9 @@ public class MenuPrincipal {
                         llenarAdministrador();
                     } else {
                         System.out.println("Bienvenido administrador ");
-                        String dni = iniciarSesion();
+                        String dni = iniciarSesion(1);
                         if (dni != null) {
-                            menuAdministrador.mostrarMenu(dni, clientes, profesionales, recepcionistas, administradores, gestorPestania,gestorDepilacion,gestorManicura, gestorTurno,gestorFactura);
+                            menuAdministrador.mostrarMenu(dni, clientes, profesionales, recepcionistas, administradores, gestorPestania, gestorDepilacion, gestorManicura, gestorTurno, gestorFactura);
                         }
                     }
                     break;
@@ -72,10 +77,10 @@ public class MenuPrincipal {
                     if (primerIngreso()) {
                         System.out.println("Un administrador debe ingresar por primera vez al sistema. ");
                     } else {
-                        String dni1 = iniciarSesion();
+                        String dni1 = iniciarSesion(2);
                         if (dni1 != null) {
                             System.out.println("Bienvenido Recepcionista !");
-                            menuRecepcionista.menuRecepcionistas(clientes, profesionales, recepcionistas, administradores, gestorDepilacion,gestorManicura,gestorPestania, gestorTurno, gestorFactura);
+                            menuRecepcionista.menuRecepcionistas(clientes, profesionales, recepcionistas, administradores, gestorDepilacion, gestorManicura, gestorPestania, gestorTurno, gestorFactura);
                         }
                     }
                     break;
@@ -84,10 +89,10 @@ public class MenuPrincipal {
                     if (primerIngreso()) {
                         System.out.println("Un administrador debe ingresar por primera vez al sistema. ");
                     } else {
-                        String dni3 = iniciarSesion();
+                        String dni3 = iniciarSesion(3);
                         if (dni3 != null) {
                             System.out.println("Bienvenido profesional! ");
-                            menuProfesional.menuProfesional(clientes, gestorTurno, dni3, gestorDepilacion, gestorManicura, gestorPestania );
+                            menuProfesional.menuProfesional(clientes, gestorTurno, dni3, gestorDepilacion, gestorManicura, gestorPestania);
                         }
                     }
                     break;
@@ -118,32 +123,50 @@ public class MenuPrincipal {
     }
 
     public void inicioSistema() {
+        gestorDepilacion = new GestorDepilacion();
+        gestorPestania = new GestorPestania();
+        gestorManicura = new GestorManicura();
+
+
+        gestorTurno = new GestorTurno(gestorDepilacion, gestorPestania, gestorManicura, clientes);
+
 
         profesionales = new GestorProfesional(gestorTurno);
         administradores = new GestorAdministrador();
         recepcionistas = new GestorRecepcionista();
         clientes = new GestorCliente();
 
-        gestorDepilacion = new GestorDepilacion();
-        gestorPestania = new GestorPestania();
-        gestorManicura = new GestorManicura();
+        //gestorFactura= new GestorFactura(gestorTurno,)
 
-        //aca le estabas pasando profesionales pero el constructor espera clientes en gestoTurno,
-        //pero no entendi si querias los dos o solo el de clientes
-        gestorTurno = new GestorTurno(gestorDepilacion, gestorPestania, gestorManicura, clientes);
 
+        gestorTurno.pedirGestorProfesionales(profesionales);
+
+
+        profesionales.escribirProfesionalesEnJson();
         profesionales.leerProfesionalesDesdeJson();
+
+        administradores.guardarArchivoAdministradores();
         administradores.leerDesdeJSON();
+
+        recepcionistas.escribirArchivoRecepcionistas();
         recepcionistas.leerDesdeJson();
+
+        clientes.escribirClientesEnJson();
         clientes.leerArchivoClientes();
 
+        gestorDepilacion.escribirServiciosEnJson();
         gestorDepilacion.leerServiciosDesdeJson();
+
+        gestorPestania.escribirServiciosEnJson();
         gestorPestania.leerServiciosDesdeJson();
+
+        gestorManicura.escribirServiciosEnJson();
         gestorManicura.leerServiciosDesdeJson();
 
-        gestorTurno.leerArchivoTurnos();
+        gestorTurno.cargarTurnosDesdeArchivo();
+        gestorTurno.guardarTurnosEnArchivo();
 
-        gestorFactura.leerArchivoFacturas();
+        //gestorFactura.leerArchivoFacturas();
 
     }
 
@@ -159,7 +182,7 @@ public class MenuPrincipal {
         gestorPestania.escribirServiciosEnJson();
         gestorManicura.escribirServiciosEnJson();
 
-        gestorTurno.guardarEnArchivoTurnos();
+        gestorTurno.guardarTurnosEnArchivo();
         gestorFactura.escribirFacturasEnEnJson();
 
         System.out.println("Se ha cerrado el sistema. ");
@@ -171,7 +194,8 @@ public class MenuPrincipal {
         System.out.println("Bienvenido administrador ! ");
     }
 
-    public String pedirDatos() {
+    //1 admin/ 2 recepcionista/ 3 profesional
+    public String pedirDatos(int tipoPersona) {
         boolean tienecuenta = false;
         String dni = administradores.pedirDNIsinVerificacion();
         String contra = null;
@@ -180,13 +204,23 @@ public class MenuPrincipal {
 
         do {
             try {
-                if (administradores.buscarPersonas(dni)) {
-                    contra = administradores.buscarContraseña(dni);
+                switch (tipoPersona) {
+                    case 1:
+                        if (administradores.verificarSiExisteAdministrador(dni)) {
+                            contra = administradores.buscarContraseña(dni);
 
-                } else if (recepcionistas.buscarPersonas(dni)) {
-                    contra = recepcionistas.buscarContraseña(dni);
-                } else if (profesionales.buscarPersonas(dni)) {
-                    contra = profesionales.buscarContraseña(dni);
+                        }
+                        break;
+                    case 2:
+                        if (recepcionistas.buscarPersonas(dni)) {
+                            contra = recepcionistas.buscarContraseña(dni);
+                        }
+                        break;
+                    case 3:
+                        if (profesionales.buscarPersonas(dni)) {
+                        contra = profesionales.buscarContraseña(dni);
+                    }
+                        break;
                 }
 
                 if (contra == null) {
@@ -202,10 +236,8 @@ public class MenuPrincipal {
                     System.out.println("Contraseña incorrecta. Inténtalo nuevamente.");
                 }
             } catch (DNInoEncontradoException e) {
-                throw new RuntimeException(e);
-            }
-            if (!valido) {
-                System.out.println("Vuelva a intentar");
+                System.out.println(e.getMessage() + " Vuelva a intentar");
+                scanner.nextLine();
             }
         } while (!valido);
 
@@ -216,9 +248,9 @@ public class MenuPrincipal {
         }
     }
 
-    public String iniciarSesion() {
-
-        String dni = pedirDatos();
+    //1 admin/ 2 recepcionista/ 3 profesional
+    public String iniciarSesion(int tipoPersona) {
+        String dni = pedirDatos(tipoPersona);
 
         if (dni != null) {
             System.out.println("Entrando..");

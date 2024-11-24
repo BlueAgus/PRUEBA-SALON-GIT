@@ -265,15 +265,15 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
     private String pedirDuracion() {
         int h = -1;
         int m = -1;
-        while (m < 0 || m > 59 || h > 23 || h < 0) {
+        while (m < 0 || m > 59 || h > 4 || h < 0) {
             try {
-                System.out.print("Introduce las horas que durara el servicio (0-23):");
+                System.out.print("Introduce las horas que durara el servicio (0-3):");
                 h = scanner.nextInt();
                 scanner.nextLine();
                 System.out.print("Introduce los minutos que durara el servicio (0-59): ");
                 m = scanner.nextInt();
                 scanner.nextLine();
-                if (m < 0 || m > 59 || h > 23 || h < 0) {
+                if (m < 0 || m > 59 || h > 4 || h < 0) {
                     System.out.println("La hora no es valida ! Volvamos a cargarla. ");
                 }
             } catch (InputMismatchException e) {
@@ -378,7 +378,7 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
         gestorTurno.cancelarTurnosXdia(hoy, pestanias.getCodigo_servicio());
     }
 
-    /////////////ARCHIVOS.
+    ///////////////////////////////////////ARCHIVOS//////////////////////////////////////////////////////////////////.
     public void escribirServiciosEnJson() {
         try (FileWriter writer = new FileWriter(archivoPestania)) {
             gson.toJson(almacenServicios, writer); // Convierte la lista a JSON y la escribe en el archivo

@@ -478,17 +478,20 @@ public class GestorFactura {
     }
 
     public void leerArchivoFacturas() {
-        try (FileReader fileReader = new FileReader(archivoFacturas)) {
-            // Deserializar el archivo JSON a una lista de objetos Cliente
-            this.caja = gson.fromJson(fileReader, new TypeToken<GestorGenerico<Factura>>() { }.getType());
-            System.out.println("Archivo de clientes leído exitosamente.");
+        if(caja!=null){
+            try (FileReader fileReader = new FileReader(archivoFacturas)) {
+                // Deserializar el archivo JSON a una lista de objetos Cliente
+                this.caja = gson.fromJson(fileReader, new TypeToken<GestorGenerico<Factura>>() { }.getType());
+                System.out.println("Archivo de clientes leído exitosamente.");
 
-        } catch (FileNotFoundException e) {
-            System.out.println("No se encontró el archivo. Se iniciará con un historial vacío.");
-            this.caja = new GestorGenerico<>();
-        } catch (IOException e) {
-            System.out.println("No se puede leer el archivo de facturas: " + e.getMessage());
+            } catch (FileNotFoundException e) {
+                System.out.println("No se encontró el archivo. Se iniciará con un historial vacío.");
+                this.caja = new GestorGenerico<>();
+            } catch (IOException e) {
+                System.out.println("No se puede leer el archivo de facturas: " + e.getMessage());
+            }
         }
+
     }
 
 

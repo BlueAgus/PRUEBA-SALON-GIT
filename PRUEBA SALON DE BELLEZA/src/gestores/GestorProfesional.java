@@ -80,15 +80,17 @@ public class GestorProfesional {
         String contra = pedirContraseña();
         Profesional profesional = new Profesional(nombre, apellido, dni, genero, telefono, contra);
 
-        System.out.println("Ingrese los servicios que realiza: ");
-        TipoServicio tipoServicio1 = gestorDepilacion.pedirTipoServicio();
 
-        System.out.println("SELECCIONE EL TIPO DE "+ tipoServicio1+ " QUE REALIZA");
-        String e = gestorTurno.pedirCodServicio(tipoServicio1);
-        profesional.agregarProfesion(e);//minimo una profesion.
         int opcion=0;
+
+        System.out.println("Ingrese los servicios que realiza: ");
         do {
 
+            TipoServicio tipoServicio1 = gestorDepilacion.pedirTipoServicio();
+
+            System.out.println("SELECCIONE EL TIPO DE "+ tipoServicio1+ " QUE REALIZA");
+            String e = gestorTurno.pedirCodServicio(tipoServicio1);
+            profesional.agregarProfesion(e);//minimo una profesion.
             System.out.println("Deseas agregar otra profesion?");
             System.out.println("1. Si deseo.");
             System.out.println("2. No deseo.");
@@ -602,32 +604,11 @@ public class GestorProfesional {
             System.out.println(profesional.toString());
         }
     }
-
-    // Profesionales
-/*    public void escribirProfesionalesEnJson() {
-        try (FileWriter fileWriter = new FileWriter(archivoProfesionales)) {
-            // Convertir la lista de prof a JSON y guardarlo en el archivo
-            gson.toJson(profesionales, fileWriter);
-        } catch (IOException e) {
-            System.out.println("No se puede guardar el archivo de clientes: " + e.getMessage());
-        }
-    }
-
-    public void leerArchivoProfesionales() {
-        try (FileReader fileReader = new FileReader(archivoProfesionales)) {
-            // Deserializar el archivo JSON a una lista de objetos Cliente
-            profesionales = gson.fromJson(fileReader, new TypeToken<List<Profesional>>() {
-            }.getType());
-            System.out.println("Archivo de profesionales leído exitosamente.");
-        } catch (IOException e) {
-            System.out.println("No se puede leer el archivo de profesionales: " + e.getMessage());
-        }
-    }*/
+    ///////////////////////////////////////////ARCHIVOS/////////////////////////////////////////////////////////////////
 
     public void escribirProfesionalesEnJson() {
         try (FileWriter fileWriter = new FileWriter(archivoProfesionales)) {
             gson.toJson(profesionales, fileWriter);
-            System.out.println("Archivo de profesionales guardado exitosamente.");
         } catch (IOException e) {
             System.out.println("Error al guardar el archivo de profesionales: " + e.getMessage());
         }
@@ -639,7 +620,6 @@ public class GestorProfesional {
             if (profesionales == null) {
                 profesionales = new ArrayList<>();
             }
-            System.out.println("Archivo de profesionales leído exitosamente.");
         } catch (FileNotFoundException e) {
             System.out.println("El archivo de profesionales no existe, se creará uno nuevo al guardar.");
             profesionales = new ArrayList<>();

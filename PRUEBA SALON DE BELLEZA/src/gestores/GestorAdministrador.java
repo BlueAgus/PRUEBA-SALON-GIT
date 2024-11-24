@@ -103,7 +103,7 @@ public class GestorAdministrador {
         }
         throw new DNInoEncontradoException("\nDNI no encontrado!!");
     }
-
+/*//hay un metodo igual con mas verificacion (verificarSiExisteAdministrador)
     public boolean buscarPersonas(String dni) throws DNInoEncontradoException {
         for (Administrador p : administradores) {
             if (p.getDni().equals(dni)) {
@@ -111,6 +111,19 @@ public class GestorAdministrador {
             }
         }
         throw new DNInoEncontradoException("DNI no encontrado!!");
+    }*/
+
+    public boolean verificarSiExisteAdministrador(String dni) throws DNInoEncontradoException {
+
+        if (administradores == null || administradores.isEmpty()) {
+            throw new DNInoEncontradoException("\nNo hay registros de administradores..");
+        }
+        for (Administrador p : administradores) {
+            if (p.getDni().equals(dni)) {
+                return true;//alguien del archivo tiene ese dni.
+            }
+        }
+        throw new DNInoEncontradoException("\nDNI no encontrado en administradores!!");
     }
 
     public String buscarContraseña(String dni) {
@@ -504,25 +517,12 @@ public class GestorAdministrador {
 
         return contraseña;
     }
-    public boolean verificarSiExisteAdministrador(String dni) throws DNInoEncontradoException {
 
-        if (administradores == null || administradores.isEmpty()) {
-            throw new DNInoEncontradoException("\nNo hay registros de administradores..");
-        }
-        for (Administrador p : administradores) {
-            if (p.getDni().equals(dni)) {
-                return true;//alguien del archivo tiene ese dni.
-            }
-        }
-        throw new DNInoEncontradoException("\nDNI no encontrado en administradores!!");
-    }
+
 
 
     /////////////////////////MANEJO DE ARCHIVOSS.//////////////////////////
 
-    /**
-     * Escribe la lista de administradores en el archivo JSON.
-     */
     public void guardarArchivoAdministradores() {
         ObjectMapper objectMapper = new ObjectMapper(); // Crear una instancia de ObjectMapper
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT); // Habilitar formato legible

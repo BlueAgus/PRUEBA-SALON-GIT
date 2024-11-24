@@ -108,11 +108,15 @@ public class GestorTurno {
     public boolean eliminarTurno() {
 
         String codTurno = buscarCodigoTurno();
+
         for (List<Turno> e : listaTurnos.getMapa().values()) {
             for (Turno t : e) {
-                if (t.getCod_turno().equals(codTurno)) {
-                    return e.remove(t);
+                if(t.getCod_turno()!=null){
+                    if (t.getCod_turno().equals(codTurno)) {
+                        return e.remove(t);
+                    }
                 }
+
             }
         }
         return false;
@@ -534,16 +538,17 @@ public class GestorTurno {
 
                     try {
                         indiceHorario = Integer.parseInt(opcElegida); // Convierte el String a entero
+                        if (indiceHorario < 0 || indiceHorario >= horariosDisponibles.size()) {
+                            System.out.println("Opcion no valida");
+                        } else {
+                            break;
+                        }
                     } catch (NumberFormatException e) {
                         System.out.println("Entrada inválida. Debe ingresar un número.");
 
                     }
 
-                    if (indiceHorario < 0 || indiceHorario >= horariosDisponibles.size()) {
-                        System.out.println("Opcion no valida");
-                    } else {
-                        break;
-                    }
+
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada no valida. Por favor ingrese un número.");
@@ -614,6 +619,37 @@ public class GestorTurno {
         long hora = 0;
         long minutos = 0;
         LocalTime duracion = null;
+        String duracionStr = null;
+
+        try {
+            switch (tipoServicio) {
+                case TipoServicio.DEPILACION:
+                    duracionStr = gestorDepilacion.buscarPorCodigo(cod_servicio).getDuracion();
+                    break;
+                case TipoServicio.MANICURA:
+                    duracionStr = gestorManicura.buscarPorCodigo(cod_servicio).getDuracion();
+                    break;
+                case TipoServicio.PESTANIAS:
+                    duracionStr = gestorPestania.buscarPorCodigo(cod_servicio).getDuracion();
+                    break;
+            }
+
+            // Valida y convierte la duración
+            if (duracionStr == null || duracionStr.isEmpty()) {
+                throw new IllegalArgumentException("La duración del servicio es nula o vacía.");
+            }
+            duracion = ConvertirFechaHoras.convertirStringALocalTime(duracionStr);
+
+            // Obtener horas y minutos
+            hora = (long) duracion.getHour();
+            minutos = (long) duracion.getMinute();
+
+        } catch (CodigoNoEncontradoException e) {
+            System.out.println("Código no encontrado: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error al procesar la duración: " + e.getMessage());
+        }
+        /*LocalTime duracion = null;
         try {
             switch (tipoServicio) {
                 case TipoServicio.DEPILACION:
@@ -638,7 +674,7 @@ public class GestorTurno {
 
         } catch (CodigoNoEncontradoException  e) {
             System.out.println(e.getMessage());
-        }
+        }*/
 
 
         System.out.println("Turnos disponibles del dia: " + fecha);
@@ -828,83 +864,6 @@ public class GestorTurno {
 
     }
 
-
-    public HashMap<String, List<Turno>> leerArchivoTurnos() {
-/*
-        try (FileReader reader = new FileReader(archivoTurnos)) {
-            // Deserializar como HashMap<String, List<Turno>>
-            Type tipoMapa = new TypeToken<HashMap<String, List<Turno>>>() {}.getType();
-
-            // Convertir las claves de String a LocalDate
-            HashMap<LocalDate, List<Turno>> listaTurnos = new HashMap<>();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
-
-            for (Map.Entry<String, List<Turno>> entry : listaTurnos.entrySet()) {
-                LocalDate fecha = LocalDate.parse(entry.getKey(), formatter);
-                listaTurnos.put(fecha, entry.getValue());
-            }
-            return listaTurnos;
-        } catch (IOException e) {
-            System.err.println("Error al cargar el archivo");
-            return new HashMap<>(); // Devuelve un mapa vacío en caso de error
-        }*/
-        return null
-
-
-                ;
-    }
-  // le saque el parametro (HashMap<String, List<Turno>> listaTurnos) si mal no entiendo guarda la lista de la clase ya
-    public void guardarEnArchivoTurnos() {
-        // Crear instancia de Gson para convertir a JSON con formato bonito
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        try (FileWriter writer = new FileWriter("turnos.json")) {
-
-
-            // Convertir la lista de TurnoArchivo a formato JSON
-            String json = gson.toJson(listaTurnos);
-
-            // Escribir el JSON en el archivo
-            writer.write(json);
-
-        } catch (IOException e) {
-            System.err.println("Error al guardar el archivo: " + e.getMessage());
-        }
-    }
-/*
-    public List<TurnoArchivo> convertirMapa(HashMap<LocalDate, List<Turno>> mapa) {
-        List<TurnoArchivo> turnosConvertidos = new ArrayList<>();
-
-        // Recorrer todo el mapa
-        for (List<Turno> turnos : mapa.values()) {
-            // Recorrer cada Turno en la lista y convertirlo
-            for (Turno turno : turnos) {
-                TurnoArchivo turnoConvertido = convertirTurno(turno);
-                turnosConvertidos.add(turnoConvertido);
-            }
-        }
-        return turnosConvertidos;
-    }
-
-    public TurnoArchivo convertirTurno(Turno turnoOriginal) {
-        // Formateadores para fecha y hora
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
-
-        // Convertir LocalDate y LocalTime a String
-        String fecha = turnoOriginal.getFecha().format(formatoFecha);
-        String horario = turnoOriginal.getHorario().format(formatoHora);
-
-        // Crear y retornar el nuevo objeto TurnoArchivo
-        return new TurnoArchivo(
-                turnoOriginal.getCod_turno(),
-                fecha,
-                horario,
-                turnoOriginal.getCodigo_servicio(),
-                turnoOriginal.getDni_profesional(),
-                turnoOriginal.getDni_cliente()
-        );
-    }*/
 ////////////////////////////////////////////////////////GET Y SET ////////////////////////////////////////////////////
 
     public MapaGenerico<String, List<Turno>> getListaTurnos() {

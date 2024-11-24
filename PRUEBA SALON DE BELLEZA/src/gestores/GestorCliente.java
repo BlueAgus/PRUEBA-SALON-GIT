@@ -80,6 +80,17 @@ public class GestorCliente {
         return cargado;
     }
 
+    public boolean eliminarPersona(String dni) {
+        try {
+            Cliente cliente = buscarPersona(dni);
+            return clientes.remove(cliente);
+
+        } catch (DNInoEncontradoException e) {
+            System.out.printf(e.getMessage());
+        }
+        return false;
+    }
+
 
     public Cliente buscarPersona(String dni) throws DNInoEncontradoException {
         for (Cliente cliente : clientes) {
@@ -194,21 +205,29 @@ public class GestorCliente {
 
     }
 
-    public String pedirTelefono() throws TelefonoInvalidoException {
+    public String pedirTelefono() {
         String telefono = "";
         boolean telefonoValido = false;
 
-        while (!telefonoValido) {
-            System.out.print("Ingrese el teléfono: ");
-            telefono = scanner.nextLine().trim();
+        // Limpia cualquier entrada residual del buffer antes de empezar
+        if (scanner.hasNextLine()) {
             scanner.nextLine();
+        }
 
-            // Validar que el número tenga exactamente 10 dígitos y solo contenga números
-            if (!telefono.matches("\\d{10}")) {
-                throw new TelefonoInvalidoException("El número de teléfono debe tener  10 dígitos y solo contener números.");
-            } else {
-                // Si es válido, confirmamos y salimos del bucle
-                telefonoValido = true;
+        while (!telefonoValido) {
+            try {
+                System.out.print("Ingrese el teléfono: ");
+                telefono = scanner.nextLine().trim();
+
+                // Validar que el número tenga exactamente 10 dígitos y solo contenga números
+                if (!telefono.matches("\\d{10}")) {
+                    throw new TelefonoInvalidoException("El número de teléfono debe tener 10 dígitos y solo contener números.");
+                } else {
+                    // Si es válido, confirmamos y salimos del bucle
+                    telefonoValido = true;
+                }
+            } catch (TelefonoInvalidoException e) {
+                System.out.println(e.getMessage());
             }
         }
         return telefono;
@@ -418,18 +437,9 @@ public class GestorCliente {
         throw new DNInoEncontradoException("\nDNI no encontrado en clientes del archivo especificado.");
     }
 
-    public boolean eliminarPersona(String dni) {
-        try {
-            Cliente cliente = buscarPersona(dni);
-            return clientes.remove(cliente);
-
-        } catch (DNInoEncontradoException e) {
-            System.out.printf(e.getMessage());
-        }
-        return false;
-    }
 
 
+/////////////////////////////////////////ARCHIVOS////////////////////////////////////////////////
     public void escribirClientesEnJson() {
         try (FileWriter fileWriter = new FileWriter(archivoClientes)) {
             // Convertir la lista de clientes a JSON y guardarlo en el archivo
@@ -448,36 +458,5 @@ public class GestorCliente {
             System.out.println("No se puede leer el archivo de clientes: " + e.getMessage());
         }
     }
-/*
-    public List<Cliente> leerArchivoClientes1() {
 
-        List<Cliente> listaClientes = null;
-
-        try (FileReader fileReader = new FileReader(archivoClientes)) {
-            Type listType = new TypeToken<List<Cliente>>() {}.getType();
-            listaClientes = gson.fromJson(fileReader, listType); // Leer y convertir desde JSON
-        } catch (FileNotFoundException e) {
-            System.out.println("Archivo de clientes no encontrado: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("Error al leer el archivo de clientes: " + e.getMessage());
-        }
-
-        return listaClientes;
-    }
-
-    public List<Cliente> leerArchivoClientes() {
-
-        try (FileReader reader = new FileReader(archivoClientes)) {
-
-            Cliente[] clientesArray = gson.fromJson(reader, Cliente[].class);
-            List<Cliente> clientesCargados = Arrays.asList(clientesArray);
-
-            clientes.addAll(clientesCargados);
-
-            return clientesCargados;
-        } catch (IOException e) {
-            System.out.println("Error al cargar los archivos" + e.getMessage());
-        }
-        return null;
-    }*/
 }
