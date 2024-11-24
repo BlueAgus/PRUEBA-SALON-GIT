@@ -43,13 +43,13 @@ public class MenuPrincipal {
         int opcion = -1;
         do {
             try {
-            System.out.println("Bienvenido a Estetica Queens!\n");
+            System.out.println("\nBienvenido a Estetica Queens!\n");
             System.out.println("¿Quién está ingresando?");
             System.out.println("--------------------");
             System.out.println("1. Administrador ");
             System.out.println("2. Recepcionista");
             System.out.println("3. Profesional");
-            System.out.println("0. Salir ");
+            System.out.println("0. Salir del programa");
             System.out.println("--------------------");
             System.out.print("Ingrese una opción: ");
 
@@ -67,10 +67,8 @@ public class MenuPrincipal {
                         if (dniAdmin.equals("12345678") && contraseñaAdmin.equals("12345678")) {
                             // El DNI y la contraseña son correctos, procedemos con la inicialización
                             llenarAdministrador();  // Aquí creamos el administrador si es necesario
-                            //String dni = iniciarSesion(1);
-                            if (dniAdmin != null) {
-                                menuAdministrador.mostrarMenu(dniAdmin, clientes, profesionales, recepcionistas, administradores, gestorPestania, gestorDepilacion, gestorManicura, gestorTurno, gestorFactura);
-                            }
+
+                            menuAdministrador.mostrarMenu(dniAdmin, clientes, profesionales, recepcionistas, administradores, gestorPestania, gestorDepilacion, gestorManicura, gestorTurno, gestorFactura);
 
                         } else {
                             System.out.println("DNI o contraseña incorrectos. No se puede continuar.");
@@ -88,11 +86,11 @@ public class MenuPrincipal {
                 case 2:
                     //recepcionista
                     if (primerIngreso()) {
-                        System.out.println("Un administrador debe ingresar por primera vez al sistema. ");
+                        System.out.println("\nUn administrador debe ingresar por primera vez al sistema. ");
                     } else {
                         String dni1 = iniciarSesion(2);
                         if (dni1 != null) {
-                            System.out.println("Bienvenido Recepcionista !");
+                            System.out.println("Bienvenido Recepcionista!");
                             menuRecepcionista.menuRecepcionistas(clientes, profesionales, recepcionistas, administradores, gestorDepilacion, gestorManicura, gestorPestania, gestorTurno, gestorFactura);
                         }
                     }
@@ -100,7 +98,7 @@ public class MenuPrincipal {
                 case 3:
                     //profesional
                     if (primerIngreso()) {
-                        System.out.println("Un administrador debe ingresar por primera vez al sistema. ");
+                        System.out.println("\nUn administrador debe ingresar por primera vez al sistema. ");
                     } else {
                         String dni3 = iniciarSesion(3);
                         if (dni3 != null) {
@@ -186,8 +184,8 @@ public class MenuPrincipal {
         gestorTurno.guardarTurnosEnArchivo();
         gestorTurno.cargarTurnosDesdeArchivo();
 
-
-        //gestorFactura.leerArchivoFacturas();
+//        gestorFactura.escribirFacturasEnEnJson();
+//        gestorFactura.leerArchivoFacturas();
 
     }
 
@@ -204,7 +202,7 @@ public class MenuPrincipal {
         gestorManicura.escribirServiciosEnJson();
 
         gestorTurno.guardarTurnosEnArchivo();
-        gestorFactura.escribirFacturasEnEnJson();
+       // gestorFactura.escribirFacturasEnEnJson();
 
     }
 
@@ -218,58 +216,6 @@ public class MenuPrincipal {
     public String pedirDatos(int tipoPersona) {
         boolean tienecuenta = false;
         String dni = administradores.pedirDNIsinVerificacion();
-        String contra = null;
-        String contrapedida;
-        boolean valido = false;
-
-        do {
-            try {
-                switch (tipoPersona) {
-                    case 1:
-                        if (administradores.verificarSiExisteAdministrador(dni)) {
-                            contra = administradores.buscarContraseña(dni);
-
-                        }
-                        break;
-                    case 2:
-                        if (recepcionistas.buscarPersonas(dni)) {
-                            contra = recepcionistas.buscarContraseña(dni);
-                        }
-                        break;
-                    case 3:
-                        if (profesionales.buscarPersonas(dni)) {
-                            contra = profesionales.buscarContraseña(dni);
-                        }
-                        break;
-                }
-
-                if (contra == null) {
-                    System.out.println("No tiene contraseña..");
-                    break;
-                }
-                contrapedida = pedirContraseña();
-
-                if (contrapedida.equals(contra)) {
-                    valido = true;
-                    tienecuenta = true; //
-                } else {
-                    System.out.println("Contraseña incorrecta. Intentelo nuevamente.");
-                }
-            } catch (DNInoEncontradoException e) {
-                System.out.println(e.getMessage() + " Vuelva a intentar");
-                scanner.nextLine();
-            }
-        } while (!valido);
-
-        if (valido) {
-            return dni;
-        } else {
-            return null;
-        }
-    }
-
-    public String pedirDatos1(int tipoPersona, String dni) {
-        boolean tienecuenta = false;
         String contra = null;
         String contrapedida;
         boolean valido = false;

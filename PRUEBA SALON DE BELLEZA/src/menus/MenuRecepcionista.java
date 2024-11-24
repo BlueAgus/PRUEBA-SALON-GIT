@@ -17,12 +17,14 @@ public class MenuRecepcionista extends MenuAdministrador {
 
         do {
             try {
+                System.out.println("--------------------");
                 System.out.println("1.Gestion de clientes");
                 System.out.println("2.Gestion de turnos");
                 System.out.println("3.Gestion de facturas");
                 System.out.println("4.Mostrar nuestros servicios");
                 System.out.println("5.Ver profesionales en el salón");
-                System.out.println("0. Salir");
+                System.out.println("0. Volver al Menú anterior");
+                System.out.println("--------------------");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -64,7 +66,7 @@ public class MenuRecepcionista extends MenuAdministrador {
                 System.out.println("Caracter invalido..Ingrese un numero por favor");
             }
         } while (opcion != 0);
-        scanner.close();
+
     }
 
     public void mostrarProfesionales(GestorProfesional profesionales) {
@@ -76,7 +78,7 @@ public class MenuRecepcionista extends MenuAdministrador {
             try {
                 System.out.println("1.Mostrar profesionales del salón ");
                 System.out.println("2.Mostrar profesionales por servicio específico ");
-                System.out.println("0. Salir");
+                System.out.println("0. Volver al Menú anterior");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -115,6 +117,6 @@ public class MenuRecepcionista extends MenuAdministrador {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
             }
         } while (opcion != 0);
-        scanner.close();
+
     }
 }

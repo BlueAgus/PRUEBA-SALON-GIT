@@ -15,11 +15,13 @@ public class MenuProfesional {
         int opcion=-1;
         do {
             try {
+                System.out.println("--------------------");
                 System.out.println("Bienvenido al menu de Profesional ");
                 System.out.println("1.Ver historial de turnos ");
                 System.out.println("2.Ver turnos próximos");
                 System.out.println("3.Reportar falla de servicio");
-                System.out.println("0.Salir");
+                System.out.println("0. Volver al Menú anterior");
+                System.out.println("--------------------");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -44,7 +46,6 @@ public class MenuProfesional {
                             System.out.println("1. Depilación");
                             System.out.println("2. Manicura");
                             System.out.println("3. Pestañas");
-                            System.out.println("0. Salir");
                             System.out.print("Seleccione una opción (1-3): ");
                             opc5 = scanner.nextInt();
 
@@ -58,7 +59,6 @@ public class MenuProfesional {
                                 System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
                             }
                         } while (opc5 < 1 || opc5 > 3);
-                        scanner.close();
 
                         break;
                     default:

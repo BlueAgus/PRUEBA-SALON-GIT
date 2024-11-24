@@ -7,7 +7,6 @@ import excepciones.FacturaNoExistenteException;
 import gestores.*;
 import model.*;
 
-import java.nio.channels.ScatteringByteChannel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
@@ -23,11 +22,13 @@ public class MenuAdministrador {
         int opcion;
 
         do {
+            System.out.println("--------------------");
             System.out.println("1.Menu de usuarios");
             System.out.println("2.Menu de servicios");
             System.out.println("3.Menu de turnos");
             System.out.println("4.Menu de facturas");
-            System.out.println("0. Salir");
+            System.out.println("0. Cerrar Sesión");
+            System.out.println("--------------------");
             System.out.print("Ingrese una opción: ");
 
             opcion = scanner.nextInt();
@@ -66,7 +67,7 @@ public class MenuAdministrador {
             System.out.println("2.Gestionar profesionales");
             System.out.println("3.Gestionar clientes");
             System.out.println("4.Gestionar mis datos");
-            System.out.println("0.Salir");
+            System.out.println("0- Volver al Menú anterior");
             System.out.print("Ingrese una opción: ");
 
             opcion = scanner.nextInt();
@@ -116,7 +117,7 @@ public class MenuAdministrador {
             System.out.println("2.Eliminar");
             System.out.println("3.Buscar por su dni");
             System.out.println("4.Modificar datos");
-            System.out.println("0. Salir");
+            System.out.println("0. Volver al Menú anterior");
             System.out.print("Ingrese una opción: ");
 
             opcion = scanner.nextInt();
@@ -187,7 +188,7 @@ public class MenuAdministrador {
             System.out.println("5.Mostrar profesionales del salon ");
             ///o 3 listar, 1 listra manicura etc
             System.out.println("6.Mostrar profesionales por servicio específico");
-            System.out.println("0. Salir");
+            System.out.println("0. Volver al Menú anterior");
             System.out.print("Ingrese una opción: ");
 
             opcion = scanner.nextInt();
@@ -284,7 +285,7 @@ public class MenuAdministrador {
                 System.out.println("3.Buscar por su dni ");
                 System.out.println("4.Modificar datos ");
                 System.out.println("5.Mostrar todos lo clientes");
-                System.out.println("0. Salir");
+                System.out.println("0. Volver al Menú anterior");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -345,7 +346,7 @@ public class MenuAdministrador {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
             }
         } while (opcion != 0);
-        scanner.close();
+
     }
 
     public void menuServicio(GestorPestania pestania, GestorDepilacion depilacion, GestorManicura manicura, GestorCliente cliente, GestorTurno turnos) {
@@ -362,7 +363,7 @@ public class MenuAdministrador {
                 System.out.println("4.Buscar servicio por tipo ");
                 System.out.println("5.Mostrar todos los servicios");
                 System.out.println("6.Reportar falla de un servicio");
-                System.out.println("0. Salir");
+                System.out.println("0. Volver al Menú anterior");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -525,7 +526,7 @@ public class MenuAdministrador {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
             }
         } while (opcion != 0);
-        scanner.close();
+
     }
 
     public void menuTurnos(GestorTurno turnos, GestorCliente clientes, GestorProfesional profesionales) {
@@ -544,7 +545,7 @@ public class MenuAdministrador {
                 System.out.println("6.Listar historial de turnos");
                 System.out.println("7.Turnos segun profesional");
                 System.out.println("8.Turnos segun cliente");
-                System.out.println("0. Salir");
+                System.out.println("0. Volver al Menú anterior");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -591,7 +592,7 @@ public class MenuAdministrador {
                     case 4:
                         Turno turno = turnos.buscarTurnoXclienteFechaHorario();
                         if (turno == null) {
-                            System.out.println("Turno buscado no encontrado");
+                            System.out.println("Turno buscado no encontrado.");
                         } else {
                             System.out.println("Turno buscado:");
                             System.out.println(turno);
@@ -622,7 +623,7 @@ public class MenuAdministrador {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
             }
         } while (opcion != 0);
-        scanner.close();
+
     }
 
     public void turnosXprofesional(GestorTurno turnos, GestorProfesional profesionales) {
@@ -632,10 +633,9 @@ public class MenuAdministrador {
 
         do {
             try {
-                System.out.println("6.Turnos proximos de un profesional");
-                System.out.println("7.Historial de turnos de un profesional");
-
-                System.out.println("0. Salir");
+                System.out.println("1.Turnos proximos de un profesional");
+                System.out.println("2.Historial de turnos de un profesional");
+                System.out.println("0. Volver al Menú anterior");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -681,7 +681,7 @@ public class MenuAdministrador {
             }
         }
         while (opcion != 0);
-        scanner.close();
+
     }
 
     public void turnosXcliente(GestorTurno turnos, GestorCliente clientes) {
@@ -693,7 +693,7 @@ public class MenuAdministrador {
             try {
             System.out.println("1.Turnos proximos de un cliente especifico");
             System.out.println("2.Historial de turnos de un cliente");
-            System.out.println("0. Salir");
+            System.out.println("0. Volver al Menú anterior");
             System.out.print("Ingrese una opción: ");
 
             opcion = scanner.nextInt();
@@ -737,7 +737,7 @@ public class MenuAdministrador {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
             }
         } while (opcion != 0);
-        scanner.close();
+
     }
 
     public void menuFacturas(GestorFactura facturas, GestorCliente clientes, GestorTurno gestorTurno) {
@@ -754,7 +754,7 @@ public class MenuAdministrador {
             System.out.println("5.Ver historial de facturas");
             System.out.println("6.Ver historial de facturas por cliente");
             System.out.println("7.Resumen de ganancia");
-            System.out.println("0.Salir");
+            System.out.println("0. Volver al Menú anterior");
             System.out.print("Ingrese una opción: ");
 
             opcion = scanner.nextInt();
@@ -833,12 +833,12 @@ public class MenuAdministrador {
                 case 7:
                     int opc = 0;
                     while (true) {
-                        System.out.println("Seleccione una opción: ");
+
                         System.out.println("1- Ganancia de un día específico");
                         //System.out.println("2- Ganancia de un mes específico");
                         // System.out.println("3- Ganancia de un año específico");
-                        System.out.println("0- SALIR");
-
+                        System.out.println("0. Volver al Menú anterior");
+                        System.out.print("Ingrese una opción: ");
                         try {
                             opc = scanner.nextInt();
 
@@ -938,7 +938,6 @@ public class MenuAdministrador {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
             }
         } while (opcion != 0);
-        scanner.close();
     }
 
     public void buscarFacturas(GestorFactura facturas, GestorCliente clientes) {
@@ -951,7 +950,7 @@ public class MenuAdministrador {
             System.out.println("1.Buscar por codigo ");
             System.out.println("2.Buscar por fecha ");
             System.out.println("3.Buscar por cliente ");
-            System.out.println("0. Salir");
+            System.out.println("0. Volver al Menú anterior");
             System.out.print("Ingrese una opción: ");
 
             opcion = scanner.nextInt();
@@ -1020,7 +1019,6 @@ public class MenuAdministrador {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
             }
         } while (opcion != 0);
-        scanner.close();
     }
 
     public void menuPrecios(GestorPestania pestania, GestorDepilacion depilacion, GestorManicura manicura) {
@@ -1034,7 +1032,7 @@ public class MenuAdministrador {
             System.out.println("2. Aumentar TODOS los precios");//aumentar todos o por clase
             System.out.println("3. Aumentar precios de un tipo de servicio");//aumentar todos o por clase
             System.out.println("4. Ver todos los precios");
-            System.out.println("0. Salir");
+            System.out.println("0. Volver al Menú anterior");
             System.out.print("Ingrese una opción: ");
 
             opcion = scanner.nextInt();
@@ -1051,7 +1049,6 @@ public class MenuAdministrador {
                         System.out.println("1. Depilación");
                         System.out.println("2. Manicura");
                         System.out.println("3. Pestañas");
-                        System.out.println("0. Salir");
                         System.out.print("Seleccione una opción (1-3): ");
                         opc5 = scanner.nextInt();
 
@@ -1179,7 +1176,7 @@ public class MenuAdministrador {
                             System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
                         }
                     } while (opc5 < 1 || opc5 > 3);
-                    scanner.close();
+
                     break;
                 case 2:
 
