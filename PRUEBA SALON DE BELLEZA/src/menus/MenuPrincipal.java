@@ -43,6 +43,7 @@ public class MenuPrincipal {
         int opcion = -1;
         do {
             try {
+                System.out.println("\n");
             System.out.println("\nBienvenido a Estetica Queens!\n");
             System.out.println("¿Quién está ingresando?");
             System.out.println("--------------------");
@@ -65,8 +66,8 @@ public class MenuPrincipal {
 
                         // Verificamos si el DNI y la contraseña son correctos
                         if (dniAdmin.equals("12345678") && contraseñaAdmin.equals("12345678")) {
-                            // El DNI y la contraseña son correctos, procedemos con la inicialización
-                            llenarAdministrador();  // Aquí creamos el administrador si es necesario
+
+                            administradores.modificarAdministradorPrimeroIngreso();
 
                             menuAdministrador.mostrarMenu(dniAdmin, clientes, profesionales, recepcionistas, administradores, gestorPestania, gestorDepilacion, gestorManicura, gestorTurno, gestorFactura);
 
@@ -110,6 +111,7 @@ public class MenuPrincipal {
                 case 0:
                     boolean salir = false;
                     do {
+
                         System.out.println("\nDeseas guardar los cambios realizados?");
                         System.out.println("1.Salir sin guardar. ");
                         System.out.println("2.Salir y guardar todos los cambios.");
@@ -169,23 +171,23 @@ public class MenuPrincipal {
         recepcionistas.escribirArchivoRecepcionistas();
         recepcionistas.leerDesdeJson();
 
-        clientes.escribirClientesEnJson();
+       // clientes.escribirClientesEnJson();
         clientes.leerArchivoClientes();
 
-        gestorDepilacion.escribirServiciosEnJson();
+       // gestorDepilacion.escribirServiciosEnJson();
         gestorDepilacion.leerServiciosDesdeJson();
 
-        gestorPestania.escribirPestañasEnJson();
+       // gestorPestania.escribirPestañasEnJson();
         gestorPestania.leerPestañasDesdeJson();
 
-        gestorManicura.escribirServiciosEnJson();
+       // gestorManicura.escribirServiciosEnJson();
         gestorManicura.leerServiciosDesdeJson();
 
-        gestorTurno.guardarTurnosEnArchivo();
+       // gestorTurno.guardarTurnosEnArchivo();
         gestorTurno.cargarTurnosDesdeArchivo();
 
 //        gestorFactura.escribirFacturasEnEnJson();
-//        gestorFactura.leerArchivoFacturas();
+         // gestorFactura.leerArchivoFacturas();
 
     }
 

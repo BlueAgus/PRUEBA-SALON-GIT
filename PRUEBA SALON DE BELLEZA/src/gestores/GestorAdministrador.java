@@ -204,6 +204,30 @@ public class GestorAdministrador {
         System.out.println(persona.toString());
     }
 
+    public void modificarAdministradorPrimeroIngreso(){
+        Administrador aux=buscarPersona("12345678");
+        System.out.println("Cambiaremos los datos de administrador para mayor seguridad.");
+        aux.setNombre(pedirNombre());
+        aux.setApellido(pedirApellido());
+        try {
+            aux.setDni(pedirDNI(administradores));
+        } catch (DNIyaCargadoException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            aux.setGenero(pedirGenero());
+        } catch (GeneroInvalidoException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            aux.setTelefono(pedirTelefono());
+        } catch (TelefonoInvalidoException e) {
+            System.out.println(e.getMessage());
+        }
+        aux.setContraseña(pedirContraseña());
+
+    }
+
     public void mostrarTodos() {
         System.out.println("Estos son los administradores:");
         for (Administrador p : administradores) {

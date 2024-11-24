@@ -85,9 +85,9 @@ public class GestorProfesional {
 
         System.out.println("Ingrese los servicios que realiza: ");
         do {
-
+            //aca elige si es manicura,depi, o pestanias.
             TipoServicio tipoServicio1 = gestorDepilacion.pedirTipoServicio();
-
+           ///aca que tipo dentro de los otros tres hace
             System.out.println("SELECCIONE EL TIPO DE "+ tipoServicio1+ " QUE REALIZA");
             String e = gestorTurno.pedirCodServicio(tipoServicio1);
             profesional.agregarProfesion(e);//minimo una profesion.
@@ -104,13 +104,10 @@ public class GestorProfesional {
                 } else if (opcion != 2) {
                     System.out.println("Ingresa una opcion valida por favor.");
                 }
-            }catch (InputMismatchException e1){
+            }catch (InputMismatchException e1) {
                 System.out.println("Error: Por favor, ingresa un número válido.");
                 scanner.nextLine();
             }
-
-
-
         } while (opcion != 2);
 
         cargado = true;
@@ -121,9 +118,7 @@ public class GestorProfesional {
         }
         System.out.println(profesional);
         verificarCarga(profesional);
-
         profesionales.add(profesional);
-
         return cargado;
     }
     //------------------------------------------------------------------------------------------------------------

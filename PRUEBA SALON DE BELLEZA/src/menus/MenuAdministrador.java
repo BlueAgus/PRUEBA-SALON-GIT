@@ -23,11 +23,12 @@ public class MenuAdministrador {
 
         do {
             System.out.println("--------------------");
+            System.out.println("Bienvenido al menu de administrador ");
             System.out.println("1.Menu de usuarios");
             System.out.println("2.Menu de servicios");
             System.out.println("3.Menu de turnos");
             System.out.println("4.Menu de facturas");
-            System.out.println("0. Cerrar Sesión");
+            System.out.println("0. Volver al inicio");
             System.out.println("--------------------");
             System.out.print("Ingrese una opción: ");
 
@@ -180,6 +181,7 @@ public class MenuAdministrador {
         int opcion;
 
         do {
+            System.out.println("\n");
             System.out.println("PROFESIONALES");
             System.out.println("1.Agregar");
             System.out.println("2.Eliminar");
@@ -279,6 +281,7 @@ public class MenuAdministrador {
 
         do {
             try {
+                System.out.println("\n");
                 System.out.println("CLIENTES");
                 System.out.println("1.Agregar");
                 System.out.println("2.Eliminar");
@@ -356,6 +359,7 @@ public class MenuAdministrador {
 
         do {
             try {
+                System.out.println("\n");
                 System.out.println("SERVICIOS");
                 System.out.println("1.Agregar");
                 System.out.println("2.Eliminar ");
@@ -401,6 +405,7 @@ public class MenuAdministrador {
                         int opc2 = -1; // Variable para almacenar la opción seleccionada
 
                         do {
+                            System.out.println("\n");
                             System.out.println("Que servicio desea eliminar? ");
                             System.out.println("1. Depilacion");
                             System.out.println("2. Manicura");
@@ -436,6 +441,7 @@ public class MenuAdministrador {
                     case 3:
                         int op3 = -1;
                         do {
+                            System.out.println("\n");
                             System.out.println("¿Qué servicio desea modificar?");
                             System.out.println("1. Depilación");
                             System.out.println("2. Manicura");
@@ -458,6 +464,7 @@ public class MenuAdministrador {
                     case 4:
                         int opc4 = -1;
                         do {
+                            System.out.println("\n");
                             System.out.println("¿Qué servicio desea elegir?");
                             System.out.println("1. Depilación");
                             System.out.println("2. Manicura");
@@ -482,6 +489,7 @@ public class MenuAdministrador {
 
                         break;
                     case 5:
+                        System.out.println("\n");
                         System.out.println("Estos son los servicios disponibles en Queens: ");
                         System.out.println("SERVICIOS DE DEPILACION-----------------------");
                         depilacion.mostrarServicios();
@@ -498,6 +506,7 @@ public class MenuAdministrador {
 
                         int opc5 = -1;
                         do {
+                            System.out.println("\n");
                             System.out.println("¿En qué servicio desea reportar falla?");
                             System.out.println("1. Depilación");
                             System.out.println("2. Manicura");
@@ -536,6 +545,7 @@ public class MenuAdministrador {
 
         do {
             try {
+                System.out.println("\n");
                 System.out.println("TURNOS");
                 System.out.println("1.Agregar ");
                 System.out.println("2.Eliminar ");
@@ -569,6 +579,7 @@ public class MenuAdministrador {
                         int opc = -1; // Variable para almacenar la opción seleccionada
 
                         do {
+                            System.out.println("\n");
                             System.out.println("¿De que servicio desea eliminar el turno? ");
                             System.out.println("1. Depilacion");
                             System.out.println("2. Manicura");
@@ -633,6 +644,7 @@ public class MenuAdministrador {
 
         do {
             try {
+                System.out.println("\n");
                 System.out.println("1.Turnos proximos de un profesional");
                 System.out.println("2.Historial de turnos de un profesional");
                 System.out.println("0. Volver al Menú anterior");
@@ -691,6 +703,7 @@ public class MenuAdministrador {
 
         do {
             try {
+                System.out.println("\n");
             System.out.println("1.Turnos proximos de un cliente especifico");
             System.out.println("2.Historial de turnos de un cliente");
             System.out.println("0. Volver al Menú anterior");
@@ -747,6 +760,8 @@ public class MenuAdministrador {
 
         do {
             try {
+                System.out.println("\n");
+                System.out.println("Facturas");
             System.out.println("1.Agregar ");
             System.out.println("2.Eliminar ");
             System.out.println("3.Modificar ");
@@ -947,6 +962,7 @@ public class MenuAdministrador {
 
         do {
             try {
+                System.out.println("\n");
             System.out.println("1.Buscar por codigo ");
             System.out.println("2.Buscar por fecha ");
             System.out.println("3.Buscar por cliente ");
@@ -1028,6 +1044,7 @@ public class MenuAdministrador {
 
         do {
             try {
+                System.out.println("\n");
             System.out.println("1. Modificar precio base de un servicio");
             System.out.println("2. Aumentar TODOS los precios");//aumentar todos o por clase
             System.out.println("3. Aumentar precios de un tipo de servicio");//aumentar todos o por clase
@@ -1045,6 +1062,7 @@ public class MenuAdministrador {
                 case 1:
                     int opc5 = -1;
                     do {
+                        System.out.println("\n");
                         System.out.println("¿Qué servicio desea modificar el precio?");
                         System.out.println("1. Depilación");
                         System.out.println("2. Manicura");
@@ -1209,6 +1227,7 @@ public class MenuAdministrador {
                     int opc = -1; // Variable para almacenar la opción seleccionada
 
                     do {
+                        System.out.println("\n");
                         System.out.println("¿De que servicio desea incrementar los precios? ");
                         System.out.println("1. Depilacion");
                         System.out.println("2. Manicura");

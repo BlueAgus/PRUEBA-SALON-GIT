@@ -17,7 +17,9 @@ public class MenuRecepcionista extends MenuAdministrador {
 
         do {
             try {
+                System.out.println("\n");
                 System.out.println("--------------------");
+                System.out.println("Bienvenido al menu de recepcionista ");
                 System.out.println("1.Gestion de clientes");
                 System.out.println("2.Gestion de turnos");
                 System.out.println("3.Gestion de facturas");
@@ -44,6 +46,7 @@ public class MenuRecepcionista extends MenuAdministrador {
                         menuFacturas(facturas, clientes, turnos);
                         break;
                     case 4:
+                        System.out.println("\n");
                         System.out.println("Estos son los servicios disponibles en Queens: ");
                         System.out.println("SERVICIOS DE DEPILACION-----------------------");
                         depilacion.mostrarServicios();
@@ -76,6 +79,7 @@ public class MenuRecepcionista extends MenuAdministrador {
 
         do {
             try {
+                System.out.println("\n");
                 System.out.println("1.Mostrar profesionales del salón ");
                 System.out.println("2.Mostrar profesionales por servicio específico ");
                 System.out.println("0. Volver al Menú anterior");

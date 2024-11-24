@@ -1,8 +1,8 @@
 [ {
-  "nombre" : null,
-  "apellido" : null,
+  "nombre" : "Cecilia",
+  "apellido" : "Novelli",
   "dni" : "12345678",
-  "genero" : null,
-  "telefono" : null,
-  "contraseña" : "12345678"
+  "genero" : "F",
+  "telefono" : "2236684318",
+  "contraseña" : "1234578"
 } ]

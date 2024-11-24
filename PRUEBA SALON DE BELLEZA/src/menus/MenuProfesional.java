@@ -15,6 +15,7 @@ public class MenuProfesional {
         int opcion=-1;
         do {
             try {
+                System.out.println("\n");
                 System.out.println("--------------------");
                 System.out.println("Bienvenido al menu de Profesional ");
                 System.out.println("1.Ver historial de turnos ");
@@ -42,6 +43,7 @@ public class MenuProfesional {
 
                         int opc5 = -1;
                         do {
+                            System.out.println("\n");
                             System.out.println("¿En qué servicio desea reportar falla?");
                             System.out.println("1. Depilación");
                             System.out.println("2. Manicura");
