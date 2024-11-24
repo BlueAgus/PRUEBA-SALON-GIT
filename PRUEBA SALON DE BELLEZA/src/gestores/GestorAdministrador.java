@@ -1,5 +1,6 @@
 package gestores;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import excepciones.DNInoEncontradoException;
 import excepciones.DNIyaCargadoException;
 import excepciones.GeneroInvalidoException;
@@ -35,13 +36,10 @@ public class GestorAdministrador {
     }
 
 
-    public void agregarAdmi()
+    public void agregarAdmi(Administrador administrador)
     {
-
-        Administrador administrador= new Administrador(null,null, "12345678", null,null,"12345678");
         administradores.add(administrador);
 
-        guardarArchivoAdministradores();
     }
 
     public boolean agregarAdministrador() {
@@ -542,7 +540,7 @@ public class GestorAdministrador {
         }
     }
 
-    public void leerDesdeJSON() {
+    public void leerDesdeJSON1() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             // Comprobar si el archivo JSON existe antes de leerlo
@@ -565,6 +563,18 @@ public class GestorAdministrador {
             System.err.println("Error al leer los datos almacenados de Administradores");
         }
     }
-
+    public void leerDesdeJSON() {
+        try {
+            File archivo = new File(archivoAdministradores);
+            if (archivo.exists()) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                administradores = objectMapper.readValue(archivo, new TypeReference<List<Administrador>>() {});
+            } else {
+                administradores = new ArrayList<>();  // Si el archivo no existe, inicializa la lista vacía
+            }
+        } catch (IOException e) {
+            System.err.println("Error al leer los datos almacenados de Administradores");
+        }
+    }
 
 }

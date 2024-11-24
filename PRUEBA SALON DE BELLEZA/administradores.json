@@ -1,8 +1,0 @@
-[ {
-  "nombre" : null,
-  "apellido" : null,
-  "dni" : "12345678",
-  "genero" : null,
-  "telefono" : null,
-  "contraseña" : "12345678"
-} ]
