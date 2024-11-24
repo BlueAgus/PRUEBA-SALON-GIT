@@ -300,22 +300,6 @@ public class MenuPrincipal {
         return contraseña;
     }
 
-    public String pedirContraseña1() {
-        String contraseña = "";
-        do {
-            System.out.println("Ingresa una contraseña (entre 6 y 12 caracteres, debe contener al menos un número):");
-            contraseña = scanner.nextLine();
-
-            // Validación de longitud de la contraseña y de que contenga al menos un número
-            if (contraseña.length() < 6 || contraseña.length() > 12) {
-                System.out.println("Tu contraseña es muy débil o tiene un tamaño incorrecto. Vuelve a intentar.");
-            } else if (!contraseña.matches(".*\\d.*")) {  // Verifica que haya al menos un número
-                System.out.println("Tu contraseña debe contener al menos un número. Vuelve a intentarlo.");
-            }
-        } while (contraseña.length() < 6 || contraseña.length() > 12 || !contraseña.matches(".\\d.")); // Bucle sigue hasta que la contraseña sea válida
-
-        return contraseña;
-    }
 
     public boolean primerIngreso() {
 
