@@ -12,34 +12,24 @@ public class Manicura extends Servicio {
     private TipoManicura tipoManicura;
     private boolean disenio;
     private double precioDisenio;
-    //private static double precioDisenio = GestorPrecios.getPrecioDisenio();
-
 
     //////////////////////////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////////////
   /// saque esto double precio, double precioDisenio prque a se calcula con el gestor
     public Manicura(String duracion, TipoManicura tipoManicura, boolean disenio) {
         super(TipoServicio.MANICURA, duracion);
         this.tipoManicura = tipoManicura;
-        this.precio = calcularPrecio(); // es importante que esto este luego de que se defina el tipo
         this.precioDisenio = GestorPrecios.getPrecioDisenio();
-        //this.precio = calcularPrecio(); esto esta en servicio
         this.disenio = disenio;
-
+        this.precio = calcularPrecio();
     }
-
     //////////////////////////////////////////////////////// metodos extr ////////////////////////////////////////////////////
 
 
-    /*@Override
+    @Override
     public double calcularPrecio() {
         double precioBase = GestorPrecios.obtenerPrecio(Manicura.class, tipoManicura);
         this.precio = precioBase + (disenio ? precioDisenio : 0);
         return this.precio;
-    }*/
-
-    @Override
-    public double calcularPrecio() {
-        return this.precio+precioDisenio;
     }
 
     @Override

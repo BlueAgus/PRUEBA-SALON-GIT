@@ -41,22 +41,21 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
 
     public void agregarServicio() {
+        System.out.println("\n");
+        System.out.println("Vamos a cargar un servicio...");
         double precio = pedirPrecio();
         String duracion = pedirDuracion();
+        System.out.println("En cuanto al diseño..");
         double precioDisenio = pedirDisenio(); //si pone que si devuelve un valor, si pone que no devuelve 0
         TipoManicura tipoManicura = pedirTipoManicura();
-
-        //Ingresamos el precio al gestor que despues sera calculado en la llamada de este en las clases
         boolean tieneDisenio = precioDisenio > 0;
-
-
-        Manicura manicura = new Manicura(duracion, tipoManicura, tieneDisenio); //saque esto (, precio, disenio);
-
-
         GestorPrecios.modificarPrecio(Manicura.class, tipoManicura, precio);
         if(tieneDisenio){
             GestorPrecios.setPrecioDisenio(precioDisenio);
         }
+        //Ingresamos el precio al gestor que despues sera calculado en la llamada de este en las clases
+
+        Manicura manicura = new Manicura(duracion, tipoManicura, tieneDisenio); //saque esto (, precio, disenio);
         almacenServicios.add(manicura);
         System.out.println(manicura);
         verificarCarga(manicura);
@@ -302,9 +301,7 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
         int opcion = -1;
         do {
             try {
-
-
-                System.out.println("Selecciona el tipo de manicura:");
+                System.out.println("\nSelecciona el tipo de manicura:");
                 System.out.println("1. Esculpidas");
                 System.out.println("2. Gel");
                 System.out.println("3. Semipermanente");
@@ -337,7 +334,6 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
     public double pedirDisenio() {
         int opcion = 0;
         double disenio = 0;
-
 
         do {
             try {

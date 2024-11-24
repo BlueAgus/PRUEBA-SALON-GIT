@@ -38,13 +38,11 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
     public void agregarServicio() {
 
         TipoServicio tipoService = TipoServicio.DEPILACION;
+        System.out.println("Vamos a cargar un servicio..");
         double precio = pedirPrecio();
         String duracion = pedirDuracion();
         TipoDepilacion tipoDepilacion = pedirTipoDepilacion();
-
-
         GestorPrecios.modificarPrecio(Depilacion.class, tipoDepilacion, precio);
-
         //Cuando se instancie depilacion llamara a calcular precio y obtendra el precio ingresado arriba
         Depilacion depilacion = new Depilacion(duracion, tipoDepilacion);
 

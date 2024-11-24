@@ -136,6 +136,7 @@ public class MenuPrincipal {
             }
             } catch (InputMismatchException e) {
                 System.out.println("Opcion invalida. Ingrese numeros del 0 al 3");
+                scanner.nextLine();
             }
         } while (opcion != 0);
     }

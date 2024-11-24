@@ -26,8 +26,8 @@ import java.util.function.Predicate;
 
 public class GestorFactura {
 
-    private GestorGenerico<Factura> caja ; // asi no me confundo
-    Gson gson ;
+    private GestorGenerico<Factura> caja; // asi no me confundo
+    Gson gson;
     private final String archivoFacturas = "facturas.json";
     private GestorTurno gestorTurno; // Para buscar turnos
     Scanner scan = new Scanner(System.in);
@@ -137,7 +137,6 @@ public class GestorFactura {
     }
 
 
-
     public void eliminarFactura(String codigoFactura) throws FacturaNoExistenteException {
         Factura facturaAEliminar = null;
 
@@ -164,7 +163,6 @@ public class GestorFactura {
         } else {
             System.out.println("La factura no fue eliminada.");
         }
-
 
 
     }
@@ -359,10 +357,9 @@ public class GestorFactura {
     }
 
     public void modificarFechaFactura(Factura factura) {
-      String nuevaFecha = ConvertirFechaHoras.convertirFechaAString(LocalDate.now());
+        String nuevaFecha = ConvertirFechaHoras.convertirFechaAString(LocalDate.now());
         factura.setFecha(nuevaFecha);
     }
-
 
 
     public List<Factura> verHistorialPorFecha(String fecha) {
@@ -390,7 +387,6 @@ public class GestorFactura {
         Predicate<Factura> condicion = factura -> (factura.getFecha().equals(fecha));
         return caja.filtrarPorCondicion(condicion);
     }
-
 
 
     public void historialFacturasPorCliente(String dni) throws DNInoEncontradoException {
@@ -434,6 +430,7 @@ public class GestorFactura {
 
         }
     }
+
     public double gananciaXdia(String fecha) {
         double total = 0;
         for (Factura f : caja.getLista()) {
@@ -443,32 +440,35 @@ public class GestorFactura {
         }
         return total;
     }
-    /*
-        public double gananciaXmes(int mes, int año) {
 
-            double total = 0;
-            for (Factura f : historial.getAlmacen()) {
-                if (f.getFecha().getMonthValue() == mes && f.getFecha().getYear() == año) {
-                    total += f.getPrecioFinal();
-                }
+    public double gananciaXmes(int mes, int año) {
+
+        double total = 0;
+        for (Factura f : caja.getLista()) {
+            LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(f.getFecha());
+
+            if (fecha.getMonthValue() == mes && fecha.getYear() == año) {
+                total += f.getPrecioFinal();
             }
-            return total;
         }
+        return total;
+    }
 
-        public double gananciaXaño(int año) {
+    public double gananciaXaño(int año) {
 
-            double total = 0;
-            for (Factura f : historial.getAlmacen()) {
-                if (f.getFecha().getYear() == año) {
-                    total += f.getPrecioFinal();
-                }
+        double total = 0;
+        for (Factura f : caja.getLista()) {
+            LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(f.getFecha());
+
+            if (fecha.getYear() == año) {
+                total += f.getPrecioFinal();
             }
-            return total;
         }
-    */
+        return total;
+    }
     ////////////////////////////////////////////////////////MANEJO DE ARCHIVOS ////////////////////////////////////////////////////
 
-    public  void escribirFacturasEnEnJson() {
+    public void escribirFacturasEnEnJson() {
         try (FileWriter writer = new FileWriter(this.archivoFacturas)) {
             gson.toJson(caja.getLista(), writer);
             writer.close();
@@ -478,20 +478,46 @@ public class GestorFactura {
     }
 
     public void leerArchivoFacturas() {
-        if(caja!=null){
-            try (FileReader fileReader = new FileReader(archivoFacturas)) {
-                // Deserializar el archivo JSON a una lista de objetos Cliente
-                this.caja = gson.fromJson(fileReader, new TypeToken<GestorGenerico<Factura>>() { }.getType());
-                System.out.println("Archivo de clientes leído exitosamente.");
+        try (FileReader fileReader = new FileReader(archivoFacturas)) {
+            // Deserializar el archivo JSON a una lista de facturas
+            List<Factura> listaFacturas = gson.fromJson(fileReader, new TypeToken<List<Factura>>() {
+            }.getType());
 
-            } catch (FileNotFoundException e) {
-                System.out.println("No se encontró el archivo. Se iniciará con un historial vacío.");
-                this.caja = new GestorGenerico<>();
-            } catch (IOException e) {
-                System.out.println("No se puede leer el archivo de facturas: " + e.getMessage());
+            if (listaFacturas != null) {
+                // Limpia la lista existente en caja y agrega las facturas deserializadas
+                this.caja.vaciarAlmacen();
+                for (Factura factura : listaFacturas) {
+                    //factura.setGestores(this.gestores); // Inicializa gestores después de deserializar
+                    this.caja.agregar(factura);
+                }
+            }
+
+            System.out.println("Archivo de facturas leído exitosamente.");
+        } catch (FileNotFoundException e) {
+            System.out.println("No se encontró el archivo. Se iniciará con un historial vacío.");
+            this.caja = new GestorGenerico<>();
+        } catch (IOException e) {
+            System.out.println("No se puede leer el archivo de facturas: " + e.getMessage());
+        }
+    }
+
+
+    public String verFacturas() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("==== Lista de Facturas ====\n");
+
+        if (caja == null || caja.getLista().isEmpty()) {
+            sb.append("No hay facturas registradas.\n");
+        } else {
+            int contador = 1;
+            for (Factura factura : caja.getLista()) { // Asegúrate de que obtenerTodos devuelva una lista de facturas.
+                sb.append("Factura ").append(contador++).append(":\n");
+                sb.append(factura.toString()).append("\n");
+                sb.append("--------------------------\n");
             }
         }
 
+        return sb.toString();
     }
 
 
@@ -509,97 +535,5 @@ public class GestorFactura {
     public void setCaja(GestorGenerico<Factura> caja) {
         this.caja = caja;
     }
-
-
-
-    /*  public void crearFactura() {
-        GestorTurno turnos = new GestorTurno();
-        GestorCliente clientes = new GestorCliente();
-        Scanner scan = new Scanner(System.in);
-
-        try {
-            // Pedir cliente por DNI
-            Cliente cliente = null;
-            while (cliente == null) {
-                try {
-                    System.out.println("Ingrese el DNI del cliente:");
-                    String dni = scan.nextLine();
-                    cliente = clientes.buscarPersona(dni);
-
-                } catch (DNInoEncontradoException e) {
-                    System.out.println(e.getMessage());
-                    System.out.println("¿Desea intentar nuevamente? (SI/NO):");
-                    if (!scan.nextLine().equalsIgnoreCase("SI")) {// ese equals ignora si es en mayus o minus
-                        return; //salir si el usuario ingresa NO
-                    }
-                }
-            }
-
-            //pedir tipo de pago
-            TipoDePago tipo = pedirTipoPago();
-            Factura factura = new Factura(tipo, cliente, gestor);
-
-            //buscamos los turnos de hoy y futuros de ese cliente
-            List<Turno> turnosCliente = turnos.buscarTurnosXdniClienteVigentes(cliente.getDni());
-
-            if (turnosCliente.isEmpty()) {
-                System.out.println("No hay turnos reservados para este cliente.");
-                return;
-            }
-
-            //mostrarle los turnos del dia de la fecha y los proximos
-            System.out.println("Estos son los turnos recientes del cliente: ");
-            for (int i = 0; i < turnosCliente.size(); i++) {
-                System.out.println((i + 1) + ". " + turnosCliente.get(i));
-            }
-
-            boolean continuar = true;
-            while (continuar) {
-
-                System.out.println(" ");// dejo un espacio
-                System.out.print("Ingrese el número del turno a pagar: ");
-                int nroTurno = scan.nextInt();
-
-                if (nroTurno < 1 || nroTurno > turnosCliente.size()) { //corroboramos que el numero esye bien
-                    System.out.println("Número de turno inválido. Intente nuevamente.");
-                    continue;
-                }
-
-                Turno turnoSeleccionado = turnosCliente.get(nroTurno - 1);
-
-                if (!factura.getTurnosPorCliente().contains(turnoSeleccionado)) {
-                    factura.agregarTurno(turnoSeleccionado);
-                    System.out.println("El turno se agregó correctamente a la factura.");
-                } else {
-                    System.out.println("El turno ya está en la factura.");
-                }
-
-
-                System.out.print("¿Desea agregar otro turno? (SI/NO): ");
-                String rta = scan.next().toLowerCase();
-                continuar = rta.equals("si");
-            }
-
-            System.out.println("Aplicar descuento?(SI/NO)");
-            String rta2 = scan.next().toLowerCase();
-
-            if (rta2.equalsIgnoreCase("si")) {
-                aplicarDescuento(factura, scan);
-            } else {
-                return;
-            }
-
-            // montrar factura y agregarla
-            boolean seCargo = agregarFactura(factura);
-            if (seCargo) {
-                System.out.println("La factura fue ingresada correctamente, aqui tiene los detalles:");
-                System.out.println(factura);
-                verificarCarga(factura, scan);
-            }
-
-        } catch (TurnoExistenteException | FacturaYaExistenteException e) {
-            System.out.println(e.getMessage());
-        }
-    }*/
 
 }

@@ -383,7 +383,8 @@ public class GestorAdministrador {
                     }
                 }
                 if (dniRepetido) {
-                    throw new DNIyaCargadoException("DNI ya cargado en el sistema: " + dni);
+                    System.out.println("DNI ya cargado en el sistema: " + dni);
+                    scanner.nextLine();
                 } else {
                     dnivalido = true;
                 }
