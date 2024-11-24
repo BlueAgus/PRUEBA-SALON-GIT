@@ -56,12 +56,27 @@ public class MenuPrincipal {
                 opcion = scanner.nextInt();
                 scanner.nextLine();
 
-
             switch (opcion) {
                 case 1:
                     //administrador
                     if (primerIngreso()) {
-                        llenarAdministrador();
+                        String dniAdmin = administradores.pedirDNIsinVerificacion();
+                        String contraseñaAdmin = pedirContraseña();
+
+                        // Verificamos si el DNI y la contraseña son correctos
+                        if (dniAdmin.equals("12345678") && contraseñaAdmin.equals("12345678")) {
+                            // El DNI y la contraseña son correctos, procedemos con la inicialización
+                            llenarAdministrador();  // Aquí creamos el administrador si es necesario
+                            //String dni = iniciarSesion(1);
+                            if (dniAdmin != null) {
+                                menuAdministrador.mostrarMenu(dniAdmin, clientes, profesionales, recepcionistas, administradores, gestorPestania, gestorDepilacion, gestorManicura, gestorTurno, gestorFactura);
+                            }
+
+                        } else {
+                            System.out.println("DNI o contraseña incorrectos. No se puede continuar.");
+                            break;  // Terminamos el flujo si el DNI o la contraseña son incorrectos
+                        }
+
                     } else {
                         System.out.println("Bienvenido administrador! ");
                         String dni = iniciarSesion(1);
@@ -144,8 +159,14 @@ public class MenuPrincipal {
         profesionales.escribirProfesionalesEnJson();
         profesionales.leerProfesionalesDesdeJson();
 
-        administradores.guardarArchivoAdministradores();
         administradores.leerDesdeJSON();
+        if (administradores.getAdministradores().isEmpty()) {
+            // Si no hay administradores, crear uno con valores predeterminados
+            Administrador admin = new Administrador(null,null,"12345678",null,null, "12345678");  // DNI y contraseña predeterminados
+            administradores.agregarAdmi(admin);
+            administradores.guardarArchivoAdministradores();
+        }
+
 
         recepcionistas.escribirArchivoRecepcionistas();
         recepcionistas.leerDesdeJson();
@@ -162,8 +183,9 @@ public class MenuPrincipal {
         gestorManicura.escribirServiciosEnJson();
         gestorManicura.leerServiciosDesdeJson();
 
-        gestorTurno.cargarTurnosDesdeArchivo();
         gestorTurno.guardarTurnosEnArchivo();
+        gestorTurno.cargarTurnosDesdeArchivo();
+
 
         //gestorFactura.leerArchivoFacturas();
 
@@ -246,6 +268,58 @@ public class MenuPrincipal {
         }
     }
 
+    public String pedirDatos1(int tipoPersona, String dni) {
+        boolean tienecuenta = false;
+        String contra = null;
+        String contrapedida;
+        boolean valido = false;
+
+        do {
+            try {
+                switch (tipoPersona) {
+                    case 1:
+                        if (administradores.verificarSiExisteAdministrador(dni)) {
+                            contra = administradores.buscarContraseña(dni);
+
+                        }
+                        break;
+                    case 2:
+                        if (recepcionistas.buscarPersonas(dni)) {
+                            contra = recepcionistas.buscarContraseña(dni);
+                        }
+                        break;
+                    case 3:
+                        if (profesionales.buscarPersonas(dni)) {
+                            contra = profesionales.buscarContraseña(dni);
+                        }
+                        break;
+                }
+
+                if (contra == null) {
+                    System.out.println("No tiene contraseña..");
+                    break;
+                }
+                contrapedida = pedirContraseña();
+
+                if (contrapedida.equals(contra)) {
+                    valido = true;
+                    tienecuenta = true; //
+                } else {
+                    System.out.println("Contraseña incorrecta. Intentelo nuevamente.");
+                }
+            } catch (DNInoEncontradoException e) {
+                System.out.println(e.getMessage() + " Vuelva a intentar");
+                scanner.nextLine();
+            }
+        } while (!valido);
+
+        if (valido) {
+            return dni;
+        } else {
+            return null;
+        }
+    }
+
     //1 admin/ 2 recepcionista/ 3 profesional
     public String iniciarSesion(int tipoPersona) {
         String dni = pedirDatos(tipoPersona);
@@ -261,6 +335,7 @@ public class MenuPrincipal {
 
     public String pedirContraseña() {
         String contraseña = "";
+        boolean esValida = false;  // Para controlar si la contraseña es válida
         do {
             System.out.println("Ingresa una contraseña (entre 6 y 12 caracteres, debe contener al menos un número):");
             contraseña = scanner.nextLine();
@@ -268,7 +343,27 @@ public class MenuPrincipal {
             // Validación de longitud de la contraseña y de que contenga al menos un número
             if (contraseña.length() < 6 || contraseña.length() > 12) {
                 System.out.println("Tu contraseña es muy débil o tiene un tamaño incorrecto. Vuelve a intentar.");
-            } else if (!contraseña.matches(".\\d.")) {  // Verifica que haya al menos un número
+            } else if (!contraseña.matches(".*\\d.*")) {  // Verifica que haya al menos un número en cualquier parte de la contraseña
+                System.out.println("Tu contraseña debe contener al menos un número. Vuelve a intentarlo.");
+            } else {
+                // Si la contraseña es válida, salimos del bucle
+                esValida = true;
+            }
+        } while (!esValida); // Continuamos pidiendo la contraseña hasta que sea válida
+
+        return contraseña;
+    }
+
+    public String pedirContraseña1() {
+        String contraseña = "";
+        do {
+            System.out.println("Ingresa una contraseña (entre 6 y 12 caracteres, debe contener al menos un número):");
+            contraseña = scanner.nextLine();
+
+            // Validación de longitud de la contraseña y de que contenga al menos un número
+            if (contraseña.length() < 6 || contraseña.length() > 12) {
+                System.out.println("Tu contraseña es muy débil o tiene un tamaño incorrecto. Vuelve a intentar.");
+            } else if (!contraseña.matches(".*\\d.*")) {  // Verifica que haya al menos un número
                 System.out.println("Tu contraseña debe contener al menos un número. Vuelve a intentarlo.");
             }
         } while (contraseña.length() < 6 || contraseña.length() > 12 || !contraseña.matches(".\\d.")); // Bucle sigue hasta que la contraseña sea válida

@@ -1270,7 +1270,7 @@ public class MenuAdministrador {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
             }
         } while (opcion != 0);
-        scanner.close();
+
     }
 
     public static String convertirFechaAString(LocalDate fecha) {
