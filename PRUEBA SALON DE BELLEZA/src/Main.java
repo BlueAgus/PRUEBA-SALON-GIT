@@ -20,6 +20,10 @@ public class Main {
 
         menuPrincipal.menuPrincipal();
 
+
+        //probando si guarda bien - agu
+        //soy cei
+
        /* ///DEPILACION
         GestorDepilacion gestorDepilacion = new GestorDepilacion();
 
