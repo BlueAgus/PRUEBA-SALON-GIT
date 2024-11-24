@@ -379,22 +379,23 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
     }
 
     ///////////////////////////////////////ARCHIVOS//////////////////////////////////////////////////////////////////.
-    public void escribirServiciosEnJson() {
+
+    public void escribirPestañasEnJson() {
         try (FileWriter writer = new FileWriter(archivoPestania)) {
             gson.toJson(almacenServicios, writer); // Convierte la lista a JSON y la escribe en el archivo
         } catch (IOException e) {
-            System.out.println("Error al escribir en el archivo JSON: " + e.getMessage());
+            System.out.println("Error al guardar los datos del Servicio de Pestañas");
         }
     }
 
-    public void leerServiciosDesdeJson() {
+    public void leerPestañasDesdeJson() {
         try (FileReader reader = new FileReader(archivoPestania)) {
             // Definir el tipo de la lista de objetos `Pestañas`
             List<Pestanias> servicios = gson.fromJson(reader, new TypeToken<List<Pestanias>>() {
             }.getType());
             almacenServicios = servicios != null ? servicios : new ArrayList<>();
         } catch (IOException e) {
-            System.out.println("Error al leer el archivo JSON: " + e.getMessage());
+            System.out.println("Error al leer los datos almacenados del Servicio de Pestañas");
             almacenServicios = new ArrayList<>(); // Inicializa una lista vacía si falla
         }
     }

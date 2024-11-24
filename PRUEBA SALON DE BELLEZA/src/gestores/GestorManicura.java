@@ -392,13 +392,13 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
         }
     }
 
-
     /////////////////////////////////////////////ARCHIVOS/////////////////////////////////////////////////////////////////////////////.
+
     public void escribirServiciosEnJson() {
         try (FileWriter writer = new FileWriter(archivoManicura)) {
             gson.toJson(almacenServicios, writer); // Convierte la lista a JSON y la escribe en el archivo
         } catch (IOException e) {
-            System.out.println("Error al escribir en el archivo JSON: " + e.getMessage());
+            System.out.println("Error al guardar los datos del Servicio de Manicura");
         }
     }
 
@@ -409,7 +409,7 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
             }.getType());
             almacenServicios = servicios != null ? servicios : new ArrayList<>();
         } catch (IOException e) {
-            System.out.println("Error al leer el archivo JSON: " + e.getMessage());
+            System.out.println("Error al leer los datos almacenados del Servicio de Manicura");
             almacenServicios = new ArrayList<>(); // Inicializa una lista vacía si falla
         }
     }

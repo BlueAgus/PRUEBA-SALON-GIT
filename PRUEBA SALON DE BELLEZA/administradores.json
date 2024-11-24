@@ -1,29 +1,8 @@
 [ {
-  "nombre" : "Juli",
-  "apellido" : "Fazzio",
-  "dni" : "22222222",
-  "genero" : "F",
-  "telefono" : "2222222222",
-  "contraseña" : "dae1236"
-}, {
-  "nombre" : "Juli",
-  "apellido" : "Fazzio",
-  "dni" : "22222222",
-  "genero" : "F",
-  "telefono" : "2222222222",
-  "contraseña" : "dae1236"
-}, {
-  "nombre" : "Martu",
-  "apellido" : "Rios",
-  "dni" : "44444444",
-  "genero" : "O",
-  "telefono" : "2234563416",
-  "contraseña" : "dasda321"
-}, {
-  "nombre" : "Martu",
-  "apellido" : "Rios",
-  "dni" : "44444444",
-  "genero" : "O",
-  "telefono" : "2234563416",
-  "contraseña" : "dasda321"
+  "nombre" : null,
+  "apellido" : null,
+  "dni" : "12345678",
+  "genero" : null,
+  "telefono" : null,
+  "contraseña" : "12345678"
 } ]

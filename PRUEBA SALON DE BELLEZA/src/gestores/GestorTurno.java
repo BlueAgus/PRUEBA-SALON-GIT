@@ -837,9 +837,9 @@ public class GestorTurno {
         try (FileWriter writer = new FileWriter(archivoTurnos)) {
             // Serializar el mapa de turnos a JSON
             gson.toJson(listaTurnos, writer);
-            System.out.println("Turnos guardados correctamente en el archivo JSON.");
+
         } catch (IOException e) {
-            System.out.println("Error al guardar los turnos: " + e.getMessage());
+            System.out.println("Error al guardar los datos de Turnos");
         }
     }
 
@@ -854,12 +854,11 @@ public class GestorTurno {
                 listaTurnos = new MapaGenerico<>(); // En caso de que el archivo esté vacío
             }
 
-            System.out.println("Turnos cargados correctamente desde el archivo JSON.");
         } catch (FileNotFoundException e) {
-            System.out.println("Archivo JSON no encontrado. Se creará uno nuevo al guardar.");
+            System.out.println("Archivo no encontrado. Se creará uno nuevo al guardar.");
             listaTurnos = new MapaGenerico<>();
         } catch (IOException e) {
-            System.out.println("Error al leer los turnos: " + e.getMessage());
+            System.out.println("Error al leer los datos guardados de Turnos");
         }
 
     }

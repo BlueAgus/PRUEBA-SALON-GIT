@@ -445,7 +445,7 @@ public class GestorCliente {
             // Convertir la lista de clientes a JSON y guardarlo en el archivo
             gson.toJson(clientes, fileWriter);
         } catch (IOException e) {
-            System.out.println("No se puede guardar el archivo de clientes: " + e.getMessage());
+            System.out.println("Error al guardar los datos de Clientes");
         }
     }
 
@@ -453,9 +453,10 @@ public class GestorCliente {
         try (FileReader fileReader = new FileReader(archivoClientes)) {
             // Deserializar el archivo JSON a una lista de objetos Cliente
             clientes = gson.fromJson(fileReader, new TypeToken<List<Cliente>>(){}.getType());
-            System.out.println("Archivo de clientes leído exitosamente.");
+
         } catch (IOException e) {
-            System.out.println("No se puede leer el archivo de clientes: " + e.getMessage());
+            System.out.println("Error al leer los datos almacenados de Clientes");
+
         }
     }
 

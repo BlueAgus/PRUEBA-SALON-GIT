@@ -610,7 +610,7 @@ public class GestorProfesional {
         try (FileWriter fileWriter = new FileWriter(archivoProfesionales)) {
             gson.toJson(profesionales, fileWriter);
         } catch (IOException e) {
-            System.out.println("Error al guardar el archivo de profesionales: " + e.getMessage());
+            System.out.println("Error al guardar los datos de profesionales: " + e.getMessage());
         }
     }
 
@@ -624,7 +624,7 @@ public class GestorProfesional {
             System.out.println("El archivo de profesionales no existe, se creará uno nuevo al guardar.");
             profesionales = new ArrayList<>();
         } catch (IOException e) {
-            System.out.println("Error al leer el archivo de profesionales: " + e.getMessage());
+            System.out.println("Error al leer los datos almacenados de Profesionales");
         }
     }
 

@@ -527,9 +527,8 @@ public class GestorRecepcionista {
         try {
             objectMapper.writerWithDefaultPrettyPrinter()
                     .writeValue(new File(archivoRecepcionista), almacenPersonas);
-            System.out.println("Datos guardados exitosamente en el archivo JSON.");
         } catch (IOException e) {
-            System.out.println("Error al guardar los datos en el archivo JSON: " + e.getMessage());
+            System.out.println("Error al guardar los datos de Recepcionistas");
         }
     }
 
@@ -541,7 +540,7 @@ public class GestorRecepcionista {
             objectMapper.writeValue(new File(archivoRecepcionista), almacenPersonas);
 
         } catch (IOException e) {
-            System.out.println("Error al guardar los datos: " + e.getMessage());
+            System.out.println("Error al guardar los datos Recepcionistas");
         }
     }
 
@@ -560,7 +559,7 @@ public class GestorRecepcionista {
                 System.out.println("El archivo no existe.");
             }
         } catch (IOException e) {
-            System.out.println("Error al leer los datos: " + e.getMessage());
+            System.out.println("Error al leer los datos almacenados de Recepcionistas");
         }
     }
 }

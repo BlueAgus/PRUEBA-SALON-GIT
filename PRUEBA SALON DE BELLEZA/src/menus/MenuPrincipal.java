@@ -22,7 +22,6 @@ public class MenuPrincipal {
     GestorRecepcionista recepcionistas;
     GestorCliente clientes;
 
-
     ///servicios
     GestorDepilacion gestorDepilacion;
     GestorPestania gestorPestania;
@@ -34,6 +33,7 @@ public class MenuPrincipal {
 
     public void menuPrincipal() {
 
+
         MenuAdministrador menuAdministrador = new MenuAdministrador();
         MenuRecepcionista menuRecepcionista = new MenuRecepcionista();
         MenuProfesional menuProfesional = new MenuProfesional();
@@ -42,7 +42,7 @@ public class MenuPrincipal {
 
         int opcion = -1;
         do {
-
+            try {
             System.out.println("Bienvenido a Estetica Queens!\n");
             System.out.println("¿Quién está ingresando?");
             System.out.println("--------------------");
@@ -52,12 +52,10 @@ public class MenuPrincipal {
             System.out.println("0. Salir ");
             System.out.println("--------------------");
             System.out.print("Ingrese una opción: ");
-            try {
+
                 opcion = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Opcion invalida: ingrese numeros del 0 al 3");
                 scanner.nextLine();
-            }
+
 
             switch (opcion) {
                 case 1:
@@ -65,7 +63,7 @@ public class MenuPrincipal {
                     if (primerIngreso()) {
                         llenarAdministrador();
                     } else {
-                        System.out.println("Bienvenido administrador ");
+                        System.out.println("Bienvenido administrador! ");
                         String dni = iniciarSesion(1);
                         if (dni != null) {
                             menuAdministrador.mostrarMenu(dni, clientes, profesionales, recepcionistas, administradores, gestorPestania, gestorDepilacion, gestorManicura, gestorTurno, gestorFactura);
@@ -99,18 +97,20 @@ public class MenuPrincipal {
                 case 0:
                     boolean salir = false;
                     do {
-                        System.out.println("Deseas guardar los cambios realizados?");
+                        System.out.println("\nDeseas guardar los cambios realizados?");
                         System.out.println("1.Salir sin guardar. ");
-                        System.out.println("1.Salir y guardar todos los cambios.");
+                        System.out.println("2.Salir y guardar todos los cambios.");
+                        System.out.print("Ingrese una opción: ");
 
                         int opc = scanner.nextInt();
                         scanner.nextLine();
-                        if (opcion == 1) {
-                            cerrarSistema();
-                            System.out.println("Se ha guardado con exito.");
+
+                        if (opc == 1) {
+                            System.out.println("Cerrando sesión...");
                             salir = true;
-                        } else if (opcion == 2) {
-                            System.out.println("saliendo...");
+                        } else if (opc== 2) {
+                            cerrarSistema();
+                            System.out.println("Se ha guardado con exito...Cerrando sesión");
                             salir = true;
                         }
                     } while (!salir);
@@ -118,6 +118,9 @@ public class MenuPrincipal {
                     break;
                 default:
                     System.out.println("Opción no válida.");
+            }
+            } catch (InputMismatchException e) {
+                System.out.println("Opcion invalida. Ingrese numeros del 0 al 3");
             }
         } while (opcion != 0);
     }
@@ -127,9 +130,7 @@ public class MenuPrincipal {
         gestorPestania = new GestorPestania();
         gestorManicura = new GestorManicura();
 
-
         gestorTurno = new GestorTurno(gestorDepilacion, gestorPestania, gestorManicura, clientes);
-
 
         profesionales = new GestorProfesional(gestorTurno);
         administradores = new GestorAdministrador();
@@ -138,9 +139,7 @@ public class MenuPrincipal {
 
         //gestorFactura= new GestorFactura(gestorTurno,)
 
-
         gestorTurno.pedirGestorProfesionales(profesionales);
-
 
         profesionales.escribirProfesionalesEnJson();
         profesionales.leerProfesionalesDesdeJson();
@@ -157,8 +156,8 @@ public class MenuPrincipal {
         gestorDepilacion.escribirServiciosEnJson();
         gestorDepilacion.leerServiciosDesdeJson();
 
-        gestorPestania.escribirServiciosEnJson();
-        gestorPestania.leerServiciosDesdeJson();
+        gestorPestania.escribirPestañasEnJson();
+        gestorPestania.leerPestañasDesdeJson();
 
         gestorManicura.escribirServiciosEnJson();
         gestorManicura.leerServiciosDesdeJson();
@@ -179,19 +178,18 @@ public class MenuPrincipal {
         clientes.escribirClientesEnJson();
 
         gestorDepilacion.escribirServiciosEnJson();
-        gestorPestania.escribirServiciosEnJson();
+        gestorPestania.escribirPestañasEnJson();
         gestorManicura.escribirServiciosEnJson();
 
         gestorTurno.guardarTurnosEnArchivo();
         gestorFactura.escribirFacturasEnEnJson();
 
-        System.out.println("Se ha cerrado el sistema. ");
     }
 
     public void llenarAdministrador() {
 
         administradores.guardarArchivoAdministradores();
-        System.out.println("Bienvenido administrador ! ");
+        System.out.println("Bienvenido administrador! ");
     }
 
     //1 admin/ 2 recepcionista/ 3 profesional
@@ -218,13 +216,13 @@ public class MenuPrincipal {
                         break;
                     case 3:
                         if (profesionales.buscarPersonas(dni)) {
-                        contra = profesionales.buscarContraseña(dni);
-                    }
+                            contra = profesionales.buscarContraseña(dni);
+                        }
                         break;
                 }
 
                 if (contra == null) {
-                    System.out.println("no tiene contrasenia..");
+                    System.out.println("No tiene contraseña..");
                     break;
                 }
                 contrapedida = pedirContraseña();
@@ -233,7 +231,7 @@ public class MenuPrincipal {
                     valido = true;
                     tienecuenta = true; //
                 } else {
-                    System.out.println("Contraseña incorrecta. Inténtalo nuevamente.");
+                    System.out.println("Contraseña incorrecta. Intentelo nuevamente.");
                 }
             } catch (DNInoEncontradoException e) {
                 System.out.println(e.getMessage() + " Vuelva a intentar");

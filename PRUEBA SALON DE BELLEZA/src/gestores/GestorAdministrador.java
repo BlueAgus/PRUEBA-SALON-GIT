@@ -35,6 +35,15 @@ public class GestorAdministrador {
     }
 
 
+    public void agregarAdmi()
+    {
+
+        Administrador administrador= new Administrador(null,null, "12345678", null,null,"12345678");
+        administradores.add(administrador);
+
+        guardarArchivoAdministradores();
+    }
+
     public boolean agregarAdministrador() {
         boolean cargado = false;
         String dni = "";
@@ -519,8 +528,6 @@ public class GestorAdministrador {
     }
 
 
-
-
     /////////////////////////MANEJO DE ARCHIVOSS.//////////////////////////
 
     public void guardarArchivoAdministradores() {
@@ -529,9 +536,9 @@ public class GestorAdministrador {
 
         try {
             objectMapper.writeValue(new File(archivoAdministradores), administradores);
-            System.out.println("Lista de administradores guardada correctamente en " + archivoAdministradores);
+
         } catch (IOException e) {
-            System.err.println("Error al guardar la lista de administradores en el archivo JSON: " + e.getMessage());
+            System.err.println("Error al guardar los datos de Administradores");
         }
     }
 
@@ -549,14 +556,15 @@ public class GestorAdministrador {
 
                 // Asignar los datos leídos a la lista de administradores
                 this.administradores = listaCargada;
-                System.out.println("Datos cargados correctamente desde el archivo: " + archivoAdministradores);
+
             } else {
-                System.out.println("El archivo " + archivoAdministradores + " no existe. Se inicializará la lista vacía.");
+                System.out.println("El archivo de Administradores no existe. Se inicializará la lista vacía.");
                 this.administradores = new ArrayList<>(); // Lista vacía si el archivo no existe
             }
         } catch (IOException e) {
-            System.err.println("Error al leer los datos desde el archivo JSON: " + e.getMessage());
-        }}
+            System.err.println("Error al leer los datos almacenados de Administradores");
+        }
+    }
 
 
 }
