@@ -36,8 +36,9 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
     public void agregarServicio() {
 
         double precio = pedirPrecio();
-        String duracion = pedirDuracion();
         TipoPestanias tipoPestanias = pedirTipoPestanias();
+        String duracion = pedirDuracion();
+
 
         GestorPrecios.modificarPrecio(Pestanias.class, tipoPestanias , precio);// no mover
 
@@ -244,15 +245,15 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
 
     // Validación del precio
     private double pedirPrecio() {
-        double precio = 0;
+        double precio = -1;
         while (precio <= 0) {
             try {
                 System.out.print("Introduce el precio del servicio: ");
                 precio = scanner.nextDouble();
                 scanner.nextLine();
 
-                if (precio <= 0) {
-                    System.out.println("El precio debe ser mayor a 0.");
+                if (precio <= 0|| precio>500000) {
+                    System.out.println("El precio debe ser mayor a 0 y menor a 500000");
                 }
             } catch (InputMismatchException a) {
                 System.out.println("Solo es posible ingresar numeros");
