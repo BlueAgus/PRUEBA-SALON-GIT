@@ -531,8 +531,8 @@ public class GestorAdministrador {
     /////////////////////////MANEJO DE ARCHIVOSS.//////////////////////////
 
     public void guardarArchivoAdministradores() {
-        ObjectMapper objectMapper = new ObjectMapper(); // Crear una instancia de ObjectMapper
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT); // Habilitar formato legible
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT); // para que sea legible
 
         try {
             objectMapper.writeValue(new File(archivoAdministradores), administradores);
@@ -545,21 +545,17 @@ public class GestorAdministrador {
     public void leerDesdeJSON() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            // Comprobar si el archivo JSON existe antes de leerlo
             File archivo = new File(archivoAdministradores);
             if (archivo.exists()) {
-                // Leer el contenido del archivo y deserializarlo en una lista de Administrador
                 List<Administrador> listaCargada = objectMapper.readValue(
                         archivo,
                         objectMapper.getTypeFactory().constructCollectionType(List.class, Administrador.class)
                 );
-
-                // Asignar los datos leídos a la lista de administradores
                 this.administradores = listaCargada;
 
             } else {
-                System.out.println("El archivo de Administradores no existe. Se inicializará la lista vacía.");
-                this.administradores = new ArrayList<>(); // Lista vacía si el archivo no existe
+                System.out.println("El archivo de Administradores no existe.");
+                this.administradores = new ArrayList<>();
             }
         } catch (IOException e) {
             System.err.println("Error al leer los datos almacenados de Administradores");
