@@ -189,7 +189,7 @@ public class GestorRecepcionista {
     }
 
     public void verificarCarga(Recepcionista recepcionista) {
-        int opcion=-1;
+        int opcion = -1;
         do {
             try {
                 System.out.println("¿Deseas modificar algo de la persona?");
@@ -410,7 +410,7 @@ public class GestorRecepcionista {
                 System.out.println("Has ingresado la misma contraseña. Intenta de nuevo.");
             } else if (nuevaContrasenia.isEmpty()) {
                 System.out.println("La contraseña no puede estar vacía. Intenta de nuevo.");
-            } else if (!nuevaContrasenia.matches(".\\d.")) {//tiene al menos un num?
+            } else if (!nuevaContrasenia.matches("[A-Za-z0-9]+")) {
                 System.out.println("La contraseña debe contener al menos un número. Intenta de nuevo.");
             } else if (nuevaContrasenia.length() < 6 || nuevaContrasenia.length() > 12) {
                 System.out.println("La contraseña debe tener entre 6 y 12 caracteres. Intenta de nuevo.");
@@ -431,6 +431,9 @@ public class GestorRecepcionista {
                     if (opcion == 2) {
                         System.out.println("Contraseña definitiva establecida.");
                         break;
+                    } else if (opcion == 1) {
+                        pedirContraseña();
+
                     } else if (opcion != 1) {
                         System.out.println("Opción no válida. Intenta de nuevo.");
                     }
@@ -458,7 +461,7 @@ public class GestorRecepcionista {
             if (contraseña.length() < 6 || contraseña.length() > 12) {
                 System.out.println("Tu contraseña es muy débil o tiene un tamaño incorrecto. Vuelve a intentar.");
                 // Vuelve al principio del ciclo si la contraseña no es válida
-            } else if (!contraseña.matches(".*\\d.*")) {  // Verifica que haya al menos un número
+            } else if (!contraseña.matches("[A-Za-z0-9]+")) {  // Verifica que haya al menos un número
                 System.out.println("Tu contraseña debe contener al menos un número. Vuelve a intentarlo.");
 
             } else {
@@ -471,6 +474,7 @@ public class GestorRecepcionista {
             System.out.println("Deseas modificar la contraseña?");
             System.out.println("1. SI deseo");
             System.out.println("2. NO deseo");
+            System.out.println("Ingrese una opción:");
             try {
                 opcion = scanner.nextInt();
                 scanner.nextLine();
@@ -490,7 +494,7 @@ public class GestorRecepcionista {
                     if (contraseña.length() < 6 || contraseña.length() > 12) {
                         System.out.println("Tu contraseña es muy débil o tiene un tamaño incorrecto. Vuelve a intentar.");
 
-                    } else if (!contraseña.matches(".*\\d.*")) {  // Verifica que haya al menos un número
+                    } else if (!contraseña.matches("[A-Za-z0-9]+")) {  // Verifica que haya al menos un número
                         System.out.println("Tu contraseña debe contener al menos un número. Vuelve a intentarlo.");
 
                     }

@@ -1,1 +1,8 @@
-[ ]
+[ {
+  "nombre" : "Melina",
+  "apellido" : "Mamani",
+  "dni" : "45399965",
+  "genero" : "M",
+  "telefono" : "2235066590",
+  "contraseña" : "45399965"
+} ]

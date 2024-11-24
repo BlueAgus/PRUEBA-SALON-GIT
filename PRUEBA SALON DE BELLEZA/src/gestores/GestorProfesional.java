@@ -387,7 +387,7 @@ public class GestorProfesional {
                 System.out.println("Has ingresado la misma contraseña. Intenta de nuevo.");
             } else if (nuevaContrasenia.isEmpty()) {
                 System.out.println("La contraseña no puede estar vacía. Intenta de nuevo.");
-            } else if (!nuevaContrasenia.matches(".\\d.")) {//tiene al menos un num?
+            } else if (!nuevaContrasenia.matches("[A-Za-z0-9]+")) {
                 System.out.println("La contraseña debe contener al menos un número. Intenta de nuevo.");
             } else if (nuevaContrasenia.length() < 6 || nuevaContrasenia.length() > 12) {
                 System.out.println("La contraseña debe tener entre 6 y 12 caracteres. Intenta de nuevo.");
@@ -436,7 +436,7 @@ public class GestorProfesional {
             if (contraseña.length() < 6 || contraseña.length() > 12) {
                 System.out.println("Tu contraseña es muy débil o tiene un tamaño incorrecto. Vuelve a intentar.");
                 // Vuelve al principio del ciclo si la contraseña no es válida
-            } else if (!contraseña.matches(".*\\d.*")) {  // Verifica que haya al menos un número
+            } else if (!contraseña.matches("[A-Za-z0-9]+")) {  // Verifica que haya al menos un número
                 System.out.println("Tu contraseña debe contener al menos un número. Vuelve a intentarlo.");
 
             } else {
@@ -468,7 +468,7 @@ public class GestorProfesional {
                     if (contraseña.length() < 6 || contraseña.length() > 12) {
                         System.out.println("Tu contraseña es muy débil o tiene un tamaño incorrecto. Vuelve a intentar.");
                         continue;  // Vuelve al principio del ciclo si la contraseña no es válida
-                    } else if (!contraseña.matches(".*\\d.*")) {  // Verifica que haya al menos un número
+                    } else if (!contraseña.matches("[A-Za-z0-9]+")) {
                         System.out.println("Tu contraseña debe contener al menos un número. Vuelve a intentarlo.");
                         continue;
                     }

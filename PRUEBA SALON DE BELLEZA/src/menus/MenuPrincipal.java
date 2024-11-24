@@ -168,7 +168,7 @@ public class MenuPrincipal {
         }
 
 
-        recepcionistas.escribirArchivoRecepcionistas();
+        //recepcionistas.escribirArchivoRecepcionistas();
         recepcionistas.leerDesdeJson();
 
        // clientes.escribirClientesEnJson();

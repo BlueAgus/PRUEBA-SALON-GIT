@@ -68,7 +68,7 @@ public class MenuAdministrador {
             System.out.println("2.Gestionar profesionales");
             System.out.println("3.Gestionar clientes");
             System.out.println("4.Gestionar mis datos");
-            System.out.println("0- Volver al Menú anterior");
+            System.out.println("0. Volver al Menú anterior");
             System.out.print("Ingrese una opción: ");
 
             opcion = scanner.nextInt();
