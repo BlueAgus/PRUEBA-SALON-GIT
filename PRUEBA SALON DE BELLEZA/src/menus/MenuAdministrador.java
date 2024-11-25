@@ -716,7 +716,7 @@ public class MenuAdministrador {
                             try {
                                 System.out.println("\n");
                                 System.out.println("---------------------------------");
-                                System.out.println("¿De que servicio desea eliminar el turno? ");
+                                System.out.println("¿De que servicio desea modificar el turno? ");
                                 System.out.println("1. Depilacion");
                                 System.out.println("2. Manicura");
                                 System.out.println("3. Pestañas");
@@ -755,11 +755,15 @@ public class MenuAdministrador {
                     case 5:
                         List<Turno> turnosProximos = turnos.mostrarTurnosVigentes();
                         int contador = 0;
-
-                        for (Turno turno1 : turnosProximos) {
-                            System.out.println(contador + " " + turno1);
-                            contador++;
+                        if (turnosProximos.isEmpty()) {
+                            System.out.println("No hay turnos próximos");
+                        } else {
+                            for (Turno turno1 : turnosProximos) {
+                                System.out.println(contador + " " + turno1);
+                                contador++;
+                            }
                         }
+
                         break;
                     case 6:
                         turnos.mostrarHistorialTurnos();

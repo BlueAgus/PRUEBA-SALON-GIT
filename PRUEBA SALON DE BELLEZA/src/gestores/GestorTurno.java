@@ -57,7 +57,7 @@ public class GestorTurno {
 
         //pregunta que tipo de servicio
         TipoServicio tipoServicio = gestorDepilacion.pedirTipoServicio();
-        String codServicio =pedirCodServicio(tipoServicio);
+        String codServicio = pedirCodServicio(tipoServicio);
 
 
         if (codServicio == null) {
@@ -65,9 +65,9 @@ public class GestorTurno {
         }
 
         Turno turno = elegirFechaYhorario(codServicio, tipoServicio);
-        try{
+        try {
             turno.setCodigo_servicio(codServicio);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
 
         }
         if (turno == null) {
@@ -109,7 +109,7 @@ public class GestorTurno {
 
         for (List<Turno> e : listaTurnos.getMapa().values()) {
             for (Turno t : e) {
-                if(t.getCod_turno()!=null){
+                if (t.getCod_turno() != null) {
                     if (t.getCod_turno().equals(codTurno)) {
                         return e.remove(t);
                     }
@@ -194,7 +194,7 @@ public class GestorTurno {
             } catch (InputMismatchException e) {
                 System.out.println("Entrada no valida. Por favor ingrese un número.");
                 scanner.nextLine();
-            }catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Debe ingresar un número.");
             }
         }
@@ -250,89 +250,95 @@ public class GestorTurno {
 
         List<Turno> turnosVigentes = mostrarTurnosVigentes();
 
-        int opc = 0;
-        ///eleccion de turno
-        while (true) {
+        if (turnosVigentes.isEmpty()) {
+            System.out.println("No hay turnos de " + tipoServicio);
+            return false;
+        } else {
+            int opc = 0;
+            ///eleccion de turno
+            while (true) {
 
-            System.out.println("OPCIÓN: (o escriba 'salir' para cancelar) ");
-            String opcElegida = scanner.nextLine();
+                System.out.println("OPCIÓN: (o escriba 'salir' para cancelar) ");
+                String opcElegida = scanner.nextLine();
 
-            if (opcElegida.equalsIgnoreCase("salir")) {
-                System.out.println("Operación cancelada por el usuario.");
-                return false;
-            }
-
-            try {
-                opc = Integer.parseInt(opcElegida); // Convierte el String a entero
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Debe ingresar un número.");
-            }
-
-            if (opc < 0 || opc >= turnosVigentes.size()) {
-                System.out.println("Opcion no valida");
-            } else {
-                t = turnosVigentes.get(opc);
-                break;
-            }
-        }
-
-        ///modificacion de turno
-        while (true) {
-            System.out.println("DATOS ACTUALES DEL TURNO: " + t.toString(buscarTipoServicio(t.getCodigo_servicio()), gestorCliente, gestorProfesional));
-            System.out.println("| Ingrese la opcion que desea modificar:");
-            System.out.println("1- Fecha y horario");
-            System.out.println("2- Profesional");
-            System.out.println("3- Cliente");
-
-
-            System.out.println("OPCIÓN: (o escriba 'salir' para cancelar) ");
-            String opcElegida = scanner.nextLine();
-
-            if (opcElegida.equalsIgnoreCase("salir")) {
-                System.out.println("Operación cancelada por el usuario.");
-                return false;
-            }
-
-            try {
-                opc = Integer.parseInt(opcElegida); // Convierte el String a entero
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Debe ingresar un número.");
-            }
-
-            if (opc < 0 || opc > 3) {
-                System.out.println("Opcion no valida");
-            } else {
-                break;
-            }
-        }
-
-        switch (opc) {
-            case 1:
-                Turno aux = elegirFechaYhorario(t.getCodigo_servicio(), tipoServicio);
-                t.setFecha(aux.getFecha());
-                t.setHorario(aux.getHorario());
-                break;
-
-            case 2:
-                String dniProfesional = pedirDNIprofesionalXservicio(t.getCodigo_servicio(), t.getHorario(), t.getFecha());
-
-                if (dniProfesional == null) {
-                    break;
+                if (opcElegida.equalsIgnoreCase("salir")) {
+                    System.out.println("Operación cancelada por el usuario.");
+                    return false;
                 }
 
-                t.setDni_profesional(dniProfesional);
-                break;
-            case 3:
-                String dniCliente = pedirDNIcliente();
-
-                if (dniCliente == null) {
-                    break;
+                try {
+                    opc = Integer.parseInt(opcElegida); // Convierte el String a entero
+                } catch (NumberFormatException e) {
+                    System.out.println("Entrada inválida. Debe ingresar un número.");
                 }
 
-                t.setDni_cliente(dniCliente);
-                break;
-            ///no pongo default pq ya está verificado arriba
+                if (opc < 0 || opc >= turnosVigentes.size()) {
+                    System.out.println("Opcion no valida");
+                } else {
+                    t = turnosVigentes.get(opc);
+                    break;
+                }
+            }
+///modificacion de turno
+            while (true) {
+                System.out.println("DATOS ACTUALES DEL TURNO: " + t.toString(buscarTipoServicio(t.getCodigo_servicio()), gestorCliente, gestorProfesional));
+                System.out.println("| Ingrese la opcion que desea modificar:");
+                System.out.println("1- Fecha y horario");
+                System.out.println("2- Profesional");
+                System.out.println("3- Cliente");
+
+
+                System.out.println("OPCIÓN: (o escriba 'salir' para cancelar) ");
+                String opcElegida = scanner.nextLine();
+
+                if (opcElegida.equalsIgnoreCase("salir")) {
+                    System.out.println("Operación cancelada por el usuario.");
+                    return false;
+                }
+
+                try {
+                    opc = Integer.parseInt(opcElegida); // Convierte el String a entero
+                } catch (NumberFormatException e) {
+                    System.out.println("Entrada inválida. Debe ingresar un número.");
+                }
+
+                if (opc < 0 || opc > 3) {
+                    System.out.println("Opcion no valida");
+                } else {
+                    break;
+                }
+            }
+
+            switch (opc) {
+                case 1:
+                    Turno aux = elegirFechaYhorario(t.getCodigo_servicio(), tipoServicio);
+                    t.setFecha(aux.getFecha());
+                    t.setHorario(aux.getHorario());
+                    break;
+
+                case 2:
+                    String dniProfesional = pedirDNIprofesionalXservicio(t.getCodigo_servicio(), t.getHorario(), t.getFecha());
+
+                    if (dniProfesional == null) {
+                        break;
+                    }
+
+                    t.setDni_profesional(dniProfesional);
+                    break;
+                case 3:
+                    String dniCliente = pedirDNIcliente();
+
+                    if (dniCliente == null) {
+                        break;
+                    }
+
+                    t.setDni_cliente(dniCliente);
+                    break;
+                ///no pongo default pq ya está verificado arriba
+            }
         }
+
+
         return true;
     }
 
@@ -342,7 +348,7 @@ public class GestorTurno {
         if (!(listaTurnos == null && listaTurnos.getMapa().isEmpty())) {
             for (List<Turno> list : listaTurnos.getMapa().values()) {
                 for (Turno t : list) {
-                   // LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+                    // LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
                     LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
 
                     if (fecha.isAfter(LocalDate.now()) || fecha.isEqual(LocalDate.now())) {
@@ -360,9 +366,10 @@ public class GestorTurno {
 
     public void mostrarHistorialTurnos() {
         int i = 0;
-        if(listaTurnos.getMapa().isEmpty()){
+        if (listaTurnos.getMapa().isEmpty()) {
             System.out.println("No hay historial de turnos");
-        }{
+        }
+        {
             for (List<Turno> list : listaTurnos.getMapa().values()) {
                 for (Turno t : list) {
                     //  LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
@@ -401,8 +408,8 @@ public class GestorTurno {
 
         for (List<Turno> list : listaTurnos.getMapa().values()) {
             for (Turno t : list) {
-               // LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
-               // LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+                // LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
+                // LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
                 LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
 
                 if (t.getDni_profesional().equals(dniProfesional) && (fecha.isAfter(LocalDate.now()) || fecha.isEqual(LocalDate.now()))) {
@@ -419,7 +426,7 @@ public class GestorTurno {
 
         for (List<Turno> list : listaTurnos.getMapa().values()) {
             for (Turno t : list) {
-               // LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+                // LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
                 LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
 
                 if (t.getDni_cliente().equals(dniCliente) && fecha.isBefore(LocalDate.now())) {
@@ -522,7 +529,7 @@ public class GestorTurno {
         ///guarda los horarios disponibles y los muestra
         List<LocalTime> horariosDisponibles = mostrarTurnosDisponiblesXfecha(fecha, cod_servicio, tipoServicio);
 
-        int indiceHorario=0;
+        int indiceHorario = 0;
         ///seleccion de horario
         while (true) {
             try {
@@ -556,18 +563,16 @@ public class GestorTurno {
             } catch (InputMismatchException e) {
                 System.out.println("Entrada no valida. Por favor ingrese un número.");
                 scanner.nextLine();///limpia buffer
-            }catch (NullPointerException i)
-            {
+            } catch (NullPointerException i) {
                 System.out.println("Entrada no valida. Por favor ingrese un número.");
                 scanner.nextLine();
-            }catch (NumberFormatException r)
-            {
+            } catch (NumberFormatException r) {
                 System.out.println("Entrada no valida. Por favor ingrese un número.");
                 scanner.nextLine();
             }
         }
 
-       // String horario = Turno.convertirLocalTimeAString(horariosDisponibles.get(indiceHorario));
+        // String horario = Turno.convertirLocalTimeAString(horariosDisponibles.get(indiceHorario));
         String horario = ConvertirFechaHoras.convertirHoraAString(horariosDisponibles.get(indiceHorario));
         Turno turno = new Turno(fecha, horario);
         ///System.out.println(turno);
