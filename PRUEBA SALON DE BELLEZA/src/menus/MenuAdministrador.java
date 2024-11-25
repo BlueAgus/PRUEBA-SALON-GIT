@@ -130,8 +130,6 @@ public class MenuAdministrador {
                 System.out.println("Opción invalida");
                 scanner.nextLine();
             }
-
-
         } while (opcion != 0);
     }
 
@@ -231,8 +229,6 @@ public class MenuAdministrador {
                 System.out.println("Opción invalida");
                 scanner.nextLine();
             }
-
-
         } while (opcion != 0);
     }
 
@@ -325,8 +321,6 @@ public class MenuAdministrador {
                 System.out.println("Opción invalida");
                 scanner.nextLine();
             }
-
-
         } while (opcion != 0);
     }
 
@@ -423,7 +417,6 @@ public class MenuAdministrador {
                 scanner.nextLine();
             }
         } while (opcion != 0);
-
     }
 
     public void menuServicio(GestorPestania pestania, GestorDepilacion depilacion, GestorManicura manicura, GestorCliente cliente, GestorTurno turnos) {
@@ -483,8 +476,6 @@ public class MenuAdministrador {
                                 System.out.println("Opción invalida");
                                 scanner.nextLine();
                             }
-
-
                         } while (opc < 1 || opc > 3);
 
                         break;
@@ -662,7 +653,6 @@ public class MenuAdministrador {
                 scanner.nextLine();
             }
         } while (opcion != 0);
-
     }
 
     public void menuTurnos(GestorTurno turnos, GestorCliente clientes, GestorProfesional profesionales) {

@@ -86,12 +86,9 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
             }
             throw new CodigoNoEncontradoException("El código de servicio no existe: " + cod_Servicio);
         }
-
     }
 
     ///con codigo
-
-
     @Override
     public Depilacion buscarPorCodigo(String codServicio) throws CodigoNoEncontradoException {
         Depilacion depilacion = null;
@@ -156,7 +153,6 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                 System.out.println(depilacion);
             }
         }
-
     }
 
     public void modificarServicioParametro(Depilacion depilacion) {
@@ -198,9 +194,6 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
                 scanner.nextLine();
             }
-
-
-
         }
     }
 
@@ -272,6 +265,7 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Entrada no válida. Por favor, vuelva a intentarlo.");
+                scanner.nextLine();
             }
         }
     }
@@ -347,7 +341,6 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                 scanner.nextLine();
             }
         }
-
         return tipo;
     }
 
@@ -381,7 +374,6 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                 System.out.println("Error: Por favor, ingresa un número válido.");
                 scanner.nextLine();
             }
-
         }
         return tipo;
     }
