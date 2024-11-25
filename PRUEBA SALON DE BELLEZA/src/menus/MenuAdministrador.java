@@ -347,8 +347,6 @@ public class MenuAdministrador {
                         }
                         break;
                     case 5:
-                        System.out.println("\n");
-                        System.out.println("Estos son todos los clientes registrados:");
                         clientes.mostrarTodos();
                         break;
                     default:
@@ -498,6 +496,7 @@ public class MenuAdministrador {
 
                         break;
                     case 5:
+
                         System.out.println("\n");
                         System.out.println("Estos son los servicios disponibles en Queens: ");
                         System.out.println("SERVICIOS DE DEPILACION-----------------------");

@@ -170,8 +170,13 @@ public class GestorCliente {
     }
 
     public void mostrarTodos() {
-        for (Cliente cliente : clientes) {
-            System.out.println(cliente.toString());
+        if(!clientes.isEmpty()) {
+            System.out.println("Clientes: ");
+            for (Cliente cliente : clientes) {
+                System.out.println(cliente.toString());
+            }
+        }else {
+            System.out.println("No hay clientes cargados...");
         }
     }
 

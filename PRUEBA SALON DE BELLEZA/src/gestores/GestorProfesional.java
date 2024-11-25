@@ -180,7 +180,11 @@ public class GestorProfesional {
     //------------------------------------------------------------------------------------------------------------
 
     public void mostrarTodos() {
-        System.out.println(profesionales);
+        if(!profesionales.isEmpty()) {
+            System.out.println(profesionales);
+        }else {
+            System.out.println("No hay profesionales...");
+        }
     }
 
 
