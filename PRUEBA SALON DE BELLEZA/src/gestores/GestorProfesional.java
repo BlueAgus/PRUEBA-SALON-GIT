@@ -85,43 +85,39 @@ public class GestorProfesional {
 
         System.out.println("Ingrese los servicios que realiza: ");
         do {
-            //aca elige si es manicura,depi, o pestanias.
-            TipoServicio tipoServicio1 = gestorDepilacion.pedirTipoServicio();
-            ///aca que tipo dentro de los otros tres hace
-            System.out.println("SELECCIONE EL TIPO DE " + tipoServicio1 + " QUE REALIZA");
-            String e = gestorTurno.pedirCodServicio(tipoServicio1);
+            // Elegir el tipo de servicio (depilación, manicura, etc.)
+            TipoServicio tipoServicio = gestorDepilacion.pedirTipoServicio();
+            System.out.println("SELECCIONE EL TIPO DE " + tipoServicio + " QUE REALIZA");
+            String codigoServicio = gestorTurno.pedirCodServicio(tipoServicio);
+            profesional.agregarProfesion(codigoServicio);
 
-            profesional.agregarProfesion(e);//minimo una profesion.
-            System.out.println("Deseas agregar otra profesion?");
-            System.out.println("1. Si deseo.");
-            System.out.println("2. No deseo.");
+            System.out.println("¿Deseas agregar otra profesión?");
+            System.out.println("1. Sí");
+            System.out.println("2. No");
+            System.out.print("Ingrese una opción: ");
+
             try {
                 opcion = scanner.nextInt();
                 scanner.nextLine();
 
-                if (opcion == 1) {
-                    TipoServicio tipoServicio2 = gestorDepilacion.pedirTipoServicio();
-                    System.out.println("SELECCIONE EL TIPO DE " + tipoServicio2 + " QUE REALIZA");
-                    e = gestorTurno.pedirCodServicio(tipoServicio2);
-                    profesional.agregarProfesion(e);
-                } else if (opcion != 2) {
-                    System.out.println("Ingresa una opcion valida por favor.");
-                }
+                // Si selecciona "Sí", el ciclo se repite, de lo contrario, se termina.
             } catch (InputMismatchException e1) {
                 System.out.println("Error: Por favor, ingresa un número válido.");
                 scanner.nextLine();
+                opcion = 2; // Si ocurre un error, terminamos el ciclo
             }
-        } while (opcion != 2);
+
+        } while (opcion == 1);
 
         cargado = true;
+
+        System.out.println(profesional);
+        verificarCarga(profesional);
         if (profesionales.add(profesional)) {
             System.out.printf("\n PROFESIONAL AGREGADO EXITOSAMENTE \n");
         } else {
             System.out.printf("\nERROR AL AGREGAR PROFESIONAL\n");
         }
-        System.out.println(profesional);
-        verificarCarga(profesional);
-        profesionales.add(profesional);
         return cargado;
     }
     //------------------------------------------------------------------------------------------------------------
@@ -157,6 +153,7 @@ public class GestorProfesional {
                 System.out.println("¿Deseas modificar algo de la persona?");
                 System.out.println("1. Sí");
                 System.out.println("2. No");
+                System.out.println("Ingrese una opcion:");
 
                 opcion = scanner.nextInt();
                 scanner.nextLine();
@@ -166,7 +163,6 @@ public class GestorProfesional {
                         modificarProfesional(profesional);
                         break;
                     case 2:
-                        System.out.println("....");
                         break;
                     default:
                         System.out.println("Opción no válida, selecciona nuevamente.");
@@ -188,7 +184,6 @@ public class GestorProfesional {
             System.out.println("No hay profesionales...");
         }
     }
-
 
     //------------------------------------------------------------------------------------------------------------
     public boolean eliminarPersona(String dni) {
@@ -323,7 +318,7 @@ public class GestorProfesional {
                     }
                 }
                 if (dniRepetido) {
-                    throw new DNIyaCargadoException("DNI ya cargado en el sistema: " + dni);
+                    throw new DNIyaCargadoException("DNI ya cargado en el sistema: " + dni +"\n");
                 } else {
                     dnivalido = true;
                 }
@@ -438,6 +433,7 @@ public class GestorProfesional {
             System.out.println("Deseas modificar la contraseña?");
             System.out.println("1. SI deseo");
             System.out.println("2. NO deseo");
+            System.out.println("Ingrese un opcion: ");
             try {
                 opcion = scanner.nextInt();
                 scanner.nextLine();
@@ -535,7 +531,7 @@ public class GestorProfesional {
             System.out.println("5. Telefono");
             System.out.println("6. Servicios que ofrece");
             System.out.println("7. Modificar contraseña");
-            System.out.println("8. Salir");
+            System.out.println("0. Salir");
             System.out.println("---------------------------------");
             System.out.println("Ingrese una opción: ");
             try {
@@ -578,7 +574,7 @@ public class GestorProfesional {
                     case 7:
                         profesional.setContraseña(pedirContraseñaNueva(profesional.getContraseña()));
                         break;
-                    case 8:
+                    case 0:
                         continuarModificando = false;
                         break;
                     default:
@@ -616,7 +612,6 @@ public class GestorProfesional {
             System.out.println("Error al leer los datos almacenados de Profesionales");
         }
     }
-
 
     //--------------------------------------------------GET Y SET----------------------------------------------------------
 

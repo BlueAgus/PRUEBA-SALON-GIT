@@ -1,13 +1,14 @@
 package menus;
 
 import gestores.*;
+import model.Turno;
 
 import java.nio.channels.ScatteringByteChannel;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuProfesional {
-
 
     public void menuProfesional(GestorCliente cliente, GestorTurno turnos, String dniProfesional, GestorDepilacion depilacion, GestorManicura manicura, GestorPestania pestania) {
         Scanner scanner = new Scanner(System.in);
@@ -33,10 +34,30 @@ public class MenuProfesional {
                         System.out.println("Saliendo...");
                         break;
                     case 1:
-                        turnos.historialTurnosXprofesional(dniProfesional);
+                        List<Turno> turnosProximos = turnos.buscarTurnosXdniProfesionalVigentes(dniProfesional);
+
+                        int contador = 0;
+                        if (turnosProximos.isEmpty()) {
+                            System.out.println("El profesional no tiene turnos agendados proximamente");
+                        } else {
+                            for (Turno turno : turnosProximos) {
+                                System.out.println(contador + " " + turno);
+                                contador++;
+                            }
+                        }
                         break;
                     case 2:
-                        turnos.buscarTurnosXdniProfesionalVigentes(dniProfesional);
+                        List<Turno> historialTurnos = turnos.historialTurnosXprofesional(dniProfesional);
+
+                        int contador1 = 0;
+                        if (historialTurnos.isEmpty()) {
+                            System.out.println("El profesional no tiene un historial de turnos");
+                        } else {
+                            for (Turno turno : historialTurnos) {
+                                System.out.println(contador1 + " " + turno);
+                                contador1++;
+                            }
+                        }
                         break;
                     case 3:
 
@@ -61,7 +82,7 @@ public class MenuProfesional {
                                 } else if (opc5 == 3) {
                                     pestania.reportarFalla(turnos);
                                 } else {
-                                    System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                    System.out.println("\n¡Opción no válida! Por favor, intente de nuevo.");
                                 }
                             } catch (InputMismatchException a) {
                                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
@@ -72,7 +93,7 @@ public class MenuProfesional {
 
                         break;
                     default:
-                        System.out.println("Opción no válida.");
+                        System.out.println("\nOpción no válida.");
                 }
             } catch (InputMismatchException a) {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");

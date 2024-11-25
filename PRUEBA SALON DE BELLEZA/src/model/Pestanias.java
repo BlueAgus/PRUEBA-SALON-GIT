@@ -27,7 +27,7 @@ public class Pestanias extends Servicio {
     @Override
     public void setPrecio(double precio) {
         super.setPrecio(precio);
-        GestorPrecios.modificarPrecio(Pestanias.class, this.tipoPestanias, precio);
+        GestorPrecios.modificarPrecio(Manicura.class, this.tipoPestanias, precio);
         //Actualizamos el gestor, esto porque en algunos lados se actualiza el precio
         //usando el set y esto lo va a modificar en el gestor para que tengan el mismo valor
 

@@ -128,6 +128,7 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
                 System.out.println("1. Precio");
                 System.out.println("2. Duración");
                 System.out.println("3. Tipo de manicura");
+                System.out.println("2. Diseño");
                 System.out.println("0. Salir");
                 System.out.println("---------------------------------");
                 System.out.println("Ingrese una opción: ");
@@ -241,44 +242,36 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
 
     public String pedirCodServicio() {
-        // Verifica si la lista de servicios está vacía
-        if (almacenServicios.isEmpty()) {
-            System.out.println("No hay servicios disponibles.");
-            return null;
-        }
-
-        // Muestra los servicios disponibles
+        //muestra servicios y devuelve el codigo
         for (int i = 0; i < almacenServicios.size(); i++) {
             System.out.println((i + 1) + ". \n" + almacenServicios.get(i));
         }
-
         int opc = 0;
-
         while (true) {
+
             try {
-                System.out.println("OPCIÓN: (o escriba 'salir' para cancelar) ");
+                System.out.println("OPCION: (o escriba 'salir' para cancelar) ");
                 String opcElegida = scanner.nextLine();
 
-                // Verifica si el usuario quiere cancelar
+
                 if (opcElegida.equalsIgnoreCase("salir")) {
                     System.out.println("Operación cancelada por el usuario.");
                     return null;
                 }
 
-                // Convierte la opción ingresada a un número
+                ///pasa a int un string
                 opc = Integer.parseInt(opcElegida);
-
-                // Valida que la opción esté dentro del rango permitido
-                if (opc < 1 || opc > almacenServicios.size()) {
+                if (opc < 0 || opc > almacenServicios.size()) {
                     System.out.println("Selección inválida. Inténtelo de nuevo.");
                 } else {
-                    // Retorna el código del servicio correspondiente
-                    return almacenServicios.get(opc - 1).getCodigo_servicio();
+                    break;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Entrada no válida. Por favor, vuelva a intentarlo.");
+                System.out.println("Entrada no valida. Por favor vuelva a intentarlo");
+
             }
         }
+        return almacenServicios.get(opc).getCodigo_servicio();
     }
 
     // Validación del precio
@@ -410,11 +403,10 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
     ////////////////////////////////////////GET ////////////////////////////////////////////////////
     public void mostrarManicura() {
         if(almacenServicios.isEmpty()){
-            System.out.println("No hay servicios de manicura");
+            System.out.println("No hay servicios de pestañas");
         }else{
-            for (int i=0;i<almacenServicios.size();i++)
-                System.out.println(i+") "+almacenServicios.get(i));
-            System.out.println("--------------------");
+            for (Manicura m : almacenServicios)
+                System.out.println(m);
         }
 
     }
