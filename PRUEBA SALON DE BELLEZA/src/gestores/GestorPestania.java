@@ -231,36 +231,44 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
     }
 
     public String pedirCodServicio() {
-
-        for (int i = 0; i < almacenServicios.size(); i++) {
-            System.out.println(i + "-" + almacenServicios.get(i));
+        // Verifica si la lista de servicios está vacía
+        if (almacenServicios.isEmpty()) {
+            System.out.println("No hay servicios disponibles.");
+            return null;
         }
-        int opc;
-        while (true) {
 
+        // Muestra los servicios disponibles
+        for (int i = 0; i < almacenServicios.size(); i++) {
+            System.out.println((i + 1) + ". \n" + almacenServicios.get(i));
+        }
+
+        int opc = 0;
+
+        while (true) {
             try {
-                System.out.println("OPCION: (o escriba 'salir' para cancelar) ");
+                System.out.println("OPCIÓN: (o escriba 'salir' para cancelar) ");
                 String opcElegida = scanner.nextLine();
 
-
+                // Verifica si el usuario quiere cancelar
                 if (opcElegida.equalsIgnoreCase("salir")) {
                     System.out.println("Operación cancelada por el usuario.");
                     return null;
                 }
 
-                ///pasa a int un string
+                // Convierte la opción ingresada a un número
                 opc = Integer.parseInt(opcElegida);
-                if (opc < 0 || opc > almacenServicios.size()) {
+
+                // Valida que la opción esté dentro del rango permitido
+                if (opc < 1 || opc > almacenServicios.size()) {
                     System.out.println("Selección inválida. Inténtelo de nuevo.");
                 } else {
-                    break;
+                    // Retorna el código del servicio correspondiente
+                    return almacenServicios.get(opc - 1).getCodigo_servicio();
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Entrada no valida. Por favor vuelva a intentarlo");
-
+                System.out.println("Entrada no válida. Por favor, vuelva a intentarlo.");
             }
         }
-        return almacenServicios.get(opc).getCodigo_servicio();
     }
 
     // Validación del precio

@@ -521,7 +521,6 @@ public class GestorFactura {
                     }
                 }
 
-                System.out.println("Archivo de facturas leído exitosamente.");
             } catch (FileNotFoundException e) {
                 System.out.println("No se encontró el archivo. Se iniciará con un historial vacío.");
                 this.caja = new GestorGenerico<>();

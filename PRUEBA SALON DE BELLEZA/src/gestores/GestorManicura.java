@@ -242,11 +242,13 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
 
     public String pedirCodServicio() {
+        // Verifica si la lista de servicios está vacía
         if (almacenServicios.isEmpty()) {
             System.out.println("No hay servicios disponibles.");
             return null;
         }
 
+        // Muestra los servicios disponibles
         for (int i = 0; i < almacenServicios.size(); i++) {
             System.out.println((i + 1) + ". \n" + almacenServicios.get(i));
         }
@@ -258,16 +260,20 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
                 System.out.println("OPCIÓN: (o escriba 'salir' para cancelar) ");
                 String opcElegida = scanner.nextLine();
 
+                // Verifica si el usuario quiere cancelar
                 if (opcElegida.equalsIgnoreCase("salir")) {
                     System.out.println("Operación cancelada por el usuario.");
                     return null;
                 }
 
+                // Convierte la opción ingresada a un número
                 opc = Integer.parseInt(opcElegida);
 
+                // Valida que la opción esté dentro del rango permitido
                 if (opc < 1 || opc > almacenServicios.size()) {
                     System.out.println("Selección inválida. Inténtelo de nuevo.");
                 } else {
+                    // Retorna el código del servicio correspondiente
                     return almacenServicios.get(opc - 1).getCodigo_servicio();
                 }
             } catch (NumberFormatException e) {
