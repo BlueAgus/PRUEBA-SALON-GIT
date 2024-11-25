@@ -72,9 +72,9 @@ public class GestorPrecios {
     public static double obtenerPrecio(Class<?> claseServicio, Enum<?> tipo) {
         Map<Enum<?>, Double> mapaPrecios = precios.get(claseServicio);
 
-        if (mapaPrecios == null || !mapaPrecios.containsKey(tipo)) {
+        /*if (mapaPrecios == null || !mapaPrecios.containsKey(tipo)) {
             throw new IllegalArgumentException("No se encontró un precio para el tipo " + tipo + " en la clase " + claseServicio.getName());
-        }
+        }*/
 
         return mapaPrecios.get(tipo); // Ahora sabemos que el valor no será null
     }
@@ -189,7 +189,7 @@ public class GestorPrecios {
 
             String json = gson.toJson(mapaParaJSON);
             writer.write(json);
-            System.out.println("Precios guardados exitosamente en precios.json");
+
         } catch (IOException e) {
             System.err.println("Error al guardar precios en el archivo: " + e.getMessage());
         }
@@ -227,7 +227,6 @@ public class GestorPrecios {
                 }
             }
 
-            System.out.println("Precios cargados correctamente desde el archivo JSON.");
         } catch (FileNotFoundException e) {
             System.out.println("Archivo JSON no encontrado. Se creará uno nuevo al guardar.");
             precios = new HashMap<>();
@@ -308,24 +307,6 @@ public class GestorPrecios {
     }
 
 }
-/*
-    public static void modificarPrecio(Class<?> claseServicio, Enum<?> tipo, double nuevoPrecio) {
-        // Asegurar que exista un mapa para la clase
-        precios.putIfAbsent(claseServicio, new HashMap<>());
-
-        Map<Enum<?>, Double> mapaPrecios = precios.get(claseServicio);
-
-        // Si el tipo no está presente, inicialízalo (si es válido hacerlo)
-        if (!mapaPrecios.containsKey(tipo)) {
-            System.out.println("El tipo " + tipo + " no estaba registrado. Inicializándolo con el nuevo precio.");
-        }
-
-        // Actualizar o añadir el precio
-        mapaPrecios.put(tipo, nuevoPrecio);
-        System.out.println("Precio actualizado: " + nuevoPrecio + " para tipo " + tipo + " en " + claseServicio.getSimpleName());
-    }
-*/
 
 
 
-}

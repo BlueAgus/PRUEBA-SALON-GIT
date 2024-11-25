@@ -45,8 +45,8 @@ public class GestorProfesional {
     public boolean agregarPersona() {
         boolean cargado;
 
-        String dni=null;
-        while (dni==null) {
+        String dni = null;
+        while (dni == null) {
             try {
                 dni = pedirDNI();
             } catch (DNIyaCargadoException e) {
@@ -81,14 +81,14 @@ public class GestorProfesional {
         Profesional profesional = new Profesional(nombre, apellido, dni, genero, telefono, contra);
 
 
-        int opcion=0;
+        int opcion = 0;
 
         System.out.println("Ingrese los servicios que realiza: ");
         do {
             //aca elige si es manicura,depi, o pestanias.
             TipoServicio tipoServicio1 = gestorDepilacion.pedirTipoServicio();
-           ///aca que tipo dentro de los otros tres hace
-            System.out.println("SELECCIONE EL TIPO DE "+ tipoServicio1+ " QUE REALIZA");
+            ///aca que tipo dentro de los otros tres hace
+            System.out.println("SELECCIONE EL TIPO DE " + tipoServicio1 + " QUE REALIZA");
             String e = gestorTurno.pedirCodServicio(tipoServicio1);
             profesional.agregarProfesion(e);//minimo una profesion.
             System.out.println("Deseas agregar otra profesion?");
@@ -104,7 +104,7 @@ public class GestorProfesional {
                 } else if (opcion != 2) {
                     System.out.println("Ingresa una opcion valida por favor.");
                 }
-            }catch (InputMismatchException e1) {
+            } catch (InputMismatchException e1) {
                 System.out.println("Error: Por favor, ingresa un número válido.");
                 scanner.nextLine();
             }
@@ -148,7 +148,7 @@ public class GestorProfesional {
     //------------------------------------------------------------------------------------------------------------
 
     public void verificarCarga(Profesional profesional) {
-        int opcion=-1;
+        int opcion = -1;
         do {
             try {
                 System.out.println("¿Deseas modificar algo de la persona?");
@@ -168,10 +168,9 @@ public class GestorProfesional {
                     default:
                         System.out.println("Opción no válida, selecciona nuevamente.");
                         break;
-            }
+                }
 
-            }catch (InputMismatchException e)
-            {
+            } catch (InputMismatchException e) {
                 System.out.println("Error: Por favor, ingresa un número válido.");
                 scanner.nextLine();
             }
@@ -180,7 +179,11 @@ public class GestorProfesional {
     //------------------------------------------------------------------------------------------------------------
 
     public void mostrarTodos() {
-        System.out.println(profesionales);
+        if(!profesionales.isEmpty()) {
+            System.out.println(profesionales);
+        }else {
+            System.out.println("No hay profesionales...");
+        }
     }
 
 
@@ -205,25 +208,6 @@ public class GestorProfesional {
         }
         throw new DNInoEncontradoException("\nDNI no encontrado!!");
     }
-/*
-// Asi se veria implementando la interfaz y generalizamos el CodigoNoEncontrado, que seria lo mismo que dni no encontrado
-//-Agus
-//Igual la interfaz extiende de servicio pero se podria sacar o hacer otro que extienda de Persona
-//esto serviria porque si todas las personas usan una interfaz quiza facilitaria algunos metodos de busqueda o no se
-
-     @Override
-    public Profesional buscarPorCodigo(String dni) throws CodigoNoEncontradoException{
-        for (Profesional p : profesionales) {
-            if (p.getDni().equals(dni)) {
-                return p;
-            }
-        }
-        throw new CodigoNoEncontradoException("\nDNI no encontrado!!");
-    }
-
-*/
-
-    //------------------------------------------------------------------------------------------------------------
 
     public boolean buscarPersonas(String dni) throws DNInoEncontradoException {
         for (Profesional p : profesionales) {
@@ -233,7 +217,6 @@ public class GestorProfesional {
         }
         throw new DNInoEncontradoException("DNI no encontrado!!");
     }
-
 
 
     //------------------------------------------------------------------------------------------------------------
@@ -411,8 +394,7 @@ public class GestorProfesional {
                     } else if (opcion != 1) {
                         System.out.println("Opción no válida. Intenta de nuevo.");
                     }
-                }catch (InputMismatchException e)
-                {
+                } catch (InputMismatchException e) {
                     System.out.println("Error: Por favor, ingresa un número válido.");
                     scanner.nextLine();
                 }
@@ -535,6 +517,8 @@ public class GestorProfesional {
         int opcion;
         boolean continuarModificando = true;
         while (continuarModificando) {
+            System.out.println("\n");
+            System.out.println("---------------------------------");
 
             System.out.println("¿Qué te gustaría modificar del profesional?");
             System.out.println("1. Nombre");
@@ -545,6 +529,8 @@ public class GestorProfesional {
             System.out.println("6. Servicios que ofrece");
             System.out.println("7. Modificar contraseña");
             System.out.println("8. Salir");
+            System.out.println("---------------------------------");
+            System.out.println("Ingrese una opción: ");
             try {
                 opcion = scanner.nextInt();
                 scanner.nextLine();
@@ -611,7 +597,8 @@ public class GestorProfesional {
 
     public void leerProfesionalesDesdeJson() {
         try (FileReader fileReader = new FileReader(archivoProfesionales)) {
-            profesionales = gson.fromJson(fileReader, new TypeToken<List<Profesional>>() {}.getType());
+            profesionales = gson.fromJson(fileReader, new TypeToken<List<Profesional>>() {
+            }.getType());
             if (profesionales == null) {
                 profesionales = new ArrayList<>();
             }
@@ -624,8 +611,7 @@ public class GestorProfesional {
     }
 
 
-
-    //------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------GET Y SET----------------------------------------------------------
 
 
     public List<Profesional> getProfesionales() {

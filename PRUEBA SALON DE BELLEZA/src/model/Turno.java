@@ -122,22 +122,3 @@ public class Turno implements CrearID {
 
     }
 }
-
-/*public static LocalDate convertirStringALocalDate(String fecha) {
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return LocalDate.parse(fecha, formatoFecha);
-    }
-
-    public static LocalTime convertirStringALocalTime(String hora) {
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-        return LocalTime.parse(hora, formatoHora);
-    }
-
-    public static String convertirLocalTimeAString(LocalTime hora) {
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-        return hora.format(formatoHora);
-    }
-    public static String convertirLocalDateAString(LocalDate fecha) {
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return fecha.format(formatoFecha);
-    }*/

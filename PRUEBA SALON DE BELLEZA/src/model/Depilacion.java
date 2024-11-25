@@ -21,10 +21,7 @@ public class Depilacion extends Servicio {
     }
 
     /////////////////////////////////////// metodos extr ////////////////////////////////////////////////////
-   public void programarMantenimiento(LocalDate fecha){
-        //GestorTurno turnos = new GestorTurno();
 
-    }
 
     public double calcularPrecio() {
        return this.precio = GestorPrecios.obtenerPrecio(Depilacion.class, this.tipoDepilacion);
@@ -37,7 +34,7 @@ public class Depilacion extends Servicio {
         //Actualizamos el gestor, esto porque en algunos lados se actualiza el precio
         //usando el set y esto lo va a modificar en el gestor para que tengan el mismo valor
 
-    }//En el get de servicio llamamos a calcular precio para cada ves que se quiere ver no aseguramos de que esta actualizado
+    }//En el get de servicio llamamos a calcular precio para cada vez que se quiere ver no aseguramos de que esta actualizado
 
 
 

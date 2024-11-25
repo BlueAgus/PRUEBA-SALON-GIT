@@ -49,13 +49,3 @@ public class ConvertirFechaHoras {
 
 }
 
-/*
-public static LocalDate convertirStringAFecha(String fecha) {
-    DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // El mismo formato que usaste para la fecha
-    return LocalDate.parse(fecha, formatoFecha);
-}
-
-public static LocalTime convertirStringAHora(String hora) {
-    DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss"); // El mismo formato que usaste para la hora
-    return LocalTime.parse(hora, formatoHora);
-}*/

@@ -67,6 +67,7 @@ public class MenuRecepcionista extends MenuAdministrador {
             }catch (InputMismatchException a)
             {
                 System.out.println("Caracter invalido..Ingrese un numero por favor");
+                scanner.nextLine();
             }
         } while (opcion != 0);
 

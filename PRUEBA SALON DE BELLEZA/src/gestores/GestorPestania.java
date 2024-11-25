@@ -40,7 +40,7 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
         String duracion = pedirDuracion();
 
 
-        GestorPrecios.modificarPrecio(Pestanias.class, tipoPestanias , precio);// no mover
+        GestorPrecios.modificarPrecio(Pestanias.class, tipoPestanias, precio);// no mover
 
         //Cuando se instancie pestanias llamara a calcular precio y obtendra el precio ingresado arriba
         Pestanias pestanias = new Pestanias(duracion, tipoPestanias);
@@ -114,29 +114,39 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
         if (servicio != null) {
             boolean continuarModificando = true;
             while (continuarModificando) {
-                System.out.println("¿Qué te gustaría modificar?");
-                System.out.println("1. Tipo de pestaña");
-                System.out.println("2. Precio");
-                System.out.println("3. Duración");
-                System.out.println("4. Salir");
-                int opcion = scanner.nextInt();
-                scanner.nextLine();
+                try {
+                    System.out.println("\n");
+                    System.out.println("---------------------------------");
+                    System.out.println("¿Qué te gustaría modificar?");
+                    System.out.println("1. Tipo de pestaña");
+                    System.out.println("2. Precio");
+                    System.out.println("3. Duración");
+                    System.out.println("4. Salir");
+                    System.out.println("---------------------------------");
+                    System.out.println("Ingrese una opción: ");
+                    int opcion = scanner.nextInt();
+                    scanner.nextLine();
 
-                switch (opcion) {
-                    case 1:
-                        servicio.setTipoPestanias(pedirTipoPestanias());
-                        break;
-                    case 2:
-                        servicio.setPrecio(pedirPrecio());
-                        break;
-                    case 3:
-                        servicio.setDuracion(pedirDuracion());
-                        break;
-                    case 4:
-                        continuarModificando = false;
-                        break;
-                    default:
-                        System.out.println("Opción no válida.");
+                    switch (opcion) {
+                        case 1:
+                            servicio.setTipoPestanias(pedirTipoPestanias());
+                            break;
+                        case 2:
+                            servicio.setPrecio(pedirPrecio());
+                            break;
+                        case 3:
+                            servicio.setDuracion(pedirDuracion());
+                            break;
+                        case 4:
+                            continuarModificando = false;
+                            break;
+                        default:
+                            System.out.println("Opción no válida.");
+                    }
+
+                } catch (InputMismatchException e) {
+                    System.out.println("Ingrese un numero válido, por favor");
+                    scanner.nextLine();
                 }
 
                 System.out.println("Servicio modificado:");
@@ -150,33 +160,43 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
 
         boolean continuarModificando = true;
         while (continuarModificando) {
-            System.out.println("¿Qué te gustaría modificar?");
-            System.out.println("1. Tipo de pestaña");
-            System.out.println("2. Precio");
-            System.out.println("3. Duración");
-            System.out.println("0. Salir");
-            int opcion = scanner.nextInt();
-            scanner.nextLine();
+            try{
+                System.out.println("\n");
+                System.out.println("---------------------------------");
+                System.out.println("¿Qué te gustaría modificar?");
+                System.out.println("1. Tipo de pestaña");
+                System.out.println("2. Precio");
+                System.out.println("3. Duración");
+                System.out.println("0. Salir");
+                System.out.println("---------------------------------");
+                System.out.println("Ingrese una opción: ");
+                int opcion = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (opcion) {
-                case 1:
-                    servicio.setTipoPestanias(pedirTipoPestanias());
-                    break;
-                case 2:
-                    servicio.setPrecio(pedirPrecio());
-                    break;
-                case 3:
-                    servicio.setDuracion(pedirDuracion());
-                    break;
-                case 0:
-                    continuarModificando = false;
-                    break;
-                default:
-                    System.out.println("Opción no válida.");
+                switch (opcion) {
+                    case 1:
+                        servicio.setTipoPestanias(pedirTipoPestanias());
+                        break;
+                    case 2:
+                        servicio.setPrecio(pedirPrecio());
+                        break;
+                    case 3:
+                        servicio.setDuracion(pedirDuracion());
+                        break;
+                    case 0:
+                        continuarModificando = false;
+                        break;
+                    default:
+                        System.out.println("Opción no válida.");
+                }
+
+                System.out.println("Servicio modificado:");
+                System.out.println(servicio);
+            }catch (InputMismatchException e) {
+                System.out.println("Ingrese un numero válido, por favor");
+                scanner.nextLine();
             }
 
-            System.out.println("Servicio modificado:");
-            System.out.println(servicio);
         }
     }
 
@@ -215,7 +235,7 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
         for (int i = 0; i < almacenServicios.size(); i++) {
             System.out.println(i + "-" + almacenServicios.get(i));
         }
-        int opc ;
+        int opc;
         while (true) {
 
             try {
@@ -252,7 +272,7 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
                 precio = scanner.nextDouble();
                 scanner.nextLine();
 
-                if (precio <= 0|| precio>500000) {
+                if (precio <= 0 || precio > 500000) {
                     System.out.println("El precio debe ser mayor a 0 y menor a 500000");
                 }
             } catch (InputMismatchException a) {
@@ -326,21 +346,18 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
         return tipo;
     }
 
-
-
-
-/*
-    public void reportarFalla(GestorCliente cliente, GestorTurno gestorTurno) {
+    public void reportarFalla( GestorTurno gestorTurno) {
         Pestanias pestanias = null;
         try {
             pestanias = buscarServicio();
         } catch (CodigoNoEncontradoException e) {
             System.out.println(e.getMessage());
         }
-        String hoy= Turno.convertirLocalDateAString(LocalDate.now());
-        gestorTurno.cancelarTurnosXdia(hoy, cliente, pestanias.getCodigo_servicio());
+
+        String hoy = ConvertirFechaHoras.convertirFechaAString(LocalDate.now());
+
+        gestorTurno.cancelarTurnosXdia(hoy, pestanias.getCodigo_servicio());
     }
-*/
 
 
     ////////////////////////////////////////GET ////////////////////////////////////////////////////
@@ -355,29 +372,23 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
     }
 
     public void mostrarServicios() {
-        for (Pestanias d : almacenServicios) {
-            String tipoPestaniasStr = switch (d.getTipoPestanias()) {
-                case TRES_D -> "3D";
-                case DOS_D -> "2D";
-                case CLASICAS -> "CLÁSICAS";
-            };
+        if(almacenServicios.isEmpty()){
+            System.out.println("No hay servicios de pestañas");
+        }else {
+            for (Pestanias d : almacenServicios) {
+                String tipoPestaniasStr = switch (d.getTipoPestanias()) {
+                    case TRES_D -> "3D";
+                    case DOS_D -> "2D";
+                    case CLASICAS -> "CLÁSICAS";
+                };
 
-            System.out.println("- " + d.getCodigo_servicio() + ": " + d.getTipoService() + " " + tipoPestaniasStr + "--PRECIO: " + d.getPrecio());
+                System.out.println("- " + d.getCodigo_servicio() + ": " + d.getTipoService() + " " + tipoPestaniasStr + "--PRECIO: " + d.getPrecio());
+            }
         }
+
     }
 
-    public void reportarFalla(GestorCliente cliente, GestorTurno gestorTurno) {
-        Pestanias pestanias= null;
-        try {
-            pestanias = buscarServicio();
-        } catch (CodigoNoEncontradoException e) {
-            System.out.println(e.getMessage());
-        }
-        // String hoy = Turno.convertirLocalDateAString(LocalDate.now());
-        String hoy = ConvertirFechaHoras.convertirFechaAString(LocalDate.now());
 
-        gestorTurno.cancelarTurnosXdia(hoy, pestanias.getCodigo_servicio());
-    }
 
     ///////////////////////////////////////ARCHIVOS//////////////////////////////////////////////////////////////////.
 

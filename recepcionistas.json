@@ -5,4 +5,25 @@
   "genero" : "M",
   "telefono" : "2235066590",
   "contraseña" : "45399965"
+}, {
+  "nombre" : "Carla",
+  "apellido" : "Diaz",
+  "dni" : "23454328",
+  "genero" : "F",
+  "telefono" : "2237748473",
+  "contraseña" : "123contra"
+}, {
+  "nombre" : "Malena",
+  "apellido" : "Sanchez",
+  "dni" : "26785462",
+  "genero" : "F",
+  "telefono" : "2236689704",
+  "contraseña" : "456contra"
+}, {
+  "nombre" : "Milena",
+  "apellido" : "Perez",
+  "dni" : "36785314",
+  "genero" : "F",
+  "telefono" : "2238879533",
+  "contraseña" : "789contra"
 } ]

@@ -230,10 +230,15 @@ public class GestorAdministrador {
     }
 
     public void mostrarTodos() {
-        System.out.println("Estos son los administradores:");
-        for (Administrador p : administradores) {
-            System.out.println(p.toString());
+        if(administradores.isEmpty()){
+            System.out.println("No hay servicios de pestañas");
+        }else{
+            System.out.println("Estos son los administradores:");
+            for (Administrador p : administradores) {
+                System.out.println(p.toString());
+            }
         }
+
     }
     public void verificarCarga(Administrador administrador) {
         int opcion=-1;

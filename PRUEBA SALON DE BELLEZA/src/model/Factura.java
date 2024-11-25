@@ -31,7 +31,7 @@ public class Factura implements CrearID {
     private double ajuste = 0.0;
     private String fecha;
     private String hora;
-    private List<IBuscarPorCodigo<? extends Servicio>> gestores;
+    private transient List<IBuscarPorCodigo<? extends Servicio>> gestores;
 
     //////////////////////////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////////////
 
@@ -117,18 +117,14 @@ public class Factura implements CrearID {
         if (!turnosPorCliente.contains(turno)) {
             throw new TurnoNoExistenteException("El turno que desea eliminar en la factura no existe aqui.");
         }
-        // opcion 1: no permitimos que se elimine un turno en el caso de que haya solo uno.
+
         if (turnosPorCliente.size() == 1) {
             throw new FacturaSinTurnosException("La factura debe contener al menos un turno, en caso contrario eliminar la factura completa");
-        } //
+        }
 
         turnosPorCliente.remove(turno);
         System.out.println("El turno fue quitado de la factura final");
 
-        //opcion 2: eliminamos el turno pero dejamos avisado que la instancia de factura no contiene turnos
-       /* if(turnosPorCliente.isEmpty()){
-            throw new FacturaSinTurnosException("La factura no contiene turnos, por favor ingrese un turno para validar la factura");
-        }*/
     }
 
 
@@ -202,7 +198,13 @@ public class Factura implements CrearID {
         this.descuento = descuento;
     }
 
+    public List<IBuscarPorCodigo<? extends Servicio>> getGestores() {
+        return gestores;
+    }
 
+    public void setGestores(List<IBuscarPorCodigo<? extends Servicio>> gestores) {
+        this.gestores = gestores;
+    }
     ////////////////////////////////////// TO STRING ////////////////////////////////////////////////////
 
     @Override

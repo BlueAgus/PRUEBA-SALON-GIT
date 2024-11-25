@@ -21,18 +21,19 @@ public class MenuAdministrador {
 
     public void mostrarMenu(String dni, GestorCliente clientes, GestorProfesional profesionales, GestorRecepcionista recepcionista, GestorAdministrador administradores, GestorPestania pestania, GestorDepilacion depilacion, GestorManicura manicura, GestorTurno turnos, GestorFactura facturas) {
 
-        int opcion=-1;
+        int opcion = -1;
 
         do {
             try {
-                System.out.println("--------------------");
+                System.out.println("\n");
+                System.out.println("---------------------------------");
                 System.out.println("Bienvenido al menu de administrador ");
                 System.out.println("1.Menu de usuarios");
                 System.out.println("2.Menu de servicios");
                 System.out.println("3.Menu de turnos");
                 System.out.println("4.Menu de facturas");
                 System.out.println("0. Volver al inicio");
-                System.out.println("--------------------");
+                System.out.println("---------------------------------");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -58,7 +59,7 @@ public class MenuAdministrador {
                     default:
                         System.out.println("Opción no válida.");
                 }
-            }catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("Ingresa una opcion del 0-4");
                 scanner.nextLine();
             }
@@ -68,48 +69,58 @@ public class MenuAdministrador {
     public void menuUsuarios(String dni, GestorCliente clientes, GestorProfesional profesionales, GestorRecepcionista recepcionista, GestorAdministrador administradores, GestorPestania pestania, GestorDepilacion depilacion, GestorManicura manicura, GestorTurno turnos) {
 
         Scanner scanner = new Scanner(System.in);
-        int opcion;
+        int opcion = -1;
 
         do {
-            System.out.println("1.Gestionar recepcionistas");
-            System.out.println("2.Gestionar profesionales");
-            System.out.println("3.Gestionar clientes");
-            System.out.println("4.Gestionar mis datos");
-            System.out.println("0. Volver al Menú anterior");
-            System.out.print("Ingrese una opción: ");
+            try {
+                System.out.println("\n");
+                System.out.println("---------------------------------");
+                System.out.println("1.Gestionar recepcionistas");
+                System.out.println("2.Gestionar profesionales");
+                System.out.println("3.Gestionar clientes");
+                System.out.println("4.Gestionar mis datos");
+                System.out.println("0.Volver al Menú anterior");
+                System.out.println("---------------------------------");
+                System.out.print("Ingrese una opción: ");
 
-            opcion = scanner.nextInt();
-            scanner.nextLine();
+                opcion = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (opcion) {
-                case 0:
-                    System.out.println("Saliendo...");
-                    break;
-                case 1:
-                    subMenuRecepcionista(recepcionista, pestania, depilacion, manicura);
-                    break;
-                case 2:
-                    subMenuProfesionales(profesionales, pestania, depilacion, manicura);
-                    break;
-                case 3:
-                    subMenuClientes(clientes, pestania, depilacion, manicura);
-                    break;
-                case 4:
+                switch (opcion) {
+                    case 0:
+                        System.out.println("Saliendo...");
+                        break;
+                    case 1:
+                        subMenuRecepcionista(recepcionista, pestania, depilacion, manicura);
+                        break;
+                    case 2:
+                        subMenuProfesionales(profesionales, pestania, depilacion, manicura);
+                        break;
+                    case 3:
+                        subMenuClientes(clientes, pestania, depilacion, manicura);
+                        break;
+                    case 4:
 
-                    try {
-                        Administrador administrador = administradores.buscarPersona(dni);
+                        try {
+                            Administrador administrador = administradores.buscarPersona(dni);
 
-                        administradores.modificarAdministrador(administrador);
+                            administradores.modificarAdministrador(administrador);
 
-                    } catch (DNInoEncontradoException e) {
-                        System.out.println(e.getMessage());
-                    }
+                        } catch (DNInoEncontradoException e) {
+                            System.out.println(e.getMessage());
+                        }
 
-                    break;
+                        break;
 
-                default:
-                    System.out.println("Opción no válida.");
+                    default:
+                        System.out.println("Opción no válida.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Opción invalida");
+                scanner.nextLine();
             }
+
+
         } while (opcion != 0);
     }
 
@@ -117,67 +128,97 @@ public class MenuAdministrador {
     public void subMenuRecepcionista(GestorRecepcionista recepcionistas, GestorPestania pestania, GestorDepilacion depilacion, GestorManicura manicura) {
 
         Scanner scanner = new Scanner(System.in);
-        int opcion;
+        int opcion = -1;
 
         do {
-            System.out.println("RECEPCIONISTA");
-            System.out.println("1.Agregar");
-            System.out.println("2.Eliminar");
-            System.out.println("3.Buscar por su dni");
-            System.out.println("4.Modificar datos");
-            System.out.println("0. Volver al Menú anterior");
-            System.out.print("Ingrese una opción: ");
+            try {
+                System.out.println("\n");
+                System.out.println("---------------------------------");
+                System.out.println("RECEPCIONISTA");
+                System.out.println("1.Agregar");
+                System.out.println("2.Eliminar");
+                System.out.println("3.Buscar por su dni");
+                System.out.println("4.Modificar datos");
+                System.out.println("5.Mostrar todos");
+                System.out.println("0. Volver al Menú anterior");
+                System.out.println("---------------------------------");
+                System.out.print("Ingrese una opción: ");
 
-            opcion = scanner.nextInt();
-            scanner.nextLine();
+                opcion = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (opcion) {
-                case 0:
-                    System.out.println("Saliendo...");
-                    break;
-                case 1:
-                    recepcionistas.agregarPersona();
-                    break;
-                case 2:
-                    System.out.println("¿Cual es el dni del Recepcionista que desea eliminar?");
+                switch (opcion) {
+                    case 0:
+                        System.out.println("Saliendo...");
+                        break;
+                    case 1:
+                        recepcionistas.agregarPersona();
+                        break;
+                    case 2:
+                        recepcionistas.mostrarTodos();
+                        System.out.println("¿Cual es el dni del Recepcionista que desea eliminar?('salir' si quiere cancelar la operacion)");
 
-                    String dni = recepcionistas.pedirDNIsinVerificacion();
-                    if (recepcionistas.eliminarPersona(dni)) {
-                        System.out.println("Recepcionista eliminado exitosamente!");
-                    } else {
-                        System.out.println("Error al eliminar recepcionista");
-                    }
-                    break;
-                case 3:
 
-                    System.out.println("¿Cual es el dni del Recepcionista que desea buscar?");
+                        String dni = recepcionistas.pedirDNIsinVerificacion();
 
-                    String dni1 = recepcionistas.pedirDNIsinVerificacion();
+                        if (dni.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
+                        if (recepcionistas.eliminarPersona(dni)) {
+                            System.out.println("Recepcionista eliminado exitosamente!");
+                        } else {
+                            System.out.println("Error al eliminar recepcionista");
+                        }
+                        break;
+                    case 3:
 
-                    try {
-                        Recepcionista recepcionista = (Recepcionista) recepcionistas.buscarPersona(dni1);
-                        System.out.println(recepcionista);
+                        System.out.println("¿Cual es el dni del Recepcionista que desea buscar?('salir' si quiere cancelar la operacion)");
 
-                    } catch (DNInoEncontradoException a) {
-                        System.out.println(a.getMessage());
-                    }
-                    break;
+                        String dni1 = recepcionistas.pedirDNIsinVerificacion();
+                        if (dni1.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
 
-                case 4:
-                    System.out.println("¿Cual es el DNI del Recepcionista al que le desea modificar los datos");
+                        try {
+                            Recepcionista recepcionista = (Recepcionista) recepcionistas.buscarPersona(dni1);
+                            System.out.println(recepcionista);
 
-                    String dni2 = recepcionistas.pedirDNIsinVerificacion();
-                    try {
-                        Recepcionista recepcionista = recepcionistas.buscarPersona(dni2);
-                        System.out.println(recepcionista);
-                        recepcionistas.modificarPersona(recepcionista);
-                    } catch (DNInoEncontradoException a) {
-                        System.out.println(a.getMessage());
-                    }
-                    break;
-                default:
-                    System.out.println("Opción no válida.");
+                        } catch (DNInoEncontradoException a) {
+                            System.out.println(a.getMessage());
+                        }
+                        break;
+
+                    case 4:
+                        System.out.println("¿Cual es el DNI del Recepcionista al que le desea modificar los datos('salir' si quiere cancelar la operacion)");
+
+                        String dni2 = recepcionistas.pedirDNIsinVerificacion();
+                        if (dni2.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
+                        try {
+                            Recepcionista recepcionista = recepcionistas.buscarPersona(dni2);
+                            System.out.println(recepcionista);
+                            recepcionistas.modificarPersona(recepcionista);
+                        } catch (DNInoEncontradoException a) {
+                            System.out.println(a.getMessage());
+                        }
+                        break;
+                    case 5:
+                        System.out.println("\nRECEPCIONISTAS: ");
+                        recepcionistas.mostrarTodos();
+                        break;
+                    default:
+                        System.out.println("Opción no válida.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Opción invalida");
+                scanner.nextLine();
             }
+
+
         } while (opcion != 0);
     }
 
@@ -185,99 +226,114 @@ public class MenuAdministrador {
     public void subMenuProfesionales(GestorProfesional profesionales, GestorPestania pestania, GestorDepilacion depilacion, GestorManicura manicura) {
 
         Scanner scanner = new Scanner(System.in);
-        int opcion;
+        int opcion = -1;
 
         do {
-            System.out.println("\n");
-            System.out.println("PROFESIONALES");
-            System.out.println("1.Agregar");
-            System.out.println("2.Eliminar");
-            System.out.println("3.Modificar datos");
-            System.out.println("4.Buscar por DNI");
-            System.out.println("5.Mostrar profesionales del salon ");
-            ///o 3 listar, 1 listra manicura etc
-            System.out.println("6.Mostrar profesionales por servicio específico");
-            System.out.println("0. Volver al Menú anterior");
-            System.out.print("Ingrese una opción: ");
+            try {
+                System.out.println("\n");
+                System.out.println("---------------------------------");
+                System.out.println("PROFESIONALES");
+                System.out.println("1.Agregar");
+                System.out.println("2.Eliminar");
+                System.out.println("3.Modificar datos");
+                System.out.println("4.Buscar por DNI");
+                System.out.println("5.Mostrar profesionales del salon ");
+                ///o 3 listar, 1 listra manicura etc
+                System.out.println("6.Mostrar profesionales por servicio específico");
+                System.out.println("0. Volver al Menú anterior");
+                System.out.println("---------------------------------");
+                System.out.print("Ingrese una opción: ");
 
-            opcion = scanner.nextInt();
-            scanner.nextLine();
+                opcion = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (opcion) {
-                case 0:
-                    System.out.println("Saliendo...");
-                    break;
-                case 1:
-                    profesionales.agregarPersona();
-                    break;
-                case 2:
-                    System.out.println("¿Cual es el dni del profesional que desea eliminar?");
+                switch (opcion) {
+                    case 0:
+                        System.out.println("Saliendo...");
+                        break;
+                    case 1:
+                        profesionales.agregarPersona();
+                        break;
+                    case 2:
+                        profesionales.mostrarTodos();
+                        System.out.println("¿Cual es el dni del profesional que desea eliminar?('salir' si quiere cancelar la operacion)");
 
-                    String dni = profesionales.pedirDNIsinVerificacion();
-                    if (profesionales.eliminarPersona(dni)) {
-                        System.out.println("Profesional eliminado exitosamente!");
-                    } else {
-                        System.out.println("Error al eliminar");
-                    }
-                    break;
-
-                case 3:
-                    System.out.println("¿Cual es el DNI del profesional al que le desea modificar los datos");
-
-                    String dni2 = profesionales.pedirDNIsinVerificacion();
-
-                    try {
-                        Profesional profesional = profesionales.buscarPersona(dni2);
-
-                        System.out.println(profesional);
-
-                        profesionales.modificarProfesional(profesional);
-
-                    } catch (DNInoEncontradoException a) {
-                        System.out.println(a.getMessage());
-                    }
-
-                    break;
-                case 4:
-
-                    System.out.println("¿Cual es el dni del profesional que desea buscar?");
-
-                    String dni1 = profesionales.pedirDNIsinVerificacion();
-
-                    try {
-                        Profesional persona = profesionales.buscarPersona(dni1);
-                        System.out.println(persona);
-
-                    } catch (DNInoEncontradoException a) {
-                        System.out.println(a.getMessage());
-                    }
-                    break;
-                case 5:
-                    profesionales.mostrarTodos();
-                    break;
-
-                case 6:
-                    /*
-                    Servicio servicio = null;
-                    while (true) {
-                        try {
-                            servicio = servicios.buscarServicio();
-                        } catch (CodigoNoEncontradoException e) {
-                            System.out.println(e.getMessage());
-                            continue;
-                        }
-
-                        for (Profesional p : profesionales.getProfesionales()) {
-                            if (p.verificarProfesion(servicio.getCodigo_servicio())) {
-                                System.out.println(p.toString());
-                            }
+                        String dni = profesionales.pedirDNIsinVerificacion();
+                        if (profesionales.eliminarPersona(dni)) {
+                            System.out.println("Profesional eliminado exitosamente!");
+                        } else {
+                            System.out.println("Error al eliminar");
                         }
                         break;
-                    }*/
-                    break;
-                default:
-                    System.out.println("Opción no válida.");
+
+                    case 3:
+                        System.out.println("¿Cual es el DNI del profesional al que le desea modificar los datos");
+
+                        String dni2 = profesionales.pedirDNIsinVerificacion();
+
+                        try {
+                            Profesional profesional = profesionales.buscarPersona(dni2);
+
+                            System.out.println(profesional);
+
+                            profesionales.modificarProfesional(profesional);
+
+                        } catch (DNInoEncontradoException a) {
+                            System.out.println(a.getMessage());
+                        }
+
+                        break;
+                    case 4:
+
+                        System.out.println("¿Cual es el dni del profesional que desea buscar?");
+
+                        String dni1 = profesionales.pedirDNIsinVerificacion();
+                        if (dni1.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
+                        try {
+                            Profesional persona = profesionales.buscarPersona(dni1);
+                            System.out.println(persona);
+
+                        } catch (DNInoEncontradoException a) {
+                            System.out.println(a.getMessage());
+                        }
+                        break;
+                    case 5:
+                        profesionales.mostrarTodos();
+                        break;
+
+                    case 6:
+                        TipoServicio tipoServicio = depilacion.pedirTipoServicio();
+
+                        while (true) {
+                            try {
+                                if (tipoServicio == TipoServicio.DEPILACION) {
+                                    depilacion.mostrarServicios();
+                                } else if (tipoServicio == TipoServicio.PESTANIAS) {
+                                    pestania.mostrarServicios();
+                                } else if (tipoServicio == TipoServicio.MANICURA) {
+                                    manicura.mostrarServicios();
+                                }
+
+                            } catch (CodigoNoEncontradoException e) {
+                                System.out.println(e.getMessage());
+                                continue;
+                            }
+
+                            break;
+                        }
+                        break;
+                    default:
+                        System.out.println("Opción no válida.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Opción invalida");
+                scanner.nextLine();
             }
+
+
         } while (opcion != 0);
     }
 
@@ -289,6 +345,7 @@ public class MenuAdministrador {
         do {
             try {
                 System.out.println("\n");
+                System.out.println("---------------------------------");
                 System.out.println("CLIENTES");
                 System.out.println("1.Agregar");
                 System.out.println("2.Eliminar");
@@ -296,6 +353,7 @@ public class MenuAdministrador {
                 System.out.println("4.Modificar datos ");
                 System.out.println("5.Mostrar todos lo clientes");
                 System.out.println("0. Volver al Menú anterior");
+                System.out.println("---------------------------------");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -309,9 +367,14 @@ public class MenuAdministrador {
                         clientes.agregarPersona();
                         break;
                     case 2:
-                        System.out.println("¿Cual es el dni del cliente que desea eliminar?");
+                        clientes.mostrarTodos();
+                        System.out.println("¿Cual es el dni del cliente que desea eliminar?('salir' si quiere cancelar la operacion)");
 
                         String dni = clientes.pedirDNIsinVerificacion();
+                        if (dni.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
                         if (clientes.eliminarPersona(dni)) {
                             System.out.println("Cliente eliminado exitosamente!");
                         } else {
@@ -320,9 +383,13 @@ public class MenuAdministrador {
                         break;
                     case 3:
 
-                        System.out.println("¿Cual es el dni del cliente que desea buscar?");
+                        System.out.println("¿Cual es el dni del cliente que desea buscar?('salir' si quiere cancelar la operacion)");
 
                         String dni1 = clientes.pedirDNIsinVerificacion();
+                        if (dni1.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
 
                         try {
                             Cliente cliente = clientes.buscarPersona(dni1);
@@ -333,9 +400,13 @@ public class MenuAdministrador {
                         }
                         break;
                     case 4:
-                        System.out.println("¿Cual es el DNI del cliente al que le desea modificar los datos");
+                        System.out.println("¿Cual es el DNI del cliente al que le desea modificar los datos('salir' si quiere cancelar la operacion)");
 
                         String dni2 = clientes.pedirDNIsinVerificacion();
+                        if (dni2.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
                         try {
                             Cliente cliente = clientes.buscarPersona(dni2);
                             System.out.println(cliente);
@@ -347,8 +418,6 @@ public class MenuAdministrador {
                         }
                         break;
                     case 5:
-                        System.out.println("\n");
-                        System.out.println("Estos son todos los clientes registrados:");
                         clientes.mostrarTodos();
                         break;
                     default:
@@ -356,6 +425,7 @@ public class MenuAdministrador {
                 }
             } catch (InputMismatchException a) {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
+                scanner.nextLine();
             }
         } while (opcion != 0);
 
@@ -369,6 +439,7 @@ public class MenuAdministrador {
         do {
             try {
                 System.out.println("\n");
+                System.out.println("---------------------------------");
                 System.out.println("SERVICIOS");
                 System.out.println("1.Agregar");
                 System.out.println("2.Eliminar ");
@@ -377,6 +448,7 @@ public class MenuAdministrador {
                 System.out.println("5.Mostrar todos los servicios");
                 System.out.println("6.Reportar falla de un servicio");
                 System.out.println("0. Volver al Menú anterior");
+                System.out.println("---------------------------------");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -391,22 +463,33 @@ public class MenuAdministrador {
                         int opc = -1; // Variable para almacenar la opción seleccionada
 
                         do {
-                            System.out.println("Que servicio desea agregar? ");
-                            System.out.println("1. Depilacion");
-                            System.out.println("2. Manicura");
-                            System.out.println("3. Pestañas");
-                            System.out.print("Seleccione una opción (1-3): ");
-                            opc = scanner.nextInt();
+                            try {
+                                System.out.println("\n");
+                                System.out.println("---------------------------------");
+                                System.out.println("Que servicio desea agregar? ");
+                                System.out.println("1. Depilacion");
+                                System.out.println("2. Manicura");
+                                System.out.println("3. Pestañas");
+                                System.out.println("---------------------------------");
+                                System.out.print("Seleccione una opción (1-3): ");
+                                opc = scanner.nextInt();
+                                scanner.nextLine();
 
-                            if (opc == 1) {
-                                depilacion.agregarServicio();
-                            } else if (opc == 2) {
-                                manicura.agregarServicio();
-                            } else if (opc == 3) {
-                                pestania.agregarServicio();
-                            } else {
-                                System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                if (opc == 1) {
+                                    depilacion.agregarServicio();
+                                } else if (opc == 2) {
+                                    manicura.agregarServicio();
+                                } else if (opc == 3) {
+                                    pestania.agregarServicio();
+                                } else {
+                                    System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Opción invalida");
+                                scanner.nextLine();
                             }
+
+
                         } while (opc < 1 || opc > 3);
 
                         break;
@@ -414,35 +497,44 @@ public class MenuAdministrador {
                         int opc2 = -1; // Variable para almacenar la opción seleccionada
 
                         do {
-                            System.out.println("\n");
-                            System.out.println("Que servicio desea eliminar? ");
-                            System.out.println("1. Depilacion");
-                            System.out.println("2. Manicura");
-                            System.out.println("3. Pestañas");
-                            System.out.print("Seleccione una opción (1-3): ");
-                            opc2 = scanner.nextInt();
+                            try {
+                                System.out.println("\n");
+                                System.out.println("---------------------------------");
+                                System.out.println("Que servicio desea eliminar? ");
+                                System.out.println("1. Depilacion");
+                                System.out.println("2. Manicura");
+                                System.out.println("3. Pestañas");
+                                System.out.println("---------------------------------");
+                                System.out.print("Seleccione una opción (1-3): ");
+                                opc2 = scanner.nextInt();
+                                scanner.nextLine();
 
-                            if (opc2 == 1) {
-                                if (depilacion.eliminarServicio()) {
-                                    System.out.println("Depilacion eliminada exitosamente");
+                                if (opc2 == 1) {
+                                    if (depilacion.eliminarServicio()) {
+                                        System.out.println("Depilacion eliminada exitosamente");
+                                    } else {
+                                        System.out.println("Error al eliminar servicio");
+                                    }
+                                } else if (opc2 == 2) {
+                                    if (manicura.eliminarServicio()) {
+                                        System.out.println("Manicura eliminada exitosamente");
+                                    } else {
+                                        System.out.println("Error al eliminar servicio");
+                                    }
+                                } else if (opc2 == 3) {
+                                    if (pestania.eliminarServicio()) {
+                                        System.out.println("Pestana eliminada exitosamente");
+                                    } else {
+                                        System.out.println("Error al eliminar servicio");
+                                    }
                                 } else {
-                                    System.out.println("Error al eliminar servicio");
+                                    System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
                                 }
-                            } else if (opc2 == 2) {
-                                if (manicura.eliminarServicio()) {
-                                    System.out.println("Manicura eliminada exitosamente");
-                                } else {
-                                    System.out.println("Error al eliminar servicio");
-                                }
-                            } else if (opc2 == 3) {
-                                if (pestania.eliminarServicio()) {
-                                    System.out.println("Pestana eliminada exitosamente");
-                                } else {
-                                    System.out.println("Error al eliminar servicio");
-                                }
-                            } else {
-                                System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                            } catch (InputMismatchException e) {
+                                System.out.println("Opción invalida");
+                                scanner.nextLine();
                             }
+
                         } while (opc2 < 1 || opc2 > 3);
 
                         break;
@@ -450,54 +542,72 @@ public class MenuAdministrador {
                     case 3:
                         int op3 = -1;
                         do {
-                            System.out.println("\n");
-                            System.out.println("¿Qué servicio desea modificar?");
-                            System.out.println("1. Depilación");
-                            System.out.println("2. Manicura");
-                            System.out.println("3. Pestañas");
-                            System.out.print("Seleccione una opción (1-3): ");
-                            op3 = scanner.nextInt();
+                            try {
+                                System.out.println("\n");
+                                System.out.println("---------------------------------");
+                                System.out.println("¿Qué servicio desea modificar?");
+                                System.out.println("1. Depilación");
+                                System.out.println("2. Manicura");
+                                System.out.println("3. Pestañas");
+                                System.out.println("---------------------------------");
+                                System.out.print("Seleccione una opción (1-3): ");
+                                op3 = scanner.nextInt();
+                                scanner.nextLine();
 
-                            if (op3 == 1) {
-                                depilacion.modificarServicio();
-                            } else if (op3 == 2) {
-                                manicura.modificarServicio();
-                            } else if (op3 == 3) {
-                                pestania.modificarServicio();
-                            } else {
-                                System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                if (op3 == 1) {
+                                    depilacion.modificarServicio();
+                                } else if (op3 == 2) {
+                                    manicura.modificarServicio();
+                                } else if (op3 == 3) {
+                                    pestania.modificarServicio();
+                                } else {
+                                    System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Opción invalida");
+                                scanner.nextLine();
                             }
+
                         } while (op3 < 1 || op3 > 3);
 
                         break;
                     case 4:
                         int opc4 = -1;
                         do {
-                            System.out.println("\n");
-                            System.out.println("¿Qué servicio desea elegir?");
-                            System.out.println("1. Depilación");
-                            System.out.println("2. Manicura");
-                            System.out.println("3. Pestañas");
-                            System.out.print("Seleccione una opción (1-3): ");
-                            opc4 = scanner.nextInt();
-                            scanner.nextLine();
+                            try {
+                                System.out.println("\n");
+                                System.out.println("---------------------------------");
+                                System.out.println("¿Qué servicio desea elegir?");
+                                System.out.println("1. Depilación");
+                                System.out.println("2. Manicura");
+                                System.out.println("3. Pestañas");
+                                System.out.println("---------------------------------");
+                                System.out.print("Seleccione una opción (1-3): ");
+                                opc4 = scanner.nextInt();
+                                scanner.nextLine();
 
-                            if (opc4 == 1) {
-                                System.out.println("SERVICIOS DE DEPILACION-----------------------");
-                                depilacion.mostrarServicios();
-                            } else if (opc4 == 2) {
-                                System.out.println("SERVICIOS DE MANICURA-----------------------");
-                                manicura.mostrarManicura();
-                            } else if (opc4 == 3) {
-                                System.out.println("SERVICIOS DE PESTAÑAS-----------------------");
-                                pestania.mostrarServicios();
-                            } else {
-                                System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                if (opc4 == 1) {
+                                    System.out.println("SERVICIOS DE DEPILACION-----------------------");
+                                    depilacion.mostrarServicios();
+                                } else if (opc4 == 2) {
+                                    System.out.println("SERVICIOS DE MANICURA-----------------------");
+                                    manicura.mostrarManicura();
+                                } else if (opc4 == 3) {
+                                    System.out.println("SERVICIOS DE PESTAÑAS-----------------------");
+                                    pestania.mostrarServicios();
+                                } else {
+                                    System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Opción invalida");
+                                scanner.nextLine();
                             }
+
                         } while (opc4 < 1 || opc4 > 3);
 
                         break;
                     case 5:
+
                         System.out.println("\n");
                         System.out.println("Estos son los servicios disponibles en Queens: ");
                         System.out.println("SERVICIOS DE DEPILACION-----------------------");
@@ -515,24 +625,33 @@ public class MenuAdministrador {
 
                         int opc5 = -1;
                         do {
-                            System.out.println("\n");
-                            System.out.println("¿En qué servicio desea reportar falla?");
-                            System.out.println("1. Depilación");
-                            System.out.println("2. Manicura");
-                            System.out.println("3. Pestañas");
-                            System.out.print("Seleccione una opción (1-3): ");
-                            opc5 = scanner.nextInt();
+                            try {
+                                System.out.println("\n");
+                                System.out.println("---------------------------------");
+                                System.out.println("¿En qué servicio desea reportar falla?");
+                                System.out.println("1. Depilación");
+                                System.out.println("2. Manicura");
+                                System.out.println("3. Pestañas");
+                                System.out.println("---------------------------------");
+                                System.out.print("Seleccione una opción (1-3): ");
+                                opc5 = scanner.nextInt();
+                                scanner.nextLine();
 
-                            if (opc5 == 1) {
-                                depilacion.reportarFalla(cliente, turnos);
+                                if (opc5 == 1) {
+                                    depilacion.reportarFalla(turnos);
 
-                            } else if (opc5 == 2) {
-                                manicura.reportarFalla(cliente, turnos);
-                            } else if (opc5 == 3) {
-                                pestania.reportarFalla(cliente, turnos);
-                            } else {
-                                System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                } else if (opc5 == 2) {
+                                    manicura.reportarFalla(turnos);
+                                } else if (opc5 == 3) {
+                                    pestania.reportarFalla(turnos);
+                                } else {
+                                    System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Opción invalida");
+                                scanner.nextLine();
                             }
+
                         } while (opc5 < 1 || opc5 > 3);
 
 
@@ -542,6 +661,7 @@ public class MenuAdministrador {
                 }
             } catch (InputMismatchException a) {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
+                scanner.nextLine();
             }
         } while (opcion != 0);
 
@@ -555,6 +675,7 @@ public class MenuAdministrador {
         do {
             try {
                 System.out.println("\n");
+                System.out.println("---------------------------------");
                 System.out.println("TURNOS");
                 System.out.println("1.Agregar ");
                 System.out.println("2.Eliminar ");
@@ -565,6 +686,7 @@ public class MenuAdministrador {
                 System.out.println("7.Turnos segun profesional");
                 System.out.println("8.Turnos segun cliente");
                 System.out.println("0. Volver al Menú anterior");
+                System.out.println("---------------------------------");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -588,23 +710,32 @@ public class MenuAdministrador {
                         int opc = -1; // Variable para almacenar la opción seleccionada
 
                         do {
-                            System.out.println("\n");
-                            System.out.println("¿De que servicio desea eliminar el turno? ");
-                            System.out.println("1. Depilacion");
-                            System.out.println("2. Manicura");
-                            System.out.println("3. Pestañas");
-                            System.out.print("Seleccione una opción (1-3): ");
-                            opc = scanner.nextInt();
+                            try {
+                                System.out.println("\n");
+                                System.out.println("---------------------------------");
+                                System.out.println("¿De que servicio desea eliminar el turno? ");
+                                System.out.println("1. Depilacion");
+                                System.out.println("2. Manicura");
+                                System.out.println("3. Pestañas");
+                                System.out.println("---------------------------------");
+                                System.out.print("Seleccione una opción (1-3): ");
+                                opc = scanner.nextInt();
+                                scanner.nextLine();
 
-                            if (opc == 1) {
-                                turnos.modificarTurno(TipoServicio.DEPILACION);
-                            } else if (opc == 2) {
-                                turnos.modificarTurno(TipoServicio.MANICURA);
-                            } else if (opc == 3) {
-                                turnos.modificarTurno(TipoServicio.PESTANIAS);
-                            } else {
-                                System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                if (opc == 1) {
+                                    turnos.modificarTurno(TipoServicio.DEPILACION);
+                                } else if (opc == 2) {
+                                    turnos.modificarTurno(TipoServicio.MANICURA);
+                                } else if (opc == 3) {
+                                    turnos.modificarTurno(TipoServicio.PESTANIAS);
+                                } else {
+                                    System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Opción invalida");
+                                scanner.nextLine();
                             }
+
                         } while (opc < 1 || opc > 3);
 
 
@@ -641,6 +772,7 @@ public class MenuAdministrador {
                 }
             } catch (InputMismatchException a) {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
+                scanner.nextLine();
             }
         } while (opcion != 0);
 
@@ -654,9 +786,11 @@ public class MenuAdministrador {
         do {
             try {
                 System.out.println("\n");
+                System.out.println("---------------------------------");
                 System.out.println("1.Turnos proximos de un profesional");
                 System.out.println("2.Historial de turnos de un profesional");
                 System.out.println("0. Volver al Menú anterior");
+                System.out.println("---------------------------------");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -699,6 +833,7 @@ public class MenuAdministrador {
                 }
             } catch (InputMismatchException a) {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
+                scanner.nextLine();
             }
         }
         while (opcion != 0);
@@ -713,9 +848,11 @@ public class MenuAdministrador {
         do {
             try {
                 System.out.println("\n");
+                System.out.println("---------------------------------");
                 System.out.println("1.Turnos proximos de un cliente especifico");
                 System.out.println("2.Historial de turnos de un cliente");
                 System.out.println("0. Volver al Menú anterior");
+                System.out.println("---------------------------------");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -756,6 +893,7 @@ public class MenuAdministrador {
                 }
             } catch (InputMismatchException a) {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
+                scanner.nextLine();
             }
         } while (opcion != 0);
 
@@ -769,6 +907,7 @@ public class MenuAdministrador {
         do {
             try {
                 System.out.println("\n");
+                System.out.println("---------------------------------");
                 System.out.println("Facturas");
                 System.out.println("1.Agregar ");
                 System.out.println("2.Eliminar ");
@@ -777,7 +916,9 @@ public class MenuAdministrador {
                 System.out.println("5.Ver historial de facturas");
                 System.out.println("6.Ver historial de facturas por cliente");
                 System.out.println("7.Resumen de ganancia");
+                System.out.println("8.Ver todos los precios");
                 System.out.println("0. Volver al Menú anterior");
+                System.out.println("---------------------------------");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -864,6 +1005,7 @@ public class MenuAdministrador {
                             System.out.print("Ingrese una opción: ");
                             try {
                                 opc = scanner.nextInt();
+                                scanner.nextLine();
 
                                 if (opc < 0 || opc > 3) {
                                     System.out.println("Opcion no valida");
@@ -872,6 +1014,7 @@ public class MenuAdministrador {
                                 }
                             } catch (InputMismatchException e) {
                                 System.out.println("OPCION INVALIDA");
+                                scanner.nextLine();
                             }
                         }
 
@@ -917,6 +1060,7 @@ public class MenuAdministrador {
                                         }
                                     } catch (InputMismatchException e) {
                                         System.out.println("Opcion invalida, ingrese una opcion valida");
+                                        scanner.nextLine();
                                     }
 
                                     System.out.println("Ganancia: " + Month.of(mes).getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault()) + " " + año + ": " + facturas.gananciaXmes(mes, año));
@@ -941,9 +1085,13 @@ public class MenuAdministrador {
                                         }
                                     } catch (InputMismatchException e) {
                                         System.out.println("Opcion invalida, ingrese una opcion valida");
+                                        scanner.nextLine();
                                     }
                                 }
                                 System.out.println("Ganancia del año " + año1 + facturas.gananciaXaño(año1));
+                                break;
+                            case 8:
+                                GestorPrecios.verPrecios();
                                 break;
                             case 0:
                                 break;
@@ -956,6 +1104,7 @@ public class MenuAdministrador {
                 }
             } catch (InputMismatchException a) {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
+                scanner.nextLine();
             }
         } while (opcion != 0);
     }
@@ -968,10 +1117,12 @@ public class MenuAdministrador {
         do {
             try {
                 System.out.println("\n");
+                System.out.println("---------------------------------");
                 System.out.println("1.Buscar por codigo ");
                 System.out.println("2.Buscar por fecha ");
                 System.out.println("3.Buscar por cliente ");
                 System.out.println("0. Volver al Menú anterior");
+                System.out.println("---------------------------------");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -1037,6 +1188,7 @@ public class MenuAdministrador {
                 }
             } catch (InputMismatchException a) {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
+                scanner.nextLine();
             }
         } while (opcion != 0);
     }
@@ -1049,11 +1201,13 @@ public class MenuAdministrador {
         do {
             try {
                 System.out.println("\n");
+                System.out.println("---------------------------------");
                 System.out.println("1. Modificar precio base de un servicio");
                 System.out.println("2. Aumentar TODOS los precios");//aumentar todos o por clase
                 System.out.println("3. Aumentar precios de un tipo de servicio");//aumentar todos o por clase
                 System.out.println("4. Ver todos los precios");
                 System.out.println("0. Volver al Menú anterior");
+                System.out.println("---------------------------------");
                 System.out.print("Ingrese una opción: ");
 
                 opcion = scanner.nextInt();
@@ -1066,137 +1220,146 @@ public class MenuAdministrador {
                     case 1:
                         int opc5 = -1;
                         do {
-                            System.out.println("\n");
-                            System.out.println("¿Qué servicio desea modificar el precio?");
-                            System.out.println("1. Depilación");
-                            System.out.println("2. Manicura");
-                            System.out.println("3. Pestañas");
-                            System.out.print("Seleccione una opción (1-3): ");
-                            opc5 = scanner.nextInt();
+                            try {
+                                System.out.println("\n");
+                                System.out.println("---------------------------------");
+                                System.out.println("¿Qué servicio desea modificar el precio?");
+                                System.out.println("1. Depilación");
+                                System.out.println("2. Manicura");
+                                System.out.println("3. Pestañas");
+                                System.out.println("---------------------------------");
+                                System.out.print("Seleccione una opción (1-3): ");
+                                opc5 = scanner.nextInt();
+                                scanner.nextLine();
 
-                            if (opc5 == 1) {
-                                depilacion.mostrarServicios();
-                                Depilacion depi;
-                                while (true) {
-                                    try {
-                                        depi = depilacion.buscarServicio();
-                                        break;
-                                    } catch (CodigoNoEncontradoException e) {
-                                        System.out.println(e.getMessage());
-                                    }
-                                }
-                                double precio;
-
-                                while (true) {
-
-                                    try {
-                                        System.out.println("Ingrese el nuevo precio para el servicio DEPILACION(o escriba 'salir' para cancelar): ");
-
-                                        String opcElegida = scanner.nextLine();
-
-                                        if (opcElegida.equalsIgnoreCase("salir")) {
-                                            System.out.println("Operación cancelada por el usuario.");
-                                            return;
-                                        }
-                                        ///pasa a int un string
-                                        precio = Double.parseDouble(opcElegida);
-                                        if (precio < 0 || precio > 500000) {
-                                            System.out.println("Precio fuera de rango! vuelva a intentar un numero entre 0 y 500000");
-                                        } else {
+                                if (opc5 == 1) {
+                                    depilacion.mostrarServicios();
+                                    Depilacion depi;
+                                    while (true) {
+                                        try {
+                                            depi = depilacion.buscarServicio();
                                             break;
+                                        } catch (CodigoNoEncontradoException e) {
+                                            System.out.println(e.getMessage());
                                         }
-                                    } catch (InputMismatchException e) {
-                                        System.out.println("Entrada no valida. Por favor ingrese un número.");
-                                        scanner.nextLine();
                                     }
-                                }
-                                GestorPrecios.modificarPrecio(depi.getClass(), depi.getTipoDepilacion(), precio);
-                                System.out.println("CAMBIADO EXITOSAMENTE! El precio de DEPILACION se ha actualizado: ");
-                                System.out.println("NUEVO PRECIO: " + GestorPrecios.obtenerPrecio(depi.getClass(), depi.getTipoService()));
+                                    double precio;
 
-                            } else if (opc5 == 2) {
-                                manicura.mostrarManicura();
-                                Manicura manicura1;
-                                while (true) {
-                                    try {
-                                        manicura1 = manicura.buscarServicio();
-                                        break;
-                                    } catch (CodigoNoEncontradoException e) {
-                                        System.out.println(e.getMessage());
-                                    }
-                                }
-                                double precio;
+                                    while (true) {
 
-                                while (true) {
+                                        try {
+                                            System.out.println("Ingrese el nuevo precio para el servicio DEPILACION(o escriba 'salir' para cancelar): ");
 
-                                    try {
-                                        System.out.println("Ingrese el nuevo precio para el servicio MANICURA(o escriba 'salir' para cancelar): ");
+                                            String opcElegida = scanner.nextLine();
 
-                                        String opcElegida = scanner.nextLine();
-
-                                        if (opcElegida.equalsIgnoreCase("salir")) {
-                                            System.out.println("Operación cancelada por el usuario.");
-                                            return;
+                                            if (opcElegida.equalsIgnoreCase("salir")) {
+                                                System.out.println("Operación cancelada por el usuario.");
+                                                return;
+                                            }
+                                            ///pasa a int un string
+                                            precio = Double.parseDouble(opcElegida);
+                                            if (precio < 0 || precio > 500000) {
+                                                System.out.println("Precio fuera de rango! vuelva a intentar un numero entre 0 y 500000");
+                                            } else {
+                                                break;
+                                            }
+                                        } catch (InputMismatchException e) {
+                                            System.out.println("Entrada no valida. Por favor ingrese un número.");
+                                            scanner.nextLine();
                                         }
-                                        ///pasa a int un string
-                                        precio = Double.parseDouble(opcElegida);
-                                        if (precio < 0 || precio > 500000) {
-                                            System.out.println("Precio fuera de rango! vuelva a intentar un numero entre 0 y 500000");
-                                        } else {
+                                    }
+                                    GestorPrecios.modificarPrecio(depi.getClass(), depi.getTipoDepilacion(), precio);
+                                    System.out.println("CAMBIADO EXITOSAMENTE! El precio de DEPILACION se ha actualizado: ");
+                                    System.out.println("NUEVO PRECIO: " + GestorPrecios.obtenerPrecio(depi.getClass(), depi.getTipoService()));
+
+                                } else if (opc5 == 2) {
+                                    manicura.mostrarManicura();
+                                    Manicura manicura1;
+                                    while (true) {
+                                        try {
+                                            manicura1 = manicura.buscarServicio();
                                             break;
+                                        } catch (CodigoNoEncontradoException e) {
+                                            System.out.println(e.getMessage());
                                         }
-                                    } catch (InputMismatchException e) {
-                                        System.out.println("Entrada no valida. Por favor ingrese un número.");
-                                        scanner.nextLine();
                                     }
-                                }
-                                GestorPrecios.modificarPrecio(manicura1.getClass(), manicura1.getTipoManicura(), precio);
-                                System.out.println("CAMBIADO EXITOSAMENTE! El precio de MANICURA se ha actualizado: ");
-                                System.out.println("NUEVO PRECIO: " + GestorPrecios.obtenerPrecio(manicura1.getClass(), manicura1.getTipoService()));
+                                    double precio;
 
-                            } else if (opc5 == 3) {
-                                pestania.mostrarServicios();
-                                Pestanias pestanias;
-                                while (true) {
-                                    try {
-                                        pestanias = pestania.buscarServicio();
-                                        break;
-                                    } catch (CodigoNoEncontradoException e) {
-                                        System.out.println(e.getMessage());
-                                    }
-                                }
-                                double precio;
+                                    while (true) {
 
-                                while (true) {
+                                        try {
+                                            System.out.println("Ingrese el nuevo precio para el servicio MANICURA(o escriba 'salir' para cancelar): ");
 
-                                    try {
-                                        System.out.println("Ingrese el nuevo precio para el servicio PESTAÑAS(o escriba 'salir' para cancelar): ");
+                                            String opcElegida = scanner.nextLine();
 
-                                        String opcElegida = scanner.nextLine();
-
-                                        if (opcElegida.equalsIgnoreCase("salir")) {
-                                            System.out.println("Operación cancelada por el usuario.");
-                                            return;
+                                            if (opcElegida.equalsIgnoreCase("salir")) {
+                                                System.out.println("Operación cancelada por el usuario.");
+                                                return;
+                                            }
+                                            ///pasa a int un string
+                                            precio = Double.parseDouble(opcElegida);
+                                            if (precio < 0 || precio > 500000) {
+                                                System.out.println("Precio fuera de rango! vuelva a intentar un numero entre 0 y 500000");
+                                            } else {
+                                                break;
+                                            }
+                                        } catch (InputMismatchException e) {
+                                            System.out.println("Entrada no valida. Por favor ingrese un número.");
+                                            scanner.nextLine();
                                         }
-                                        ///pasa a int un string
-                                        precio = Double.parseDouble(opcElegida);
-                                        if (precio < 0 || precio > 500000) {
-                                            System.out.println("Precio fuera de rango! vuelva a intentar un numero entre 0 y 500000");
-                                        } else {
+                                    }
+                                    GestorPrecios.modificarPrecio(manicura1.getClass(), manicura1.getTipoManicura(), precio);
+                                    System.out.println("CAMBIADO EXITOSAMENTE! El precio de MANICURA se ha actualizado: ");
+                                    System.out.println("NUEVO PRECIO: " + GestorPrecios.obtenerPrecio(manicura1.getClass(), manicura1.getTipoService()));
+
+                                } else if (opc5 == 3) {
+                                    pestania.mostrarServicios();
+                                    Pestanias pestanias;
+                                    while (true) {
+                                        try {
+                                            pestanias = pestania.buscarServicio();
                                             break;
+                                        } catch (CodigoNoEncontradoException e) {
+                                            System.out.println(e.getMessage());
                                         }
-                                    } catch (InputMismatchException e) {
-                                        System.out.println("Entrada no valida. Por favor ingrese un número.");
-                                        scanner.nextLine();
                                     }
-                                }
-                                GestorPrecios.modificarPrecio(pestanias.getClass(), pestanias.getTipoPestanias(), precio);
-                                System.out.println("CAMBIADO EXITOSAMENTE! El precio de DEPILACION se ha actualizado: ");
-                                System.out.println("NUEVO PRECIO: " + GestorPrecios.obtenerPrecio(pestanias.getClass(), pestanias.getTipoService()));
+                                    double precio;
 
-                            } else {
-                                System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                    while (true) {
+
+                                        try {
+                                            System.out.println("Ingrese el nuevo precio para el servicio PESTAÑAS(o escriba 'salir' para cancelar): ");
+
+                                            String opcElegida = scanner.nextLine();
+
+                                            if (opcElegida.equalsIgnoreCase("salir")) {
+                                                System.out.println("Operación cancelada por el usuario.");
+                                                return;
+                                            }
+                                            ///pasa a int un string
+                                            precio = Double.parseDouble(opcElegida);
+                                            if (precio < 0 || precio > 500000) {
+                                                System.out.println("Precio fuera de rango! vuelva a intentar un numero entre 0 y 500000");
+                                            } else {
+                                                break;
+                                            }
+                                        } catch (InputMismatchException e) {
+                                            System.out.println("Entrada no valida. Por favor ingrese un número.");
+                                            scanner.nextLine();
+                                        }
+                                    }
+                                    GestorPrecios.modificarPrecio(pestanias.getClass(), pestanias.getTipoPestanias(), precio);
+                                    System.out.println("CAMBIADO EXITOSAMENTE! El precio de DEPILACION se ha actualizado: ");
+                                    System.out.println("NUEVO PRECIO: " + GestorPrecios.obtenerPrecio(pestanias.getClass(), pestanias.getTipoService()));
+
+                                } else {
+                                    System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Opción invalida");
+                                scanner.nextLine();
                             }
+
                         } while (opc5 < 1 || opc5 > 3);
 
                         break;
@@ -1231,48 +1394,57 @@ public class MenuAdministrador {
                         int opc = -1; // Variable para almacenar la opción seleccionada
 
                         do {
-                            System.out.println("\n");
-                            System.out.println("¿De que servicio desea incrementar los precios? ");
-                            System.out.println("1. Depilacion");
-                            System.out.println("2. Manicura");
-                            System.out.println("3. Pestañas");
-                            System.out.print("Seleccione una opción (1-3): ");
-                            opc = scanner.nextInt();
+                            try {
+                                System.out.println("\n");
+                                System.out.println("---------------------------------");
+                                System.out.println("¿De que servicio desea incrementar los precios? ");
+                                System.out.println("1. Depilacion");
+                                System.out.println("2. Manicura");
+                                System.out.println("3. Pestañas");
+                                System.out.println("---------------------------------");
+                                System.out.print("Seleccione una opción (1-3): ");
+                                opc = scanner.nextInt();
+                                scanner.nextLine();
 
-                            double porcentaje2 = 0;
+                                double porcentaje2 = 0;
 
-                            while (true) {
-                                try {
-                                    System.out.println("Ingrese el porcentaje a aumentar: ");
-                                    porcentaje2 = scanner.nextDouble();
+                                while (true) {
+                                    try {
+                                        System.out.println("Ingrese el porcentaje a aumentar: ");
+                                        porcentaje2 = scanner.nextDouble();
 
-                                    if (porcentaje2 < 0 || porcentaje2 > 100) {
-                                        System.out.println("Porcentaje INVALIDO");
-                                    } else {
-                                        break;
+                                        if (porcentaje2 < 0 || porcentaje2 > 100) {
+                                            System.out.println("Porcentaje INVALIDO");
+                                        } else {
+                                            break;
+                                        }
+
+                                    } catch (Exception e) {
+                                        System.out.println("Entrada no válida. Por favor, ingrese un número.");
+                                        scanner.next();
+
                                     }
-
-                                } catch (Exception e) {
-                                    System.out.println("Entrada no válida. Por favor, ingrese un número.");
-                                    scanner.next();
-
                                 }
+                                if (opc == 1) {
+                                    System.out.println("-----MODIFICANDO-----");
+                                    GestorPrecios.aumentarPreciosPorClase(depilacion.getClass(), porcentaje2);
+                                    System.out.println(GestorPrecios.verPrecioDepi());
+                                } else if (opc == 2) {
+                                    System.out.println("-----MODIFICANDO-----");
+                                    GestorPrecios.aumentarPreciosPorClase(manicura.getClass(), porcentaje2);
+                                    System.out.println(GestorPrecios.verPreciosManicura());
+                                } else if (opc == 3) {
+                                    System.out.println("-----MODIFICANDO-----");
+                                    GestorPrecios.aumentarPreciosPorClase(pestania.getClass(), porcentaje2);
+                                    System.out.println(GestorPrecios.verPrecioPestanias());
+                                } else {
+                                    System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Opción invalida");
+                                scanner.nextLine();
                             }
-                            if (opc == 1) {
-                                System.out.println("-----MODIFICANDO-----");
-                                GestorPrecios.aumentarPreciosPorClase(depilacion.getClass(), porcentaje2);
-                                System.out.println(GestorPrecios.verPrecioDepi());
-                            } else if (opc == 2) {
-                                System.out.println("-----MODIFICANDO-----");
-                                GestorPrecios.aumentarPreciosPorClase(manicura.getClass(), porcentaje2);
-                                System.out.println(GestorPrecios.verPreciosManicura());
-                            } else if (opc == 3) {
-                                System.out.println("-----MODIFICANDO-----");
-                                GestorPrecios.aumentarPreciosPorClase(pestania.getClass(), porcentaje2);
-                                System.out.println(GestorPrecios.verPrecioPestanias());
-                            } else {
-                                System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
-                            }
+
                         } while (opc < 1 || opc > 3);
                         scanner.close();
 
@@ -1287,6 +1459,7 @@ public class MenuAdministrador {
                 }
             } catch (InputMismatchException a) {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
+                scanner.nextLine();
             }
         } while (opcion != 0);
 

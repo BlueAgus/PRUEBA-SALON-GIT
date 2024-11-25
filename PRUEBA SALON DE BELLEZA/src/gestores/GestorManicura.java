@@ -121,35 +121,45 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
         boolean continuarModificando = true;
         while (continuarModificando) {
-            System.out.println("¿Qué te gustaría modificar del servicio de manicura ?");
-            System.out.println("1. Precio");
-            System.out.println("2. Duración");
-            System.out.println("3. Tipo de manicura");
-            System.out.println("2. Diseño");
-            System.out.println("0. Salir");
-            int opcion = scanner.nextInt();
-            scanner.nextLine();
+            try{
+                System.out.println("\n");
+                System.out.println("---------------------------------");
+                System.out.println("¿Qué te gustaría modificar del servicio de manicura ?");
+                System.out.println("1. Precio");
+                System.out.println("2. Duración");
+                System.out.println("3. Tipo de manicura");
+                System.out.println("2. Diseño");
+                System.out.println("0. Salir");
+                System.out.println("---------------------------------");
+                System.out.println("Ingrese una opción: ");
+                int opcion = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (opcion) {
-                case 1:
-                   servicio.setPrecio(pedirPrecio());
+                switch (opcion) {
+                    case 1:
+                        servicio.setPrecio(pedirPrecio());
 
-                    break;
-                case 2:
-                    servicio.setDuracion(pedirDuracion());
-                    break;
-                case 3:
-                    servicio.setTipoManicura(pedirTipoManicura());
-                    break;
-                case 0:
-                    continuarModificando = false;
-                    break;
-                default:
-                    System.out.println("Opción no válida.");
+                        break;
+                    case 2:
+                        servicio.setDuracion(pedirDuracion());
+                        break;
+                    case 3:
+                        servicio.setTipoManicura(pedirTipoManicura());
+                        break;
+                    case 0:
+                        continuarModificando = false;
+                        break;
+                    default:
+                        System.out.println("Opción no válida.");
+                }
+
+                System.out.println("Manicura modificada:");
+                System.out.println(servicio);
+            }catch (InputMismatchException e) {
+                System.out.println("Opcion invalida. Ingrese numeros del 0 al 3");
+                scanner.nextLine();
             }
 
-            System.out.println("Manicura modificada:");
-            System.out.println(servicio);
         }
     }
 
@@ -157,37 +167,47 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
         boolean continuarModificando = true;
         while (continuarModificando) {
-            System.out.println("¿Qué te gustaría modificar?");
-            System.out.println("1. Duración");
-            System.out.println("2. Precio");
-            System.out.println("3. Tipo de manicura");
-            System.out.println("4. Diseño");
-            System.out.println("0. Salir");
-            int opcion = scanner.nextInt();
-            scanner.nextLine();
+            try{
+                System.out.println("\n");
+                System.out.println("---------------------------------");
+                System.out.println("¿Qué te gustaría modificar?");
+                System.out.println("1. Duración");
+                System.out.println("2. Precio");
+                System.out.println("3. Tipo de manicura");
+                System.out.println("4. Diseño");
+                System.out.println("0. Salir");
+                System.out.println("---------------------------------");
+                System.out.println("Ingrese una opción: ");
+                int opcion = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (opcion) {
-                case 1:
-                    servicio.setDuracion(pedirDuracion());
-                    break;
-                case 2:
-                    servicio.setPrecio(pedirPrecio());
-                    break;
-                case 3:
-                    servicio.setTipoManicura(pedirTipoManicura());
-                    break;
-                case 4:
-                    servicio.setPrecioDisenio(pedirDisenio());
+                switch (opcion) {
+                    case 1:
+                        servicio.setDuracion(pedirDuracion());
+                        break;
+                    case 2:
+                        servicio.setPrecio(pedirPrecio());
+                        break;
+                    case 3:
+                        servicio.setTipoManicura(pedirTipoManicura());
+                        break;
+                    case 4:
+                        servicio.setPrecioDisenio(pedirDisenio());
 
-                    break;
-                case 0:
-                    continuarModificando = false;
-                default:
-                    System.out.println("Opción no válida.");
+                        break;
+                    case 0:
+                        continuarModificando = false;
+                    default:
+                        System.out.println("Opción no válida.");
+                }
+
+                System.out.println("Servicio modificado:");
+                System.out.println(servicio);
+            }catch (InputMismatchException e) {
+                System.out.println("Opcion invalida. Ingrese numeros del 0 al 3");
+                scanner.nextLine();
             }
 
-            System.out.println("Servicio modificado:");
-            System.out.println(servicio);
         }
     }
 
@@ -367,7 +387,7 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
     }
 
 
-    public void reportarFalla(GestorCliente cliente, GestorTurno gestorTurno) {
+    public void reportarFalla(GestorTurno gestorTurno) {
         Manicura manicura = null;
         try {
             manicura = buscarServicio();
@@ -382,8 +402,13 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
     ////////////////////////////////////////GET ////////////////////////////////////////////////////
     public void mostrarManicura() {
-        for (Manicura m : almacenServicios)
-            System.out.println(m);
+        if(almacenServicios.isEmpty()){
+            System.out.println("No hay servicios de pestañas");
+        }else{
+            for (Manicura m : almacenServicios)
+                System.out.println(m);
+        }
+
     }
 
     public void mostrarServicios() {

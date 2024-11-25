@@ -14,7 +14,6 @@ public class Manicura extends Servicio {
     private double precioDisenio;
 
     //////////////////////////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////////////
-  /// saque esto double precio, double precioDisenio prque a se calcula con el gestor
     public Manicura(String duracion, TipoManicura tipoManicura, boolean disenio) {
         super(TipoServicio.MANICURA, duracion);
         this.tipoManicura = tipoManicura;
@@ -40,6 +39,8 @@ public class Manicura extends Servicio {
         //usando el set y esto lo va a modificar en el gestor para que tengan el mismo valor
 
     }//En el get de servicio llamamos a calcular precio para cada ves que se quiere ver no aseguramos de que esta actualizado
+
+
     ////////////////////////////////////GET Y SET //////////////////////////////////////////////////
 
     public TipoManicura getTipoManicura() {
@@ -73,18 +74,9 @@ public class Manicura extends Servicio {
     @Override
     public String toString() {
         return "| MANICURA: " + tipoManicura +
-                (disenio ? " con diseño $"+precioDisenio : " sin diseño ")+
+                (disenio ? " con diseño " : " sin diseño ")+
                 " \n| Precio: " + calcularPrecio() +
                 " \n| Duracion: " + duracion;
     }
-
-    /*@Override
-    public String toString() {
-        return "| MANICURA: " + tipoManicura +
-                (disenio ? " con diseño " : " sin diseño ")+
-                " \n| Precio: " + precio +
-                " \n| Duracion: " + duracion;
-    }*/
-
 
 }
