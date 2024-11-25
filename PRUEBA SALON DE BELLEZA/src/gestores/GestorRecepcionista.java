@@ -360,9 +360,13 @@ public class GestorRecepcionista {
         boolean dnivalido = false;
 
         while (!dnivalido) {
-            System.out.println("Ingrese el DNI: ");
+            System.out.println("Ingrese el DNI(o escriba 'salir' para cancelar): ");
             dni = scanner.nextLine();
 
+            if (dni.equalsIgnoreCase("salir")) {
+                System.out.println("Operación cancelada por el usuario.");
+                break;
+            }
             // no esté vacío
             if (dni.isEmpty()) {
                 System.out.println("Error: El DNI no puede estar vacío.");
