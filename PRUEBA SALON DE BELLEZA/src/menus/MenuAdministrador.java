@@ -191,6 +191,8 @@ public class MenuAdministrador {
                         break;
 
                     case 4:
+                        
+                        recepcionistas.mostrarTodos();
                         System.out.println("¿Cual es el DNI del Recepcionista al que le desea modificar los datos('salir' si quiere cancelar la operacion)");
 
                         String dni2 = recepcionistas.pedirDNIsinVerificacion();
@@ -199,6 +201,7 @@ public class MenuAdministrador {
                             break;
                         }
                         try {
+
                             Recepcionista recepcionista = recepcionistas.buscarPersona(dni2);
                             System.out.println(recepcionista);
                             recepcionistas.modificarPersona(recepcionista);
