@@ -32,15 +32,19 @@ public class GestorFactura {
     private GestorTurno gestorTurno; // Para buscar turnos
     Scanner scan = new Scanner(System.in);
     private List<IBuscarPorCodigo<? extends Servicio>> gestores;
+    private GestorCliente gestorCliente;
+    private GestorProfesional gestorProfesional;
 
 
     //////////////////////////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////////////
 
-    public GestorFactura(GestorTurno gestorTurno, List<IBuscarPorCodigo<? extends Servicio>> gestores) {
+    public GestorFactura(GestorTurno gestorTurno, List<IBuscarPorCodigo<? extends Servicio>> gestores, GestorCliente gestorCliente, GestorProfesional gestorProfesional) {
         this.caja = new GestorGenerico<>();
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.gestorTurno = gestorTurno;
         this.gestores=gestores;
+        this.gestorCliente = gestorCliente;
+        this.gestorProfesional = gestorProfesional;
     }
 
     ////////////////////////////////////////////////////////AGREGAR, ELIMINAR, BUSCAR Y MODIFICAR ////////////////////////////////////////////////////
@@ -65,6 +69,7 @@ public class GestorFactura {
             agregarTurnosAFactura(factura, turnosCliente);
 
             System.out.println("¿Aplicar descuento? (SI/NO):");
+            scan.nextLine();
             if (scan.nextLine().equalsIgnoreCase("SI")) {
                 aplicarDescuento(factura);
             }
@@ -86,7 +91,7 @@ public class GestorFactura {
             try {
                 System.out.println("Seleccione el número del turno para agregar a la factura:");
                 for (int i = 0; i < turnosCliente.size(); i++) {
-                    System.out.println((i + 1) + ". " + turnosCliente.get(i));
+                    System.out.println((i + 1) + ". " + turnosCliente.get(i).toString(gestorCliente, gestorProfesional));
                 }
 
                 int seleccion = scan.nextInt();
@@ -115,7 +120,6 @@ public class GestorFactura {
 
 
     private Cliente obtenerCliente() {
-        GestorCliente gestorCliente = new GestorCliente(); // Suponiendo que este gestor ya está configurado
         Cliente cliente = null;
 
         while (cliente == null) {

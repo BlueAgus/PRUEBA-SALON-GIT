@@ -4,7 +4,7 @@
     "CERA": 0.0
   },
   "Manicura": {
-    "ESCULPIDAS": 36655.0,
+    "ESCULPIDAS": 0.0,
     "SEMIPERMANENTE": 0.0,
     "GEL": 0.0
   },
@@ -15,5 +15,8 @@
   },
   "PrecioDiseño": {
     "Diseño": 5.0
+  },
+  "TipoServicio": {
+    "PESTANIAS": 0.0
   }
 }
