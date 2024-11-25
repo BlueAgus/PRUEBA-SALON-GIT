@@ -7,9 +7,11 @@ import excepciones.FacturaNoExistenteException;
 import gestores.*;
 import model.*;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Locale;
@@ -987,7 +989,12 @@ public class MenuAdministrador {
                         buscarFacturas(facturas, clientes);
                         break;
                     case 5:
-                        System.out.println(facturas.getArchivoFacturas());
+                        if(facturas.getArchivoFacturas().isEmpty()){
+                            System.out.println("No hay historial de facturas");
+                        }else {
+                            System.out.println(facturas.getArchivoFacturas());
+                        }
+
                         break;
                     case 6:
                         String dni = clientes.pedirDNIsinVerificacion();
@@ -1024,13 +1031,41 @@ public class MenuAdministrador {
 
                         switch (opc) {
                             case 1:
-                                LocalDate fecha = gestorTurno.pedirFecha();
+                                LocalDate fecha = null;
+                                boolean valido = false;
+                                while (!valido) {
+                                    System.out.println("Ingrese la fecha (YYYY-MM-DD): (o escriba 'salir' para cancelar)");
+
+                                    // Lo guarda en un string para verificar que no haya escrito "salir"
+                                    String fechaIngresada = scanner.nextLine();
+
+                                    if (fechaIngresada.equalsIgnoreCase("salir")) {
+                                        System.out.println("Operación cancelada por el usuario.");
+                                        break;
+                                    }
+
+                                    try {
+                                        // Convierte el string al formato correcto reemplazando los ":" por "-"
+                                        String fechaFormateada = fechaIngresada.replace(":", "-");
+                                        fecha = LocalDate.parse(fechaFormateada);
+
+                                        if (fecha.isAfter(LocalDate.now())) {
+                                            System.out.println("Error: La fecha debe ser anterior.");
+                                        } else if (fecha.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                                            System.out.println("Error: No hay ganancia los dias domingos.");
+                                        } else {
+                                            valido = true;
+                                        }
+                                    } catch (DateTimeParseException e) {
+                                        System.out.println("Formato de fecha inválido. Por favor, use el formato YYYY:MM:DD");
+                                    }
+                                }
                                 String f = convertirFechaAString(fecha);
 
                                 if (fecha == null) {
                                     break;
                                 } else {
-                                    System.out.println("Ganancia del día: " + fecha + " " + facturas.gananciaXdia(f));
+                                    System.out.println("Ganancia del día: " + fecha + ": $ " + facturas.gananciaXdia(f));
                                 }
                                 break;
                             case 2:
@@ -1067,9 +1102,9 @@ public class MenuAdministrador {
                                         scanner.nextLine();
                                     }
 
-                                    System.out.println("Ganancia: " + Month.of(mes).getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault()) + " " + año + ": " + facturas.gananciaXmes(mes, año));
-                                }
 
+                                }
+                                System.out.println("Ganancia: " + Month.of(mes).getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault()) + " " + año + ": " + facturas.gananciaXmes(mes, año));
                                 break;
                             case 3:
                                 int año1 = 0;
@@ -1092,7 +1127,7 @@ public class MenuAdministrador {
                                         scanner.nextLine();
                                     }
                                 }
-                                System.out.println("Ganancia del año " + año1 + facturas.gananciaXaño(año1));
+                                System.out.println("Ganancia del año " + año1 +" $"+ facturas.gananciaXaño(año1));
                                 break;
                             case 8:
                                 GestorPrecios.verPrecios();
