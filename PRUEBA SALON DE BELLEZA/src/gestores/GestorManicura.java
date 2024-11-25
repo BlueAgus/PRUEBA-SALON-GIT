@@ -128,7 +128,6 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
                 System.out.println("1. Precio");
                 System.out.println("2. Duración");
                 System.out.println("3. Tipo de manicura");
-                System.out.println("2. Diseño");
                 System.out.println("0. Salir");
                 System.out.println("---------------------------------");
                 System.out.println("Ingrese una opción: ");
@@ -411,10 +410,11 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
     ////////////////////////////////////////GET ////////////////////////////////////////////////////
     public void mostrarManicura() {
         if(almacenServicios.isEmpty()){
-            System.out.println("No hay servicios de pestañas");
+            System.out.println("No hay servicios de manicura");
         }else{
-            for (Manicura m : almacenServicios)
-                System.out.println(m);
+            for (int i=0;i<almacenServicios.size();i++)
+                System.out.println(i+") "+almacenServicios.get(i));
+            System.out.println("--------------------");
         }
 
     }
