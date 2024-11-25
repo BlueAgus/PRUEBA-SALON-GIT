@@ -90,7 +90,7 @@ public class GestorTurno {
         turno.setDni_profesional(dniProfesional);
 
 
-        System.out.println(turno);
+        System.out.println(turno.toString(gestorCliente, gestorProfesional));
 
         if (listaTurnos.contiene(turno.getFecha())) {
             listaTurnos.getMapa().get(turno.getFecha()).add(turno);
@@ -700,54 +700,6 @@ public class GestorTurno {
 
 /////////////////////////////////////////////MANEJO DE PROFESIONALES!!!!////////////////////////////////////////
 
-    ///devuelve el DNI del profesional
-///filtra por servicio, por horario y fecha
-    /*public String pedirDNIprofesionalXservicio(String codServicio, String horario, String fecha) {
-
-        if (gestorProfesional.getProfesionales() == null || gestorProfesional.getProfesionales().isEmpty()) {
-            System.out.println("No hay profesionales disponibles.");
-            return null;
-        }
-
-        int opc = 0;
-        List<Profesional> disponibles = new ArrayList<>();
-
-        while (true) {
-            System.out.println("Profesionales disponibles:");
-            for (int i = 0; i < gestorProfesional.getProfesionales().size(); i++) {
-
-                if (gestorProfesional.getProfesionales().get(i).verificarProfesion(codServicio) && verificarProfesionalXhorario(gestorProfesional.getProfesionales().get(i).getDni(), horario, fecha)) {
-                    System.out.println(opc + "- " + gestorProfesional.getProfesionales().get(i).getNombre() + " " + gestorProfesional.getProfesionales().get(i).getApellido());
-                    disponibles.add(gestorProfesional.getProfesionales().get(i));
-                    opc++;
-                }
-            }
-            try {
-                System.out.println("OPCION: (o escriba 'salir' para cancelar) ");
-                String opcElegida = scanner.nextLine();
-
-
-                if (opcElegida.equalsIgnoreCase("salir")) {
-                    System.out.println("Operación cancelada por el usuario.");
-                    return null;
-                }
-
-                ///pasa a int un string
-                opc = Integer.parseInt(opcElegida);
-                if (opc < 0 || opc > gestorProfesional.getProfesionales().size()) {
-                    System.out.println("Selección inválida. Inténtelo de nuevo.");
-                } else {
-                    break;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada no valida. Por favor ingrese un número.");
-                scanner.nextLine();
-            }catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Debe ingresar un número.");
-            }
-        }
-        return gestorProfesional.getProfesionales().get(opc).getDni();
-    }*/
 
     public String pedirDNIprofesionalXservicio(String codServicio, String horario, String fecha) {
 

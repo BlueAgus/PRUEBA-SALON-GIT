@@ -239,7 +239,7 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
 
         // Muestra los servicios disponibles
         for (int i = 0; i < almacenServicios.size(); i++) {
-            System.out.println((i + 1) + ". \n" + almacenServicios.get(i));
+            System.out.println((i + 1) + ". \n" + almacenServicios.get(i).toString());
         }
 
         int opc = 0;

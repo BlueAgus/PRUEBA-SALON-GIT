@@ -103,6 +103,7 @@ public class Turno implements CrearID {
     }
 
     //////////////////////////////////////////////////////// TO STRING ////////////////////////////////////////////////////
+  
     public String toString(TipoServicio tipoServicio, GestorCliente gestorCliente, GestorProfesional gestorProfesional) {
         try {
 
