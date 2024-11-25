@@ -30,7 +30,7 @@ public class Depilacion extends Servicio {
     @Override
     public void setPrecio(double precio) {
         super.setPrecio(precio);
-        GestorPrecios.modificarPrecio(Manicura.class, this.tipoDepilacion, precio);
+        GestorPrecios.modificarPrecio(Depilacion.class, this.tipoDepilacion, precio);
         //Actualizamos el gestor, esto porque en algunos lados se actualiza el precio
         //usando el set y esto lo va a modificar en el gestor para que tengan el mismo valor
 

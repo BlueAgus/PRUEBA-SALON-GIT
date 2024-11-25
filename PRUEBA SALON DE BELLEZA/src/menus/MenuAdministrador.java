@@ -573,10 +573,13 @@ public class MenuAdministrador {
                                 scanner.nextLine();
 
                                 if (op3 == 1) {
+                                    System.out.println("\n");
                                     depilacion.modificarServicio();
                                 } else if (op3 == 2) {
+                                    System.out.println("\n");
                                     manicura.modificarServicio();
                                 } else if (op3 == 3) {
+                                    System.out.println("\n");
                                     pestania.modificarServicio();
                                 } else {
                                     System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
