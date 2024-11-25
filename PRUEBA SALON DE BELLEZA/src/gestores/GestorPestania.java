@@ -233,7 +233,7 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
     public String pedirCodServicio() {
 
         for (int i = 0; i < almacenServicios.size(); i++) {
-            System.out.println((i + 1) + "-" + almacenServicios.get(i));
+            System.out.println(i + "-" + almacenServicios.get(i));
         }
         int opc;
         while (true) {
@@ -250,7 +250,7 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
 
                 ///pasa a int un string
                 opc = Integer.parseInt(opcElegida);
-                if (opc < 1 || opc > almacenServicios.size()) {
+                if (opc < 0 || opc > almacenServicios.size()) {
                     System.out.println("Selección inválida. Inténtelo de nuevo.");
                 } else {
                     break;
@@ -260,7 +260,7 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
 
             }
         }
-        return almacenServicios.get(opc - 1).getCodigo_servicio();
+        return almacenServicios.get(opc).getCodigo_servicio();
     }
 
     // Validación del precio

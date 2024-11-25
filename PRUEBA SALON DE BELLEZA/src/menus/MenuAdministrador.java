@@ -7,9 +7,11 @@ import excepciones.FacturaNoExistenteException;
 import gestores.*;
 import model.*;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Locale;
@@ -100,16 +102,25 @@ public class MenuAdministrador {
                         subMenuClientes(clientes, pestania, depilacion, manicura);
                         break;
                     case 4:
+                        System.out.println("\n\n");
+                        administradores.mostrarTodos();
+                        System.out.println("\n");
+                        System.out.println("¿Cual es el DNI del administrador al que le desea modificar los datos('salir' si quiere cancelar la operacion)");
 
-                        try {
-                            Administrador administrador = administradores.buscarPersona(dni);
-
-                            administradores.modificarAdministrador(administrador);
-
-                        } catch (DNInoEncontradoException e) {
-                            System.out.println(e.getMessage());
+                        String dni2 = administradores.pedirDNIsinVerificacion();
+                        if (dni2.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
                         }
+                        try {
 
+                            Administrador administrador = administradores.buscarPersona(dni2);
+                            System.out.println(administrador);
+                            administradores.modificarAdministrador(administrador);
+                        } catch (DNInoEncontradoException a) {
+                            System.out.println(a.getMessage());
+                            scanner.close();
+                        }
                         break;
 
                     default:
@@ -191,7 +202,7 @@ public class MenuAdministrador {
                         break;
 
                     case 4:
-                        
+
                         recepcionistas.mostrarTodos();
                         System.out.println("¿Cual es el DNI del Recepcionista al que le desea modificar los datos('salir' si quiere cancelar la operacion)");
 
@@ -285,6 +296,8 @@ public class MenuAdministrador {
 
                         break;
                     case 4:
+                        System.out.println("\nProfesionales:\n");
+                        profesionales.mostrarTodos();
 
                         System.out.println("¿Cual es el dni del profesional que desea buscar?");
 
@@ -380,6 +393,8 @@ public class MenuAdministrador {
                         }
                         break;
                     case 4:
+                        System.out.println("\nClientes:\n");
+                        clientes.mostrarTodos();
                         System.out.println("¿Cual es el DNI del cliente al que le desea modificar los datos('salir' si quiere cancelar la operacion)");
 
                         String dni2 = clientes.pedirDNIsinVerificacion();
@@ -535,10 +550,13 @@ public class MenuAdministrador {
                                 scanner.nextLine();
 
                                 if (op3 == 1) {
+                                    System.out.println("\n");
                                     depilacion.modificarServicio();
                                 } else if (op3 == 2) {
+                                    System.out.println("\n");
                                     manicura.modificarServicio();
                                 } else if (op3 == 3) {
+                                    System.out.println("\n");
                                     pestania.modificarServicio();
                                 } else {
                                     System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
@@ -967,7 +985,12 @@ public class MenuAdministrador {
                         buscarFacturas(facturas, clientes);
                         break;
                     case 5:
-                        System.out.println(facturas.getArchivoFacturas());
+                        if (facturas.getArchivoFacturas().isEmpty()) {
+                            System.out.println("No hay historial de facturas");
+                        } else {
+                            System.out.println(facturas.getArchivoFacturas());
+                        }
+
                         break;
                     case 6:
                         String dni = clientes.pedirDNIsinVerificacion();
@@ -1004,13 +1027,41 @@ public class MenuAdministrador {
 
                         switch (opc) {
                             case 1:
-                                LocalDate fecha = gestorTurno.pedirFecha();
+                                LocalDate fecha = null;
+                                boolean valido = false;
+                                while (!valido) {
+                                    System.out.println("Ingrese la fecha (YYYY-MM-DD): (o escriba 'salir' para cancelar)");
+
+                                    // Lo guarda en un string para verificar que no haya escrito "salir"
+                                    String fechaIngresada = scanner.nextLine();
+
+                                    if (fechaIngresada.equalsIgnoreCase("salir")) {
+                                        System.out.println("Operación cancelada por el usuario.");
+                                        break;
+                                    }
+
+                                    try {
+                                        // Convierte el string al formato correcto reemplazando los ":" por "-"
+                                        String fechaFormateada = fechaIngresada.replace(":", "-");
+                                        fecha = LocalDate.parse(fechaFormateada);
+
+                                        if (fecha.isAfter(LocalDate.now())) {
+                                            System.out.println("Error: La fecha debe ser anterior.");
+                                        } else if (fecha.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                                            System.out.println("Error: No hay ganancia los dias domingos.");
+                                        } else {
+                                            valido = true;
+                                        }
+                                    } catch (DateTimeParseException e) {
+                                        System.out.println("Formato de fecha inválido. Por favor, use el formato YYYY:MM:DD");
+                                    }
+                                }
                                 String f = convertirFechaAString(fecha);
 
                                 if (fecha == null) {
                                     break;
                                 } else {
-                                    System.out.println("Ganancia del día: " + fecha + " " + facturas.gananciaXdia(f));
+                                    System.out.println("Ganancia del día: " + fecha + ": $ " + facturas.gananciaXdia(f));
                                 }
                                 break;
                             case 2:
@@ -1047,9 +1098,9 @@ public class MenuAdministrador {
                                         scanner.nextLine();
                                     }
 
-                                    System.out.println("Ganancia: " + Month.of(mes).getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault()) + " " + año + ": " + facturas.gananciaXmes(mes, año));
-                                }
 
+                                }
+                                System.out.println("Ganancia: " + Month.of(mes).getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault()) + " " + año + ": " + facturas.gananciaXmes(mes, año));
                                 break;
                             case 3:
                                 int año1 = 0;
@@ -1072,17 +1123,17 @@ public class MenuAdministrador {
                                         scanner.nextLine();
                                     }
                                 }
-                                System.out.println("Ganancia del año " + año1 + facturas.gananciaXaño(año1));
-                                break;
-                            case 8:
-                                GestorPrecios.verPrecios();
+                                System.out.println("Ganancia del año " + año1 + " $" + facturas.gananciaXaño(año1));
                                 break;
                             case 0:
                                 break;
-                            default:
-                                System.out.println("Opcion invalida");
                         }
+                    case 8:
+                        GestorPrecios.verPrecios();
                         break;
+                    
+
+
                     default:
                         System.out.println("Opción no válida.");
                 }
