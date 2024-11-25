@@ -24,7 +24,7 @@ public class Turno implements CrearID {
     //////////////////////////////////////////////////////// CONSTRUCTORes ////////////////////////////////////////////////////
 
     public Turno(String cod_turno, String fecha, String horario,  String dni_profesional, String dni_cliente) {
-        this.cod_turno = cod_turno;
+        this.cod_turno = generarIDEunico();
         this.fecha = fecha;
         this.horario = horario;
         this.codigo_servicio = generarIDEunico();
