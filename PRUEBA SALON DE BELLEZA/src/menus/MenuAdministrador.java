@@ -193,7 +193,7 @@ public class MenuAdministrador {
                         break;
 
                     case 4:
-                        
+
                         recepcionistas.mostrarTodos();
                         System.out.println("¿Cual es el DNI del Recepcionista al que le desea modificar los datos('salir' si quiere cancelar la operacion)");
 
@@ -992,9 +992,9 @@ public class MenuAdministrador {
                         buscarFacturas(facturas, clientes);
                         break;
                     case 5:
-                        if(facturas.getArchivoFacturas().isEmpty()){
+                        if (facturas.getArchivoFacturas().isEmpty()) {
                             System.out.println("No hay historial de facturas");
-                        }else {
+                        } else {
                             System.out.println(facturas.getArchivoFacturas());
                         }
 
@@ -1130,17 +1130,17 @@ public class MenuAdministrador {
                                         scanner.nextLine();
                                     }
                                 }
-                                System.out.println("Ganancia del año " + año1 +" $"+ facturas.gananciaXaño(año1));
-                                break;
-                            case 8:
-                                GestorPrecios.verPrecios();
+                                System.out.println("Ganancia del año " + año1 + " $" + facturas.gananciaXaño(año1));
                                 break;
                             case 0:
                                 break;
-                            default:
-                                System.out.println("Opcion invalida");
                         }
+                    case 8:
+                        GestorPrecios.verPrecios();
                         break;
+                    
+
+
                     default:
                         System.out.println("Opción no válida.");
                 }
