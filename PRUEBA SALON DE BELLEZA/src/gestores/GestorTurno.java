@@ -38,7 +38,6 @@ public class GestorTurno {
         this.gestorDepilacion = gestorDepilacion;
         this.gestorPestania = gestorPestania;
         this.gestorManicura = gestorManicura;
-        this.gestorProfesional = gestorProfesional;
         this.gestorCliente = gestorCliente;
     }
 
@@ -60,7 +59,6 @@ public class GestorTurno {
         TipoServicio tipoServicio = gestorDepilacion.pedirTipoServicio();
         String codServicio =pedirCodServicio(tipoServicio);
 
-//
 
         if (codServicio == null) {
             return false;

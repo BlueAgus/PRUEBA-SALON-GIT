@@ -123,6 +123,8 @@ public class GestorRecepcionista {
         boolean continuarModificando = true;
 
         while (continuarModificando) {
+            System.out.println("\n");
+            System.out.println("---------------------------------");
             System.out.println("¿Qué te gustaría modificar?");
             System.out.println("1. Nombre");
             System.out.println("2. Apellido");
@@ -131,6 +133,8 @@ public class GestorRecepcionista {
             System.out.println("5. Telefono");
             System.out.println("6. Contraseña");
             System.out.println("0. Salir");
+            System.out.println("---------------------------------");
+            System.out.println("Ingrese una opción: ");
             try {
                 opcion = scanner.nextInt();
                 scanner.nextLine();

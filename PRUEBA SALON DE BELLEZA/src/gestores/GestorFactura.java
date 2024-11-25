@@ -1,4 +1,5 @@
 package gestores;
+
 import Interfaces.IBuscarPorCodigo;
 import abstractas.Servicio;
 import com.google.gson.Gson;
@@ -10,6 +11,7 @@ import model.Cliente;
 import model.ConvertirFechaHoras;
 import model.Factura;
 import model.Turno;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,10 +19,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.RecursiveTask;
 import java.util.function.Predicate;
 
@@ -81,27 +80,33 @@ public class GestorFactura {
         boolean continuar = true;
 
         while (continuar) {
-            System.out.println("Seleccione el número del turno para agregar a la factura:");
-            for (int i = 0; i < turnosCliente.size(); i++) {
-                System.out.println((i + 1) + ". " + turnosCliente.get(i));
+            try {
+                System.out.println("Seleccione el número del turno para agregar a la factura:");
+                for (int i = 0; i < turnosCliente.size(); i++) {
+                    System.out.println((i + 1) + ". " + turnosCliente.get(i));
+                }
+
+                int seleccion = scan.nextInt();
+                if (seleccion < 1 || seleccion > turnosCliente.size()) {
+                    System.out.println("Selección inválida. Intente nuevamente.");
+                    continue;
+                }
+
+                Turno turnoSeleccionado = turnosCliente.get(seleccion - 1);
+                if (!factura.getTurnosPorCliente().contains(turnoSeleccionado)) {
+                    factura.agregarTurno(turnoSeleccionado);
+                    System.out.println("Turno agregado correctamente.");
+                } else {
+                    System.out.println("El turno ya está en la factura.");
+                }
+
+                System.out.println("¿Desea agregar otro turno? (SI/NO):");
+                continuar = scan.next().equalsIgnoreCase("SI");
+            } catch (InputMismatchException a) {
+                System.out.println("Caracter invalido..Ingrese un numero por favor!");
+                scan.nextLine();
             }
 
-            int seleccion = scan.nextInt();
-            if (seleccion < 1 || seleccion > turnosCliente.size()) {
-                System.out.println("Selección inválida. Intente nuevamente.");
-                continue;
-            }
-
-            Turno turnoSeleccionado = turnosCliente.get(seleccion - 1);
-            if (!factura.getTurnosPorCliente().contains(turnoSeleccionado)) {
-                factura.agregarTurno(turnoSeleccionado);
-                System.out.println("Turno agregado correctamente.");
-            } else {
-                System.out.println("El turno ya está en la factura.");
-            }
-
-            System.out.println("¿Desea agregar otro turno? (SI/NO):");
-            continuar = scan.next().equalsIgnoreCase("SI");
         }
     }
 
@@ -204,49 +209,55 @@ public class GestorFactura {
         }
 
         ///Elegir que se modifica
-        int opcion;
+        int opcion=-1;
         do {
-            //no te olvides e actualizar la fecha!!
-            System.out.println("Ingrese una opcion...");
-            System.out.println("1. Tipo de pago -");
-            System.out.println("2. Modificar el cliente -");
-            System.out.println("3. Turnos declarados en la factura-");
-            System.out.println("4. Aplicar descuento-"); //Esto puede ser en algun descuento especial o flasheo yo
-            System.out.println("0. Salir");
-            System.out.print("Ingrese una opción: ");
-            opcion = scan.nextInt();
-            scan.nextLine();
+            try {
+                System.out.println("\n");
+                System.out.println("---------------------------------");
+                System.out.println("Ingrese una opcion...");
+                System.out.println("1. Tipo de pago -");
+                System.out.println("2. Modificar el cliente -");
+                System.out.println("3. Turnos declarados en la factura-");
+                System.out.println("4. Aplicar descuento-");
+                System.out.println("0. Salir");
+                System.out.println("---------------------------------");
+                System.out.print("Ingrese una opción: ");
+                opcion = scan.nextInt();
+                scan.nextLine();
 
-            switch (opcion) {
-                case 1:
-                    TipoDePago tipo = pedirTipoPago();
-                    facturaModificada.setTipoPago(tipo);
-                    System.out.println("Tipo de pago actualizado.");
+                switch (opcion) {
+                    case 1:
+                        TipoDePago tipo = pedirTipoPago();
+                        facturaModificada.setTipoPago(tipo);
+                        System.out.println("Tipo de pago actualizado.");
 
-                    modificarFechaFactura(facturaModificada);
-                    break;
-                case 2:
-                    modificarCliente(facturaModificada);
-                    //actualizar la fecha a la actual
-                    modificarFechaFactura(facturaModificada);
+                        modificarFechaFactura(facturaModificada);
+                        break;
+                    case 2:
+                        modificarCliente(facturaModificada);
+                        //actualizar la fecha a la actual
+                        modificarFechaFactura(facturaModificada);
+                        break;
+                    case 3:
 
-                    break;
-                case 3:
+                        gestionarTurnos(facturaModificada, gestorTurno);
+                        modificarFechaFactura(facturaModificada);
 
-                    gestionarTurnos(facturaModificada, gestorTurno);
-                    modificarFechaFactura(facturaModificada);
+                        break;
+                    case 4:
+                        aplicarDescuento(facturaModificada);
+                        modificarFechaFactura(facturaModificada);
+                        break;
+                    case 0:
+                        System.out.println("Saliendo...");
+                        break;
+                    default:
+                        System.out.println("Opción no válida.");
+                }
 
-                    break;
-                case 4:
-                    aplicarDescuento(facturaModificada);
-                    modificarFechaFactura(facturaModificada);
-
-                    break;
-                case 0:
-                    System.out.println("Saliendo...");
-                    break;
-                default:
-                    System.out.println("Opción no válida.");
+            } catch (InputMismatchException a) {
+                System.out.println("Caracter invalido..Ingrese un numero por favor!");
+                scan.nextLine();
             }
 
         } while (opcion != 0);
@@ -269,27 +280,33 @@ public class GestorFactura {
         }
     }
 
-    public void verificarCarga(Factura factura, Scanner scanner) {
-        int opcion;
+    public void verificarCarga(Factura factura) {
+        int opcion = -1;
         do {
-            System.out.println("¿Deseas modificar algo de la factura?");
-            System.out.println("1. Sí");
-            System.out.println("2. No");
+            try {
+                System.out.println("¿Deseas modificar algo de la factura?");
+                System.out.println("1. Sí");
+                System.out.println("2. No");
 
-            opcion = scanner.nextInt();
-            scanner.nextLine();
+                opcion = scan.nextInt();
+                scan.nextLine();
 
-            switch (opcion) {
-                case 1:
-                    modificarFactura();
-                    break;
-                case 2:
-                    System.out.println("....");
-                    break;
-                default:
-                    System.out.println("Opción no válida, selecciona nuevamente.");
-                    break;
+                switch (opcion) {
+                    case 1:
+                        modificarFactura();
+                        break;
+                    case 2:
+                        System.out.println("....");
+                        break;
+                    default:
+                        System.out.println("Opción no válida, selecciona nuevamente.");
+                        break;
+                }
+            } catch (InputMismatchException a) {
+                System.out.println("Caracter invalido..Ingrese un numero por favor!");
+                scan.nextLine();
             }
+
         } while (opcion != 2 && opcion != 1);
     }
 
@@ -316,6 +333,9 @@ public class GestorFactura {
             } else {
                 System.out.println("Opción no válida.");
             }
+        } catch (InputMismatchException a) {
+            System.out.println("Caracter invalido..Ingrese un numero por favor!");
+            scan.nextLine();
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -340,18 +360,24 @@ public class GestorFactura {
 
 
         while (tipo == null) {
-            System.out.println("Seleccione el tipo de pago:");
-            TipoDePago[] opciones = TipoDePago.values();
-            for (int i = 0; i < opciones.length; i++) {
-                System.out.println((i + 1) + ". " + opciones[i]);
+            try {
+                System.out.println("Seleccione el tipo de pago:");
+                TipoDePago[] opciones = TipoDePago.values();
+                for (int i = 0; i < opciones.length; i++) {
+                    System.out.println((i + 1) + ". " + opciones[i]);
+                }
+                int opcion = scan.nextInt();
+                scan.nextLine(); // Limpiar buffer
+                if (opcion > 0 && opcion <= opciones.length) {
+                    tipo = opciones[opcion - 1];
+                } else {
+                    System.out.println("Opción no válida. Intente nuevamente.");
+                }
+            } catch (InputMismatchException a) {
+                System.out.println("Caracter invalido..Ingrese un numero por favor!");
+                scan.nextLine();
             }
-            int opcion = scan.nextInt();
-            scan.nextLine(); // Limpiar buffer
-            if (opcion > 0 && opcion <= opciones.length) {
-                tipo = opciones[opcion - 1];
-            } else {
-                System.out.println("Opción no válida. Intente nuevamente.");
-            }
+
         }
         return tipo;
     }
