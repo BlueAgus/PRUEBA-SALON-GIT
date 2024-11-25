@@ -86,9 +86,12 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
             }
             throw new CodigoNoEncontradoException("El código de servicio no existe: " + cod_Servicio);
         }
+
     }
 
     ///con codigo
+
+
     @Override
     public Depilacion buscarPorCodigo(String codServicio) throws CodigoNoEncontradoException {
         Depilacion depilacion = null;
@@ -153,6 +156,7 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                 System.out.println(depilacion);
             }
         }
+
     }
 
     public void modificarServicioParametro(Depilacion depilacion) {
@@ -194,6 +198,9 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                 System.out.println("Caracter invalido..Ingrese un numero por favor!");
                 scanner.nextLine();
             }
+
+
+
         }
     }
 
@@ -229,36 +236,45 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
     }
 
     public String pedirCodServicio() {
-
-        for (int i = 0; i < almacenServicios.size(); i++) {
-            System.out.println((i + 1) + "- \n" + almacenServicios.get(i));
+        // Verifica si la lista de servicios está vacía
+        if (almacenServicios.isEmpty()) {
+            System.out.println("No hay servicios disponibles.");
+            return null;
         }
-        int opc;
-        while (true) {
 
+        // Muestra los servicios disponibles
+        for (int i = 0; i < almacenServicios.size(); i++) {
+            System.out.println((i + 1) + ". \n" + almacenServicios.get(i).toString());
+        }
+
+        int opc = 0;
+
+        while (true) {
             try {
-                System.out.println("OPCION: (o escriba 'salir' para cancelar) ");
+                System.out.println("OPCIÓN: (o escriba 'salir' para cancelar) ");
                 String opcElegida = scanner.nextLine();
 
+                // Verifica si el usuario quiere cancelar
                 if (opcElegida.equalsIgnoreCase("salir")) {
                     System.out.println("Operación cancelada por el usuario.");
                     return null;
                 }
 
+                // Convierte la opción ingresada a un número
                 opc = Integer.parseInt(opcElegida);
+
+                // Valida que la opción esté dentro del rango permitido
                 if (opc < 1 || opc > almacenServicios.size()) {
                     System.out.println("Selección inválida. Inténtelo de nuevo.");
                 } else {
-                   break;
+                    // Retorna el código del servicio correspondiente
+                    return almacenServicios.get(opc - 1).getCodigo_servicio();
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Entrada no valida. Por favor vuelva a intentarlo");
-                scanner.nextLine();
+                System.out.println("Entrada no válida. Por favor, vuelva a intentarlo.");
             }
         }
-       return almacenServicios.get(opc - 1).getCodigo_servicio();
     }
-
     // Validación del precio
     private double pedirPrecio() {
         double precio = -1;
@@ -341,11 +357,10 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
         TipoServicio tipo = null;
         while (tipo == null) {
             try {
-                System.out.println("Tipo de servicio:");
+                System.out.println("Selecciona el tipo de servicio:");
                 System.out.println("1. Uñas");
                 System.out.println("2. Pestañas");
                 System.out.println("3. Depilación");
-                System.out.println("Ingrese una opcion:");
                 int opcion = scanner.nextInt();
                 scanner.nextLine();
 
@@ -366,6 +381,7 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                 System.out.println("Error: Por favor, ingresa un número válido.");
                 scanner.nextLine();
             }
+
         }
         return tipo;
     }
@@ -396,6 +412,7 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                 System.out.println("- " + d.getCodigo_servicio() + ": " + d.getTipoService() + " " + d.getTipoDepilacion() + "--PRECIO: " + d.getPrecio());
             }
         }
+
     }
 
     //////////////////////////////////////////////////ARCHIVOS.///////////////////////////////////////////////////////

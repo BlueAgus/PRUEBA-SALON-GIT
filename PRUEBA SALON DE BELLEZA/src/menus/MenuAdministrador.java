@@ -988,7 +988,7 @@ public class MenuAdministrador {
                         if (facturas.getArchivoFacturas().isEmpty()) {
                             System.out.println("No hay historial de facturas");
                         } else {
-                            System.out.println(facturas.getArchivoFacturas());
+                            System.out.println(facturas.getCaja());
                         }
 
                         break;

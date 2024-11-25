@@ -272,19 +272,34 @@ public class GestorFactura {
 
     //////////////////////////////////////////////////////// metodos extr ////////////////////////////////////////////////////
     private void aplicarDescuento(Factura factura) {
-
         try {
-            System.out.println("Precio final actual " + factura.getPrecioFinal());
-            // metodo de descuento en gestor precios
-            System.out.println("Ingrese el porcentaje de descuento");
-            double desc = scan.nextDouble();
-            scan.nextLine();
-            GestorPrecios.aplicarDescuento(factura.getCodigoFactura(), desc, caja.getLista());
+            double precioFinal = factura.getPrecioFinal();
+            if (precioFinal <= 0) {
+                System.out.println("No se puede aplicar un descuento a una factura con precio 0.");
+                return;
+            }
 
+            System.out.println("Precio final actual: " + precioFinal);
+            System.out.println("Ingrese el porcentaje de descuento (0-100):");
+
+            double desc = scan.nextDouble();
+            scan.nextLine(); // Limpiar el buffer
+
+            if (desc < 0 || desc > 100) {
+                System.out.println("Porcentaje de descuento inválido. Debe estar entre 0 y 100.");
+                return;
+            }
+
+            GestorPrecios.aplicarDescuento(factura.getCodigoFactura(), desc, caja.getLista());
+            System.out.println("Descuento aplicado correctamente.");
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese un número.");
+            scan.nextLine(); // Limpiar el buffer
         } catch (CodigoNoEncontradoException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
+
 
     public void verificarCarga(Factura factura) {
         int opcion = -1;

@@ -115,16 +115,15 @@ public class Factura implements CrearID {
 
     public void eliminarTurno(Turno turno) throws TurnoNoExistenteException, FacturaSinTurnosException {
         if (!turnosPorCliente.contains(turno)) {
-            throw new TurnoNoExistenteException("El turno que desea eliminar en la factura no existe aqui.");
-        }
-
-        if (turnosPorCliente.size() == 1) {
-            throw new FacturaSinTurnosException("La factura debe contener al menos un turno, en caso contrario eliminar la factura completa");
+            throw new TurnoNoExistenteException("El turno que desea eliminar no existe.");
         }
 
         turnosPorCliente.remove(turno);
-        System.out.println("El turno fue quitado de la factura final");
 
+        if (turnosPorCliente.isEmpty()) {
+            throw new FacturaSinTurnosException("La factura debe contener al menos un turno.");
+        }
+        System.out.println("El turno fue quitado de la factura final.");
     }
 
 
@@ -223,11 +222,9 @@ public class Factura implements CrearID {
                         "=========================================\n";
     }
 
+
     private String mostrarAjuste() {
-        if (ajuste == 0) {
-            return "Sin ajuste";
-        }
-        // aca muestra el signo del numero , si es posi o negativo
-        return String.format("%+.2f", ajuste);
+        return ajuste == 0 ? "Sin ajuste" : String.format("%+.2f", ajuste);
     }
+
 }

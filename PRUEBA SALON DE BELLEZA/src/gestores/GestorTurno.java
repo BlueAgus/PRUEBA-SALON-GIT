@@ -90,7 +90,7 @@ public class GestorTurno {
         turno.setDni_profesional(dniProfesional);
 
 
-        System.out.println(turno);
+        System.out.println(turno.toString(gestorCliente, gestorProfesional));
 
         if (listaTurnos.contiene(turno.getFecha())) {
             listaTurnos.getMapa().get(turno.getFecha()).add(turno);
@@ -201,32 +201,23 @@ public class GestorTurno {
         return turnosDelCliente.get(opc).getCod_turno();
     }
 
-
     public void cancelarTurnosXdia(String fecha, String codServicio) {
         List<Turno> turnos = obtenerTurnosReservadosXfecha(fecha);
 
-        if (turnos == null) {
-            System.out.println("No se encontraron turnos reservados para la fecha " + fecha);
-            return;
-        }
-
-        System.out.println("Avisar a los siguientes clientes que su turno del dia " + fecha + " ha sido cancelado:");
-
+        System.out.println("Avisar a los siguientes clientes que su turno del dia " + fecha + "ha sido cancelado");
         for (Turno t : turnos) {
             if (t.getCodigo_servicio().equals(codServicio)) {
                 Cliente cliente = null;
                 try {
-
                     cliente = gestorCliente.buscarPersona(t.getDni_cliente());
-                    System.out.println("- " + cliente.getNombre() + " TELEFONO: " + cliente.getTelefono());
                 } catch (DNInoEncontradoException e) {
-                    System.out.println("Error al buscar el cliente: " + e.getMessage());
+                    System.out.println(e.getMessage());
                 }
+                System.out.println("- " + cliente.getNombre() + " TELEFONO: " + cliente.getTelefono());
             }
         }
         turnos.clear();
     }
-
 
     public Turno buscarTurnoXclienteFechaHorario() {
 
@@ -478,6 +469,8 @@ public class GestorTurno {
             case TipoServicio.PESTANIAS:
                 codServicio = gestorPestania.pedirCodServicio();
                 break;
+            default:
+                codServicio = null;
         }
         return codServicio;
     }
@@ -706,6 +699,7 @@ public class GestorTurno {
     }
 
 /////////////////////////////////////////////MANEJO DE PROFESIONALES!!!!////////////////////////////////////////
+
 
     public String pedirDNIprofesionalXservicio(String codServicio, String horario, String fecha) {
 
