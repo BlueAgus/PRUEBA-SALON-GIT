@@ -74,6 +74,7 @@ public class Manicura extends Servicio {
     @Override
     public String toString() {
         return "| MANICURA: " + tipoManicura +
+                "\n| Codigo: " +codigo_servicio+
                 (disenio ? " con diseño " : " sin diseño ")+
                 " \n| Precio: " + calcularPrecio() +
                 " \n| Duracion: " + duracion;

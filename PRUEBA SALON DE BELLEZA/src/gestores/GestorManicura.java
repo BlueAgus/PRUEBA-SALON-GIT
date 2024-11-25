@@ -412,7 +412,7 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
         if(almacenServicios.isEmpty()){
             System.out.println("No hay servicios de manicura");
         }else{
-            for (int i=1;i<=almacenServicios.size();i++)
+            for (int i=0;i<almacenServicios.size();i++)
                 System.out.println(i+") "+almacenServicios.get(i));
             System.out.println("--------------------");
         }
