@@ -243,7 +243,7 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
         int opc;
         while (true) {
 
-            try { //EHHH no entiendo
+            try {
                 System.out.println("OPCION: (o escriba 'salir' para cancelar) ");
                 String opcElegida = scanner.nextLine();
 
@@ -252,7 +252,6 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                     return null;
                 }
 
-                ///pasa a int un string
                 opc = Integer.parseInt(opcElegida);
                 if (opc < 1 || opc > almacenServicios.size()) {
                     System.out.println("Selección inválida. Inténtelo de nuevo.");
