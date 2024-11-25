@@ -1,1 +1,19 @@
-{}
+{
+  "Depilacion": {
+    "LASER": 0.0,
+    "CERA": 0.0
+  },
+  "Manicura": {
+    "ESCULPIDAS": 36655.0,
+    "SEMIPERMANENTE": 0.0,
+    "GEL": 0.0
+  },
+  "Pestanias": {
+    "CLASICAS": 0.0,
+    "TRES_D": 0.0,
+    "DOS_D": 0.0
+  },
+  "PrecioDiseño": {
+    "Diseño": 5.0
+  }
+}
