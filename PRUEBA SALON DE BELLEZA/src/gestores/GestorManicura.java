@@ -242,8 +242,11 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
 
     public String pedirCodServicio() {
+
+        if(alma)
+
         //muestra servicios y devuelve el codigo
-        for (int i = 1; i <= almacenServicios.size(); i++) {
+        for (int i = 0; i <= almacenServicios.size(); i++) {
             System.out.println(i + ". \n" + almacenServicios.get(i));
         }
         int opc = 0;
@@ -260,7 +263,7 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
                 }
 
                 ///pasa a int un string
-                opc = Integer.parseInt(opcElegida);
+                opc = Integer.parseInt(opcElegida) - 1;
                 if (opc < 0 || opc > almacenServicios.size()) {
                     System.out.println("Selección inválida. Inténtelo de nuevo.");
                 } else {

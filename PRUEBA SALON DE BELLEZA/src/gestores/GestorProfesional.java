@@ -90,6 +90,7 @@ public class GestorProfesional {
             ///aca que tipo dentro de los otros tres hace
             System.out.println("SELECCIONE EL TIPO DE " + tipoServicio1 + " QUE REALIZA");
             String e = gestorTurno.pedirCodServicio(tipoServicio1);
+
             profesional.agregarProfesion(e);//minimo una profesion.
             System.out.println("Deseas agregar otra profesion?");
             System.out.println("1. Si deseo.");

@@ -469,6 +469,8 @@ public class GestorTurno {
             case TipoServicio.PESTANIAS:
                 codServicio = gestorPestania.pedirCodServicio();
                 break;
+            default:
+                codServicio = null;
         }
         return codServicio;
     }
