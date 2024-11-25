@@ -31,7 +31,7 @@ public class Factura implements CrearID {
     private double ajuste = 0.0;
     private String fecha;
     private String hora;
-    private List<IBuscarPorCodigo<? extends Servicio>> gestores;
+    private transient List<IBuscarPorCodigo<? extends Servicio>> gestores;
 
     //////////////////////////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////////////
 
@@ -198,7 +198,13 @@ public class Factura implements CrearID {
         this.descuento = descuento;
     }
 
+    public List<IBuscarPorCodigo<? extends Servicio>> getGestores() {
+        return gestores;
+    }
 
+    public void setGestores(List<IBuscarPorCodigo<? extends Servicio>> gestores) {
+        this.gestores = gestores;
+    }
     ////////////////////////////////////// TO STRING ////////////////////////////////////////////////////
 
     @Override

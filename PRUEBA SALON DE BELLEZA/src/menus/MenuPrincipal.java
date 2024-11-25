@@ -1,9 +1,15 @@
 package menus;
 
+import Interfaces.IBuscarPorCodigo;
+import abstractas.Servicio;
+import enumeraciones.TipoDePago;
 import excepciones.DNInoEncontradoException;
 import gestores.*;
 import model.Administrador;
+import model.Cliente;
+import model.Factura;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -156,6 +162,13 @@ public class MenuPrincipal {
         recepcionistas = new GestorRecepcionista();
         clientes = new GestorCliente();
 
+        List<IBuscarPorCodigo<? extends Servicio>> gestores = new ArrayList<>();
+        gestores.add(gestorManicura);
+        gestores.add(gestorDepilacion);
+        gestores.add(gestorPestania);
+
+        gestorFactura= new GestorFactura(gestorTurno,gestores );
+
 
         gestorTurno.pedirGestorProfesionales(profesionales);
 
@@ -178,9 +191,8 @@ public class MenuPrincipal {
 
 
         gestorTurno.cargarTurnosDesdeArchivo();
-        gestorFactura.escribirFacturasEnEnJson();
-        gestorFactura.leerArchivoFacturas();
         GestorPrecios.cargarPreciosDesdeArchivo();
+        gestorFactura.leerArchivoFacturas();
 
     }
 

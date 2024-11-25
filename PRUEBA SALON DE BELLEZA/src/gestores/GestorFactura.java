@@ -30,6 +30,7 @@ public class GestorFactura {
     private final String archivoFacturas = "facturas.json";
     private GestorTurno gestorTurno; // Para buscar turnos
     Scanner scan = new Scanner(System.in);
+    private List<IBuscarPorCodigo<? extends Servicio>> gestores;
 
 
     //////////////////////////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////////////
@@ -38,6 +39,7 @@ public class GestorFactura {
         this.caja = new GestorGenerico<>();
         this.gson = new Gson();
         this.gestorTurno = gestorTurno;
+        this.gestores=gestores;
     }
 
     ////////////////////////////////////////////////////////AGREGAR, ELIMINAR, BUSCAR Y MODIFICAR ////////////////////////////////////////////////////
@@ -504,27 +506,29 @@ public class GestorFactura {
     }
 
     public void leerArchivoFacturas() {
-        try (FileReader fileReader = new FileReader(archivoFacturas)) {
-            // Deserializar el archivo JSON a una lista de facturas
-            List<Factura> listaFacturas = gson.fromJson(fileReader, new TypeToken<List<Factura>>() {
-            }.getType());
 
-            if (listaFacturas != null) {
-                // Limpia la lista existente en caja y agrega las facturas deserializadas
-                this.caja.vaciarAlmacen();
-                for (Factura factura : listaFacturas) {
-                    //factura.setGestores(this.gestores); // Inicializa gestores después de deserializar
-                    this.caja.agregar(factura);
+            try (FileReader fileReader = new FileReader(archivoFacturas)) {
+                // Deserializar el archivo JSON a una lista de facturas
+                List<Factura> listaFacturas = gson.fromJson(fileReader, new TypeToken<List<Factura>>() {
+                }.getType());
+
+                if (listaFacturas != null) {
+                    // Limpia la lista existente en caja y agrega las facturas deserializadas
+                    this.caja.vaciarAlmacen();
+                    for (Factura factura : listaFacturas) {
+                        factura.setGestores(this.gestores); // Inicializa gestores después de deserializar
+                        this.caja.agregar(factura);
+                    }
                 }
+
+                System.out.println("Archivo de facturas leído exitosamente.");
+            } catch (FileNotFoundException e) {
+                System.out.println("No se encontró el archivo. Se iniciará con un historial vacío.");
+                this.caja = new GestorGenerico<>();
+            } catch (IOException e) {
+                System.out.println("No se puede leer el archivo de facturas: " + e.getMessage());
             }
 
-            System.out.println("Archivo de facturas leído exitosamente.");
-        } catch (FileNotFoundException e) {
-            System.out.println("No se encontró el archivo. Se iniciará con un historial vacío.");
-            this.caja = new GestorGenerico<>();
-        } catch (IOException e) {
-            System.out.println("No se puede leer el archivo de facturas: " + e.getMessage());
-        }
     }
 
 
