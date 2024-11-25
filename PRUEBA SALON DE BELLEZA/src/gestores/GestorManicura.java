@@ -43,11 +43,12 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
     public void agregarServicio() {
         System.out.println("\n");
         System.out.println("Vamos a cargar un servicio...");
+        TipoManicura tipoManicura = pedirTipoManicura();
         double precio = pedirPrecio();
         String duracion = pedirDuracion();
         System.out.println("En cuanto al diseño..");
         double precioDisenio = pedirDisenio(); //si pone que si devuelve un valor, si pone que no devuelve 0
-        TipoManicura tipoManicura = pedirTipoManicura();
+
         boolean tieneDisenio = precioDisenio > 0;
         GestorPrecios.modificarPrecio(Manicura.class, tipoManicura, precio);
         if(tieneDisenio){
@@ -253,18 +254,17 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
     // Validación del precio
     private double pedirPrecio() {
-        double precio = 0;
+        double precio = -1;
         while (precio <= 0) {
             try {
-                System.out.print("Introduce el precio: ");
+                System.out.print("Introduce el precio del servicio: ");
                 precio = scanner.nextDouble();
                 scanner.nextLine();
 
-
-                if (precio <= 0) {
-                    System.out.println("El precio debe ser mayor a 0.");
+                if (precio <= 0|| precio>500000) {
+                    System.out.println("El precio debe ser mayor a 0 y menor a 500000");
                 }
-            } catch (InputMismatchException | NullPointerException a) {
+            } catch (InputMismatchException a) {
                 System.out.println("Solo es posible ingresar numeros");
                 scanner.nextLine();
             }

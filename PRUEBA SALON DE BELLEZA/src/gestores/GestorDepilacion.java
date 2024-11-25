@@ -39,9 +39,10 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
 
         TipoServicio tipoService = TipoServicio.DEPILACION;
         System.out.println("Vamos a cargar un servicio..");
+        TipoDepilacion tipoDepilacion = pedirTipoDepilacion();
         double precio = pedirPrecio();
         String duracion = pedirDuracion();
-        TipoDepilacion tipoDepilacion = pedirTipoDepilacion();
+
         GestorPrecios.modificarPrecio(Depilacion.class, tipoDepilacion, precio);
         //Cuando se instancie depilacion llamara a calcular precio y obtendra el precio ingresado arriba
         Depilacion depilacion = new Depilacion(duracion, tipoDepilacion);
@@ -255,8 +256,8 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                 precio = scanner.nextDouble();
                 scanner.nextLine();
 
-                if (precio <= 0) {
-                    System.out.println("El precio debe ser mayor a 0.");
+                if (precio <= 0|| precio>500000) {
+                    System.out.println("El precio debe ser mayor a 0 y menor a 500000");
                 }
             } catch (InputMismatchException a) {
                 System.out.println("Solo es posible ingresar numeros");
