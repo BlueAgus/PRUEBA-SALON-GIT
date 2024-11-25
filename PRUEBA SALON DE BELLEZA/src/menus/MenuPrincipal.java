@@ -154,13 +154,14 @@ public class MenuPrincipal {
         gestorDepilacion = new GestorDepilacion();
         gestorPestania = new GestorPestania();
         gestorManicura = new GestorManicura();
+        clientes = new GestorCliente();
 
         gestorTurno = new GestorTurno(gestorDepilacion, gestorPestania, gestorManicura, clientes);
 
         profesionales = new GestorProfesional(gestorTurno);
         administradores = new GestorAdministrador();
         recepcionistas = new GestorRecepcionista();
-        clientes = new GestorCliente();
+
 
         List<IBuscarPorCodigo<? extends Servicio>> gestores = new ArrayList<>();
         gestores.add(gestorManicura);
