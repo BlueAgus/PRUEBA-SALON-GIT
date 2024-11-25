@@ -90,23 +90,6 @@ public class GestorPrecios {
         }
         mapaPrecios.put(tipo, nuevoPrecio);
     }
-/*
-    public static void modificarPrecio(Class<?> claseServicio, Enum<?> tipo, double nuevoPrecio) {
-        // Asegurar que exista un mapa para la clase
-        precios.putIfAbsent(claseServicio, new HashMap<>());
-
-        Map<Enum<?>, Double> mapaPrecios = precios.get(claseServicio);
-
-        // Si el tipo no está presente, inicialízalo (si es válido hacerlo)
-        if (!mapaPrecios.containsKey(tipo)) {
-            System.out.println("El tipo " + tipo + " no estaba registrado. Inicializándolo con el nuevo precio.");
-        }
-
-        // Actualizar o añadir el precio
-        mapaPrecios.put(tipo, nuevoPrecio);
-        System.out.println("Precio actualizado: " + nuevoPrecio + " para tipo " + tipo + " en " + claseServicio.getSimpleName());
-    }
-*/
 
     public static double agregarDisenio(Enum<?> tipo) {
         if (!(tipo instanceof TipoManicura)) {
@@ -324,6 +307,24 @@ public class GestorPrecios {
         return sb.toString();
     }
 
+}
+/*
+    public static void modificarPrecio(Class<?> claseServicio, Enum<?> tipo, double nuevoPrecio) {
+        // Asegurar que exista un mapa para la clase
+        precios.putIfAbsent(claseServicio, new HashMap<>());
+
+        Map<Enum<?>, Double> mapaPrecios = precios.get(claseServicio);
+
+        // Si el tipo no está presente, inicialízalo (si es válido hacerlo)
+        if (!mapaPrecios.containsKey(tipo)) {
+            System.out.println("El tipo " + tipo + " no estaba registrado. Inicializándolo con el nuevo precio.");
+        }
+
+        // Actualizar o añadir el precio
+        mapaPrecios.put(tipo, nuevoPrecio);
+        System.out.println("Precio actualizado: " + nuevoPrecio + " para tipo " + tipo + " en " + claseServicio.getSimpleName());
+    }
+*/
 
 
 

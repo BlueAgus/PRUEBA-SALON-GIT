@@ -5,7 +5,4 @@ public enum TipoPestanias {
     DOS_D,
     CLASICAS;
 
-    public String getNombre() {
-        return name().toLowerCase(); // O cualquier otra lógica de formato
-    }
 }
