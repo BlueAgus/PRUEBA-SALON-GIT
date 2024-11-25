@@ -425,7 +425,6 @@ public class GestorFactura {
         }
 
         List<Factura> facturasEncontradas = new ArrayList<>();
-
         // Recorremos todas las facturas en el historial
         for (Factura factu : caja.getLista()) {
             // Si el DNI del cliente de la factura coincide con el DNI del parametro
