@@ -1,8 +1,8 @@
 [ {
-  "nombre" : "E",
-  "apellido" : "E",
-  "dni" : "12341234",
-  "genero" : "M",
-  "telefono" : "1234567898",
-  "contraseña" : "123123"
+  "nombre" : null,
+  "apellido" : null,
+  "dni" : "12345678",
+  "genero" : null,
+  "telefono" : null,
+  "contraseña" : "12345678"
 } ]
