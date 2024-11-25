@@ -1,5 +1,6 @@
 package model;
 
+import Interfaces.CrearID;
 import enumeraciones.TipoServicio;
 import excepciones.CodigoNoEncontradoException;
 import excepciones.DNInoEncontradoException;
@@ -11,7 +12,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Turno {
+public class Turno implements CrearID {
 
     private String cod_turno;
     private String fecha;         // Fecha del turno
@@ -22,11 +23,11 @@ public class Turno {
 
     //////////////////////////////////////////////////////// CONSTRUCTORes ////////////////////////////////////////////////////
 
-    public Turno(String cod_turno, String fecha, String horario, String codigo_servicio, String dni_profesional, String dni_cliente) {
+    public Turno(String cod_turno, String fecha, String horario,  String dni_profesional, String dni_cliente) {
         this.cod_turno = cod_turno;
         this.fecha = fecha;
         this.horario = horario;
-        this.codigo_servicio = codigo_servicio;
+        this.codigo_servicio = generarIDEunico();
         this.dni_profesional = dni_profesional;
         this.dni_cliente = dni_cliente;
     }
