@@ -10,7 +10,6 @@ import model.Depilacion;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Main {
     public static void main(String[] args) {
         MenuPrincipal menuPrincipal = new MenuPrincipal();

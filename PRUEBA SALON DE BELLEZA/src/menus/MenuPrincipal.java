@@ -167,7 +167,7 @@ public class MenuPrincipal {
         gestores.add(gestorDepilacion);
         gestores.add(gestorPestania);
 
-        gestorFactura= new GestorFactura(gestorTurno,gestores );
+        gestorFactura= new GestorFactura(gestorTurno,gestores, clientes, profesionales);
 
 
         gestorTurno.pedirGestorProfesionales(profesionales);
