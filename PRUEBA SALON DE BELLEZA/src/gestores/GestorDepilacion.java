@@ -397,9 +397,14 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
     }
 
     public void mostrarServicios() {
-        for (Depilacion d : almacenServicios) {
-            System.out.println("- " + d.getCodigo_servicio() + ": " + d.getTipoService() + " " + d.getTipoDepilacion() + "--PRECIO: " + d.getPrecio());
+        if(almacenServicios.isEmpty()){
+            System.out.println("No hay servicios de pestañas");
+        }else{
+            for (Depilacion d : almacenServicios) {
+                System.out.println("- " + d.getCodigo_servicio() + ": " + d.getTipoService() + " " + d.getTipoDepilacion() + "--PRECIO: " + d.getPrecio());
+            }
         }
+
     }
 
     //////////////////////////////////////////////////ARCHIVOS.///////////////////////////////////////////////////////

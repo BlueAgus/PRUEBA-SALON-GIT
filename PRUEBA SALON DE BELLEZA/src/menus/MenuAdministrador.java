@@ -69,17 +69,17 @@ public class MenuAdministrador {
     public void menuUsuarios(String dni, GestorCliente clientes, GestorProfesional profesionales, GestorRecepcionista recepcionista, GestorAdministrador administradores, GestorPestania pestania, GestorDepilacion depilacion, GestorManicura manicura, GestorTurno turnos) {
 
         Scanner scanner = new Scanner(System.in);
-        int opcion=-1;
+        int opcion = -1;
 
         do {
-            try{
+            try {
                 System.out.println("\n");
                 System.out.println("---------------------------------");
                 System.out.println("1.Gestionar recepcionistas");
                 System.out.println("2.Gestionar profesionales");
                 System.out.println("3.Gestionar clientes");
                 System.out.println("4.Gestionar mis datos");
-                System.out.println("0. Volver al Menú anterior");
+                System.out.println("0.Volver al Menú anterior");
                 System.out.println("---------------------------------");
                 System.out.print("Ingrese una opción: ");
 
@@ -115,8 +115,7 @@ public class MenuAdministrador {
                     default:
                         System.out.println("Opción no válida.");
                 }
-            }catch (InputMismatchException e)
-            {
+            } catch (InputMismatchException e) {
                 System.out.println("Opción invalida");
                 scanner.nextLine();
             }
@@ -129,10 +128,10 @@ public class MenuAdministrador {
     public void subMenuRecepcionista(GestorRecepcionista recepcionistas, GestorPestania pestania, GestorDepilacion depilacion, GestorManicura manicura) {
 
         Scanner scanner = new Scanner(System.in);
-        int opcion=-1;
+        int opcion = -1;
 
         do {
-            try{
+            try {
                 System.out.println("\n");
                 System.out.println("---------------------------------");
                 System.out.println("RECEPCIONISTA");
@@ -140,6 +139,7 @@ public class MenuAdministrador {
                 System.out.println("2.Eliminar");
                 System.out.println("3.Buscar por su dni");
                 System.out.println("4.Modificar datos");
+                System.out.println("5.Mostrar todos");
                 System.out.println("0. Volver al Menú anterior");
                 System.out.println("---------------------------------");
                 System.out.print("Ingrese una opción: ");
@@ -155,9 +155,16 @@ public class MenuAdministrador {
                         recepcionistas.agregarPersona();
                         break;
                     case 2:
-                        System.out.println("¿Cual es el dni del Recepcionista que desea eliminar?");
+                        recepcionistas.mostrarTodos();
+                        System.out.println("¿Cual es el dni del Recepcionista que desea eliminar?('salir' si quiere cancelar la operacion)");
+
 
                         String dni = recepcionistas.pedirDNIsinVerificacion();
+
+                        if (dni.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
                         if (recepcionistas.eliminarPersona(dni)) {
                             System.out.println("Recepcionista eliminado exitosamente!");
                         } else {
@@ -166,9 +173,13 @@ public class MenuAdministrador {
                         break;
                     case 3:
 
-                        System.out.println("¿Cual es el dni del Recepcionista que desea buscar?");
+                        System.out.println("¿Cual es el dni del Recepcionista que desea buscar?('salir' si quiere cancelar la operacion)");
 
                         String dni1 = recepcionistas.pedirDNIsinVerificacion();
+                        if (dni1.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
 
                         try {
                             Recepcionista recepcionista = (Recepcionista) recepcionistas.buscarPersona(dni1);
@@ -180,9 +191,13 @@ public class MenuAdministrador {
                         break;
 
                     case 4:
-                        System.out.println("¿Cual es el DNI del Recepcionista al que le desea modificar los datos");
+                        System.out.println("¿Cual es el DNI del Recepcionista al que le desea modificar los datos('salir' si quiere cancelar la operacion)");
 
                         String dni2 = recepcionistas.pedirDNIsinVerificacion();
+                        if (dni2.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
                         try {
                             Recepcionista recepcionista = recepcionistas.buscarPersona(dni2);
                             System.out.println(recepcionista);
@@ -191,11 +206,14 @@ public class MenuAdministrador {
                             System.out.println(a.getMessage());
                         }
                         break;
+                    case 5:
+                        System.out.println("\nRECEPCIONISTAS: ");
+                        recepcionistas.mostrarTodos();
+                        break;
                     default:
                         System.out.println("Opción no válida.");
                 }
-            }catch (InputMismatchException e)
-            {
+            } catch (InputMismatchException e) {
                 System.out.println("Opción invalida");
                 scanner.nextLine();
             }
@@ -208,10 +226,10 @@ public class MenuAdministrador {
     public void subMenuProfesionales(GestorProfesional profesionales, GestorPestania pestania, GestorDepilacion depilacion, GestorManicura manicura) {
 
         Scanner scanner = new Scanner(System.in);
-        int opcion=-1;
+        int opcion = -1;
 
         do {
-            try{
+            try {
                 System.out.println("\n");
                 System.out.println("---------------------------------");
                 System.out.println("PROFESIONALES");
@@ -237,7 +255,8 @@ public class MenuAdministrador {
                         profesionales.agregarPersona();
                         break;
                     case 2:
-                        System.out.println("¿Cual es el dni del profesional que desea eliminar?");
+                        profesionales.mostrarTodos();
+                        System.out.println("¿Cual es el dni del profesional que desea eliminar?('salir' si quiere cancelar la operacion)");
 
                         String dni = profesionales.pedirDNIsinVerificacion();
                         if (profesionales.eliminarPersona(dni)) {
@@ -269,7 +288,10 @@ public class MenuAdministrador {
                         System.out.println("¿Cual es el dni del profesional que desea buscar?");
 
                         String dni1 = profesionales.pedirDNIsinVerificacion();
-
+                        if (dni1.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
                         try {
                             Profesional persona = profesionales.buscarPersona(dni1);
                             System.out.println(persona);
@@ -306,8 +328,7 @@ public class MenuAdministrador {
                     default:
                         System.out.println("Opción no válida.");
                 }
-            }catch (InputMismatchException e)
-            {
+            } catch (InputMismatchException e) {
                 System.out.println("Opción invalida");
                 scanner.nextLine();
             }
@@ -346,9 +367,14 @@ public class MenuAdministrador {
                         clientes.agregarPersona();
                         break;
                     case 2:
-                        System.out.println("¿Cual es el dni del cliente que desea eliminar?");
+                        clientes.mostrarTodos();
+                        System.out.println("¿Cual es el dni del cliente que desea eliminar?('salir' si quiere cancelar la operacion)");
 
                         String dni = clientes.pedirDNIsinVerificacion();
+                        if (dni.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
                         if (clientes.eliminarPersona(dni)) {
                             System.out.println("Cliente eliminado exitosamente!");
                         } else {
@@ -357,9 +383,13 @@ public class MenuAdministrador {
                         break;
                     case 3:
 
-                        System.out.println("¿Cual es el dni del cliente que desea buscar?");
+                        System.out.println("¿Cual es el dni del cliente que desea buscar?('salir' si quiere cancelar la operacion)");
 
                         String dni1 = clientes.pedirDNIsinVerificacion();
+                        if (dni1.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
 
                         try {
                             Cliente cliente = clientes.buscarPersona(dni1);
@@ -370,9 +400,13 @@ public class MenuAdministrador {
                         }
                         break;
                     case 4:
-                        System.out.println("¿Cual es el DNI del cliente al que le desea modificar los datos");
+                        System.out.println("¿Cual es el DNI del cliente al que le desea modificar los datos('salir' si quiere cancelar la operacion)");
 
                         String dni2 = clientes.pedirDNIsinVerificacion();
+                        if (dni2.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
+                        }
                         try {
                             Cliente cliente = clientes.buscarPersona(dni2);
                             System.out.println(cliente);
@@ -429,8 +463,7 @@ public class MenuAdministrador {
                         int opc = -1; // Variable para almacenar la opción seleccionada
 
                         do {
-                            try
-                            {
+                            try {
                                 System.out.println("\n");
                                 System.out.println("---------------------------------");
                                 System.out.println("Que servicio desea agregar? ");
@@ -451,8 +484,7 @@ public class MenuAdministrador {
                                 } else {
                                     System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
                                 }
-                            }catch (InputMismatchException e)
-                            {
+                            } catch (InputMismatchException e) {
                                 System.out.println("Opción invalida");
                                 scanner.nextLine();
                             }
@@ -498,8 +530,7 @@ public class MenuAdministrador {
                                 } else {
                                     System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
                                 }
-                            }catch (InputMismatchException e)
-                            {
+                            } catch (InputMismatchException e) {
                                 System.out.println("Opción invalida");
                                 scanner.nextLine();
                             }
@@ -511,7 +542,7 @@ public class MenuAdministrador {
                     case 3:
                         int op3 = -1;
                         do {
-                            try{
+                            try {
                                 System.out.println("\n");
                                 System.out.println("---------------------------------");
                                 System.out.println("¿Qué servicio desea modificar?");
@@ -532,8 +563,7 @@ public class MenuAdministrador {
                                 } else {
                                     System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
                                 }
-                            }catch (InputMismatchException e)
-                            {
+                            } catch (InputMismatchException e) {
                                 System.out.println("Opción invalida");
                                 scanner.nextLine();
                             }
@@ -544,7 +574,7 @@ public class MenuAdministrador {
                     case 4:
                         int opc4 = -1;
                         do {
-                            try{
+                            try {
                                 System.out.println("\n");
                                 System.out.println("---------------------------------");
                                 System.out.println("¿Qué servicio desea elegir?");
@@ -568,8 +598,7 @@ public class MenuAdministrador {
                                 } else {
                                     System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
                                 }
-                            }catch (InputMismatchException e)
-                            {
+                            } catch (InputMismatchException e) {
                                 System.out.println("Opción invalida");
                                 scanner.nextLine();
                             }
@@ -596,7 +625,7 @@ public class MenuAdministrador {
 
                         int opc5 = -1;
                         do {
-                            try{
+                            try {
                                 System.out.println("\n");
                                 System.out.println("---------------------------------");
                                 System.out.println("¿En qué servicio desea reportar falla?");
@@ -618,8 +647,7 @@ public class MenuAdministrador {
                                 } else {
                                     System.out.println("¡Opción no válida! Por favor, intente de nuevo.");
                                 }
-                            }catch (InputMismatchException e)
-                            {
+                            } catch (InputMismatchException e) {
                                 System.out.println("Opción invalida");
                                 scanner.nextLine();
                             }

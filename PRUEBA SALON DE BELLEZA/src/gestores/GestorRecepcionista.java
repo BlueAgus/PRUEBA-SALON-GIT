@@ -187,9 +187,14 @@ public class GestorRecepcionista {
     }
 
     public void mostrarTodos() {
-        for (Recepcionista p : almacenPersonas) {
-            System.out.println(p.toString());
+        if(almacenPersonas.isEmpty()){
+            System.out.println("No hay recepcionistas cargados");
+        }{
+            for (Recepcionista p : almacenPersonas) {
+                System.out.println(p.toString());
+            }
         }
+
     }
 
     public void verificarCarga(Recepcionista recepcionista) {

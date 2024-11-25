@@ -280,27 +280,25 @@ public class MenuPrincipal {
         return dni;
     }
 
-    public String pedirContraseña() {
+    public  String pedirContraseña() {
         String contraseña = "";
-        boolean esValida = false;  // Para controlar si la contraseña es válida
+        boolean esValida = false;
+
         do {
-            System.out.println("Ingresa una contraseña (entre 6 y 12 caracteres, debe contener al menos un número):");
+            System.out.println("Ingresa una contraseña (entre 6 y 12 caracteres):");
             contraseña = scanner.nextLine();
 
-            // Validación de longitud de la contraseña y de que contenga al menos un número
             if (contraseña.length() < 6 || contraseña.length() > 12) {
                 System.out.println("Tu contraseña es muy débil o tiene un tamaño incorrecto. Vuelve a intentar.");
-            } else if (!contraseña.matches(".*\\d.*")) {  // Verifica que haya al menos un número en cualquier parte de la contraseña
+            } else if (!contraseña.matches(".*\\d.*")) {
                 System.out.println("Tu contraseña debe contener al menos un número. Vuelve a intentarlo.");
             } else {
-                // Si la contraseña es válida, salimos del bucle
-                esValida = true;
+                esValida = true; // Contraseña válida
             }
-        } while (!esValida); // Continuamos pidiendo la contraseña hasta que sea válida
+        } while (!esValida);
 
         return contraseña;
     }
-
 
     public boolean primerIngreso() {
 

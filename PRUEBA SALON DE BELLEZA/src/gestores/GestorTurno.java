@@ -360,17 +360,22 @@ public class GestorTurno {
 
     public void mostrarHistorialTurnos() {
         int i = 0;
-        for (List<Turno> list : listaTurnos.getMapa().values()) {
-            for (Turno t : list) {
-              //  LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
-                LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
+        if(listaTurnos.getMapa().isEmpty()){
+            System.out.println("No hay historial de turnos");
+        }{
+            for (List<Turno> list : listaTurnos.getMapa().values()) {
+                for (Turno t : list) {
+                    //  LocalDate fecha = Turno.convertirStringALocalDate(t.getFecha());
+                    LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
 
-                if (fecha.isBefore(LocalDate.now())) {
-                    System.out.println(i + "-" + t.toString(buscarTipoServicio(t.getCodigo_servicio()), gestorCliente, gestorProfesional));
-                    i++;
+                    if (fecha.isBefore(LocalDate.now())) {
+                        System.out.println(i + "-" + t.toString(buscarTipoServicio(t.getCodigo_servicio()), gestorCliente, gestorProfesional));
+                        i++;
+                    }
                 }
             }
         }
+
     }
 
     ///turnos vigentes del cliente
@@ -647,32 +652,6 @@ public class GestorTurno {
         } catch (IllegalArgumentException e) {
             System.out.println("Error al procesar la duración: " + e.getMessage());
         }
-        /*LocalTime duracion = null;
-        try {
-            switch (tipoServicio) {
-                case TipoServicio.DEPILACION:
-                 // duracion = Turno.convertirStringALocalTime(gestorDepilacion.buscarPorCodigo(cod_servicio).getDuracion());
-                   // con el de arriba tiraba error y con el de abajo noo
-                    duracion = ConvertirFechaHoras.convertirStringALocalTime(gestorDepilacion.buscarPorCodigo(cod_servicio).getDuracion());
-                    break;
-                case TipoServicio.MANICURA:
-                    //duracion = Turno.convertirStringALocalTime(gestorManicura.buscarPorCodigo(cod_servicio).getDuracion());
-                    duracion = ConvertirFechaHoras.convertirStringAHora(gestorManicura.buscarPorCodigo(cod_servicio).getDuracion());
-
-                    break;
-                case TipoServicio.PESTANIAS:
-                   // duracion = Turno.convertirStringALocalTime(gestorPestania.buscarPorCodigo(cod_servicio).getDuracion());
-                    duracion = ConvertirFechaHoras.convertirStringAHora(gestorPestania.buscarPorCodigo(cod_servicio).getDuracion());
-
-                    break;
-            }
-
-            hora = (long) duracion.getHour();
-            minutos = (long) duracion.getMinute();
-
-        } catch (CodigoNoEncontradoException  e) {
-            System.out.println(e.getMessage());
-        }*/
 
 
         System.out.println("Turnos disponibles del dia: " + fecha);

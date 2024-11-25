@@ -402,8 +402,13 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
     ////////////////////////////////////////GET ////////////////////////////////////////////////////
     public void mostrarManicura() {
-        for (Manicura m : almacenServicios)
-            System.out.println(m);
+        if(almacenServicios.isEmpty()){
+            System.out.println("No hay servicios de pestañas");
+        }else{
+            for (Manicura m : almacenServicios)
+                System.out.println(m);
+        }
+
     }
 
     public void mostrarServicios() {

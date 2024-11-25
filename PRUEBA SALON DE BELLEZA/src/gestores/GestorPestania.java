@@ -372,15 +372,20 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
     }
 
     public void mostrarServicios() {
-        for (Pestanias d : almacenServicios) {
-            String tipoPestaniasStr = switch (d.getTipoPestanias()) {
-                case TRES_D -> "3D";
-                case DOS_D -> "2D";
-                case CLASICAS -> "CLÁSICAS";
-            };
+        if(almacenServicios.isEmpty()){
+            System.out.println("No hay servicios de pestañas");
+        }else {
+            for (Pestanias d : almacenServicios) {
+                String tipoPestaniasStr = switch (d.getTipoPestanias()) {
+                    case TRES_D -> "3D";
+                    case DOS_D -> "2D";
+                    case CLASICAS -> "CLÁSICAS";
+                };
 
-            System.out.println("- " + d.getCodigo_servicio() + ": " + d.getTipoService() + " " + tipoPestaniasStr + "--PRECIO: " + d.getPrecio());
+                System.out.println("- " + d.getCodigo_servicio() + ": " + d.getTipoService() + " " + tipoPestaniasStr + "--PRECIO: " + d.getPrecio());
+            }
         }
+
     }
 
 

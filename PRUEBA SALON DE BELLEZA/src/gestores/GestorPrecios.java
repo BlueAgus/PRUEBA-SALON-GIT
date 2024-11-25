@@ -72,9 +72,9 @@ public class GestorPrecios {
     public static double obtenerPrecio(Class<?> claseServicio, Enum<?> tipo) {
         Map<Enum<?>, Double> mapaPrecios = precios.get(claseServicio);
 
-        if (mapaPrecios == null || !mapaPrecios.containsKey(tipo)) {
+        /*if (mapaPrecios == null || !mapaPrecios.containsKey(tipo)) {
             throw new IllegalArgumentException("No se encontró un precio para el tipo " + tipo + " en la clase " + claseServicio.getName());
-        }
+        }*/
 
         return mapaPrecios.get(tipo); // Ahora sabemos que el valor no será null
     }
@@ -189,7 +189,7 @@ public class GestorPrecios {
 
             String json = gson.toJson(mapaParaJSON);
             writer.write(json);
-            System.out.println("Precios guardados exitosamente en precios.json");
+
         } catch (IOException e) {
             System.err.println("Error al guardar precios en el archivo: " + e.getMessage());
         }
@@ -227,7 +227,6 @@ public class GestorPrecios {
                 }
             }
 
-            System.out.println("Precios cargados correctamente desde el archivo JSON.");
         } catch (FileNotFoundException e) {
             System.out.println("Archivo JSON no encontrado. Se creará uno nuevo al guardar.");
             precios = new HashMap<>();
