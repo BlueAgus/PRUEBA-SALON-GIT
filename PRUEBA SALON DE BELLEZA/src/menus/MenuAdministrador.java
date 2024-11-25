@@ -241,8 +241,6 @@ public class MenuAdministrador {
                 System.out.println("3.Modificar datos");
                 System.out.println("4.Buscar por DNI");
                 System.out.println("5.Mostrar profesionales del salon ");
-                ///o 3 listar, 1 listra manicura etc
-                System.out.println("6.Mostrar profesionales por servicio específico");
                 System.out.println("0. Volver al Menú anterior");
                 System.out.println("---------------------------------");
                 System.out.print("Ingrese una opción: ");
@@ -259,7 +257,7 @@ public class MenuAdministrador {
                         break;
                     case 2:
                         profesionales.mostrarTodos();
-                        System.out.println("¿Cual es el dni del profesional que desea eliminar?('salir' si quiere cancelar la operacion)");
+                        System.out.println("¿Cual es el dni del profesional que desea eliminar?");
 
                         String dni = profesionales.pedirDNIsinVerificacion();
                         if (profesionales.eliminarPersona(dni)) {
@@ -270,7 +268,7 @@ public class MenuAdministrador {
                         break;
 
                     case 3:
-                        System.out.println("¿Cual es el DNI del profesional al que le desea modificar los datos");
+                        System.out.println("¿Cual es el DNI del profesional al que le desea modificar los datos?");
 
                         String dni2 = profesionales.pedirDNIsinVerificacion();
 
@@ -307,27 +305,6 @@ public class MenuAdministrador {
                         profesionales.mostrarTodos();
                         break;
 
-                    case 6:
-                        TipoServicio tipoServicio = depilacion.pedirTipoServicio();
-
-                        while (true) {
-                            try {
-                                if (tipoServicio == TipoServicio.DEPILACION) {
-                                    depilacion.mostrarServicios();
-                                } else if (tipoServicio == TipoServicio.PESTANIAS) {
-                                    pestania.mostrarServicios();
-                                } else if (tipoServicio == TipoServicio.MANICURA) {
-                                    manicura.mostrarServicios();
-                                }
-
-                            } catch (CodigoNoEncontradoException e) {
-                                System.out.println(e.getMessage());
-                                continue;
-                            }
-
-                            break;
-                        }
-                        break;
                     default:
                         System.out.println("Opción no válida.");
                 }

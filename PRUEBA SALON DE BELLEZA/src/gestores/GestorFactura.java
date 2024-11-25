@@ -516,12 +516,11 @@ public class GestorFactura {
                     // Limpia la lista existente en caja y agrega las facturas deserializadas
                     this.caja.vaciarAlmacen();
                     for (Factura factura : listaFacturas) {
-                        factura.setGestores(this.gestores); // Inicializa gestores después de deserializar
+                        ///factura.setGestores(this.gestores); // Inicializa gestores después de deserializar
                         this.caja.agregar(factura);
                     }
                 }
 
-                System.out.println("Archivo de facturas leído exitosamente.");
             } catch (FileNotFoundException e) {
                 System.out.println("No se encontró el archivo. Se iniciará con un historial vacío.");
                 this.caja = new GestorGenerico<>();

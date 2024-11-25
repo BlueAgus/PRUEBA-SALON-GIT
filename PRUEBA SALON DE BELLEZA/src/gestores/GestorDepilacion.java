@@ -238,7 +238,7 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
     public String pedirCodServicio() {
 
         for (int i = 0; i < almacenServicios.size(); i++) {
-            System.out.println(i + "- \n" + almacenServicios.get(i));
+            System.out.println((i + 1) + "- \n" + almacenServicios.get(i));
         }
         int opc;
         while (true) {
@@ -254,17 +254,17 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
 
                 ///pasa a int un string
                 opc = Integer.parseInt(opcElegida);
-                if (opc < 0 || opc > almacenServicios.size()) {
+                if (opc < 1 || opc > almacenServicios.size()) {
                     System.out.println("Selección inválida. Inténtelo de nuevo.");
                 } else {
-                    break;
+                   break;
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Entrada no valida. Por favor vuelva a intentarlo");
 
             }
         }
-        return almacenServicios.get(opc).getCodigo_servicio();
+       return almacenServicios.get(opc - 1).getCodigo_servicio();
     }
 
     // Validación del precio
@@ -349,10 +349,11 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
         TipoServicio tipo = null;
         while (tipo == null) {
             try {
-                System.out.println("Selecciona el tipo de servicio:");
+                System.out.println("Tipo de servicio:");
                 System.out.println("1. Uñas");
                 System.out.println("2. Pestañas");
                 System.out.println("3. Depilación");
+                System.out.println("Ingrese una opcion:");
                 int opcion = scanner.nextInt();
                 scanner.nextLine();
 

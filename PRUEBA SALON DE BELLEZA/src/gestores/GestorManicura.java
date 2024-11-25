@@ -243,8 +243,8 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
     public String pedirCodServicio() {
         //muestra servicios y devuelve el codigo
-        for (int i = 1; i <= almacenServicios.size(); i++) {
-            System.out.println(i + ". \n" + almacenServicios.get(i));
+        for (int i = 0; i < almacenServicios.size(); i++) {
+            System.out.println((i + 1) + ". \n" + almacenServicios.get(i));
         }
         int opc = 0;
         while (true) {
