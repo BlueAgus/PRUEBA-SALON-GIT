@@ -100,16 +100,25 @@ public class MenuAdministrador {
                         subMenuClientes(clientes, pestania, depilacion, manicura);
                         break;
                     case 4:
+                        System.out.println("\n\n");
+                        administradores.mostrarTodos();
+                        System.out.println("\n");
+                        System.out.println("¿Cual es el DNI del administrador al que le desea modificar los datos('salir' si quiere cancelar la operacion)");
 
-                        try {
-                            Administrador administrador = administradores.buscarPersona(dni);
-
-                            administradores.modificarAdministrador(administrador);
-
-                        } catch (DNInoEncontradoException e) {
-                            System.out.println(e.getMessage());
+                        String dni2 = administradores.pedirDNIsinVerificacion();
+                        if (dni2.equalsIgnoreCase("salir")) {
+                            System.out.println("Operación cancelada por el usuario.");
+                            break;
                         }
+                        try {
 
+                            Administrador administrador = administradores.buscarPersona(dni2);
+                            System.out.println(administrador);
+                            administradores.modificarAdministrador(administrador);
+                        } catch (DNInoEncontradoException a) {
+                            System.out.println(a.getMessage());
+                            scanner.close();
+                        }
                         break;
 
                     default:
@@ -287,6 +296,8 @@ public class MenuAdministrador {
 
                         break;
                     case 4:
+                        System.out.println("\nProfesionales:\n");
+                        profesionales.mostrarTodos();
 
                         System.out.println("¿Cual es el dni del profesional que desea buscar?");
 
@@ -403,6 +414,8 @@ public class MenuAdministrador {
                         }
                         break;
                     case 4:
+                        System.out.println("\nClientes:\n");
+                        clientes.mostrarTodos();
                         System.out.println("¿Cual es el DNI del cliente al que le desea modificar los datos('salir' si quiere cancelar la operacion)");
 
                         String dni2 = clientes.pedirDNIsinVerificacion();
