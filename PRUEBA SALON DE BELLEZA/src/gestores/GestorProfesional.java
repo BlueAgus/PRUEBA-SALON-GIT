@@ -100,7 +100,9 @@ public class GestorProfesional {
                 scanner.nextLine();
 
                 if (opcion == 1) {
-                    e = gestorManicura.pedirCodServicio();
+                    TipoServicio tipoServicio2 = gestorDepilacion.pedirTipoServicio();
+                    System.out.println("SELECCIONE EL TIPO DE " + tipoServicio2 + " QUE REALIZA");
+                    e = gestorTurno.pedirCodServicio(tipoServicio2);
                     profesional.agregarProfesion(e);
                 } else if (opcion != 2) {
                     System.out.println("Ingresa una opcion valida por favor.");
