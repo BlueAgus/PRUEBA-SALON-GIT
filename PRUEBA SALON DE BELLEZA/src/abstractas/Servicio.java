@@ -25,7 +25,7 @@ public abstract class Servicio implements CrearID {
     public abstract double calcularPrecio();
 
     public double getPrecio() {
-        calcularPrecio(); // aseguramos que el precio este actualizado.
+
         return precio;
     }
 

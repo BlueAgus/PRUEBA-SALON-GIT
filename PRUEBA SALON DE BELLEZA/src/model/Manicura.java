@@ -41,6 +41,12 @@ public class Manicura extends Servicio {
     }//En el get de servicio llamamos a calcular precio para cada ves que se quiere ver no aseguramos de que esta actualizado
 
 
+
+    @Override
+    public double getPrecio() {
+        calcularPrecio(); // aseguramos que el precio este actualizado.
+        return super.getPrecio();
+    }
     ////////////////////////////////////GET Y SET //////////////////////////////////////////////////
 
     public TipoManicura getTipoManicura() {

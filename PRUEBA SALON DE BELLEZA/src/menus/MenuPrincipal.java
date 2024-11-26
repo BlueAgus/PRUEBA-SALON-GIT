@@ -151,6 +151,8 @@ public class MenuPrincipal {
     }
 
     public void inicioSistema() {
+
+        GestorPrecios.cargarPreciosDesdeArchivo();
         gestorDepilacion = new GestorDepilacion();
         gestorPestania = new GestorPestania();
         gestorManicura = new GestorManicura();
@@ -191,7 +193,6 @@ public class MenuPrincipal {
 
 
         gestorTurno.cargarTurnosDesdeArchivo();
-        GestorPrecios.cargarPreciosDesdeArchivo();
         gestorFactura.leerArchivoFacturas();
 
     }
@@ -203,6 +204,7 @@ public class MenuPrincipal {
         administradores.guardarArchivoAdministradores();
         recepcionistas.escribirArchivoRecepcionistas();
         clientes.escribirClientesEnJson();
+
 
         gestorDepilacion.escribirServiciosEnJson();
         gestorPestania.escribirPestañasEnJson();

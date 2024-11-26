@@ -4,13 +4,13 @@
     "codigo_servicio": "38",
     "tipoService": "DEPILACION",
     "duracion": "01:00",
-    "precio": 2222.0
+    "precio": 0.0
   },
   {
     "tipoDepilacion": "LASER",
     "codigo_servicio": "6",
     "tipoService": "DEPILACION",
     "duracion": "00:45",
-    "precio": 0.0
+    "precio": 4443.0
   }
 ]

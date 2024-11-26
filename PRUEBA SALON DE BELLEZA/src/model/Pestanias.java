@@ -33,6 +33,13 @@ public class Pestanias extends Servicio {
 
     }
 
+
+    @Override
+    public double getPrecio() {
+        calcularPrecio(); // aseguramos que el precio este actualizado.
+        return super.getPrecio();
+    }
+
     /////////////////////////////////GET Y SET ////////////////////////////////////////////////////
 
     public TipoPestanias getTipoPestanias() {

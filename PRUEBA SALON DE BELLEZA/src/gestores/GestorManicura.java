@@ -170,7 +170,7 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
                 System.out.println("Manicura modificada:");
                 System.out.println(servicio);
-            }catch (InputMismatchException e) {
+            }catch (InputMismatchException | NullPointerException e) {
                 System.out.println("Opcion invalida. Ingrese numeros del 0 al 3");
                 scanner.nextLine();
             }
@@ -193,6 +193,7 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
                 System.out.println("0. Salir");
                 System.out.println("---------------------------------");
                 System.out.println("Ingrese una opción: ");
+
                 int opcion = scanner.nextInt();
                 scanner.nextLine();
 
@@ -290,17 +291,17 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
     }
 
     // Validación del precio
+    // Validación del precio
     private double pedirPrecio() {
         double precio = -1;
-        while (precio <= 0|| precio>500000) {
+        while (precio <= 0) {
             try {
-
+                System.out.print("Introduce el precio del servicio: ");
                 precio = scanner.nextDouble();
                 scanner.nextLine();
 
-                if (precio <= 0|| precio>500000) {
+                if (precio <= 0 || precio > 500000) {
                     System.out.println("El precio debe ser mayor a 0 y menor a 500000");
-                    System.out.print("Introduce el precio: ");
                 }
             } catch (InputMismatchException a) {
                 System.out.println("Solo es posible ingresar numeros");

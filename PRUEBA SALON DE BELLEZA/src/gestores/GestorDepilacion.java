@@ -146,6 +146,7 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
                             depilacion.setTipoDepilacion(pedirTipoDepilacion());
                         case 2:
                             depilacion.setPrecio(pedirPrecio());
+
                             break;
                         case 3:
                             depilacion.setDuracion(pedirDuracion());

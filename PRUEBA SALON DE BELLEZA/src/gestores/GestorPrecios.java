@@ -51,22 +51,33 @@ public class GestorPrecios {
     private static Map<Class<?>, Map<Enum<?>, Double>> precios = new HashMap<>();
 
     static {
-        // inicializa los mapas de cada clase vacios
-        precios.put(Depilacion.class, new HashMap<>());
-        precios.put(Manicura.class, new HashMap<>());
-        precios.put(Pestanias.class, new HashMap<>());
+        // Cargar los precios guardados desde el archivo.
 
-        precios.get(Depilacion.class).put(TipoDepilacion.CERA, 0.0);
-        precios.get(Depilacion.class).put(TipoDepilacion.LASER, 0.0);
 
-        precios.get(Manicura.class).put(TipoManicura.GEL, 0.0);
-        precios.get(Manicura.class).put(TipoManicura.ESCULPIDAS, 0.0);
-        precios.get(Manicura.class).put(TipoManicura.SEMIPERMANENTE, 0.0);
+        // Asegurarse de que todas las clases y tipos tengan valores por defecto si no existen.
+        precios.putIfAbsent(Depilacion.class, new HashMap<>());
+        precios.get(Depilacion.class).putIfAbsent(TipoDepilacion.CERA, 0.0);
+        precios.get(Depilacion.class).putIfAbsent(TipoDepilacion.LASER, 0.0);
 
-        precios.get(Pestanias.class).put(TipoPestanias.TRES_D, 0.0);
-        precios.get(Pestanias.class).put(TipoPestanias.DOS_D, 0.0);
-        precios.get(Pestanias.class).put(TipoPestanias.CLASICAS, 0.0);
+        precios.putIfAbsent(Manicura.class, new HashMap<>());
+        precios.get(Manicura.class).putIfAbsent(TipoManicura.GEL, 0.0);
+        precios.get(Manicura.class).putIfAbsent(TipoManicura.ESCULPIDAS, 0.0);
+        precios.get(Manicura.class).putIfAbsent(TipoManicura.SEMIPERMANENTE, 0.0);
+
+        precios.putIfAbsent(Pestanias.class, new HashMap<>());
+        precios.get(Pestanias.class).putIfAbsent(TipoPestanias.TRES_D, 0.0);
+        precios.get(Pestanias.class).putIfAbsent(TipoPestanias.DOS_D, 0.0);
+        precios.get(Pestanias.class).putIfAbsent(TipoPestanias.CLASICAS, 0.0);
+
+        // Si el precio de diseño no se cargó, inicializar a 0.
+        if (precioDisenio == 0.0) {
+            precioDisenio = 0.0;
+        }
+
+        cargarPreciosDesdeArchivo();
+
     }
+
 
 
     public static double obtenerPrecio(Class<?> claseServicio, Enum<?> tipo) {
@@ -89,6 +100,8 @@ public class GestorPrecios {
             throw new IllegalArgumentException("El tipo " + tipo + " no pertenece a la clase " + claseServicio.getName());
         }
         mapaPrecios.put(tipo, nuevoPrecio);
+        guardarPreciosEnArchivo(); // Asegúrate de guardar el archivo después de modificar los precios
+
     }
 
     public static double agregarDisenio(Enum<?> tipo) {
@@ -139,6 +152,7 @@ public class GestorPrecios {
         if (porcentajeDescuento < 0 || porcentajeDescuento > 100) {
             throw new IllegalArgumentException("El porcentaje de descuento debe estar entre 0 y 100.");
         }
+
         Factura facturaEncontrada = null;
 
         for (Factura factura : facturas) {
@@ -147,20 +161,21 @@ public class GestorPrecios {
                 break;
             }
         }
+
         if (facturaEncontrada == null) {
             throw new CodigoNoEncontradoException("Factura con código " + codigoFactura + " no encontrada.");
         }
 
         double precioOriginal = facturaEncontrada.getPrecioFinal();
         double descuento = precioOriginal * (porcentajeDescuento / 100);
+        double precioConDescuento = precioOriginal - descuento;
 
-        double nuevoPrecioFinal = precioOriginal - descuento;
-        facturaEncontrada.setPrecioFinal(nuevoPrecioFinal);
-        facturaEncontrada.setDescuento(descuento);
+        // Actualizar el precio final de la factura
+        facturaEncontrada.setPrecioFinal(precioConDescuento);
 
-        System.out.println("Descuento del " + porcentajeDescuento + "% aplicado. Descuento: " + descuento + ". Nuevo precio final: " + nuevoPrecioFinal);
-
+        System.out.printf("Descuento aplicado: %.2f%%. El precio original era %.2f y ahora es %.2f.%n", porcentajeDescuento, precioOriginal, precioConDescuento);
     }
+
 
     private static Map<String, Map<String, Double>> convertirMapaParaJSON() {
         Map<String, Map<String, Double>> mapaJSON = new HashMap<>();
@@ -196,7 +211,7 @@ public class GestorPrecios {
     }
 
 
-    public static void cargarPreciosDesdeArchivo() {
+   public static void cargarPreciosDesdeArchivo() {
         try (FileReader reader = new FileReader(archivoPrecios)) {
             Type tipoMapaJSON = new TypeToken<Map<String, Map<String, Double>>>() {}.getType();
             Map<String, Map<String, Double>> mapaJSON = gson.fromJson(reader, tipoMapaJSON);
@@ -223,7 +238,7 @@ public class GestorPrecios {
                     }
                     precios.put(servicioEnum.getClass(), mapaConvertido);
                 } catch (IllegalArgumentException e) {
-                    System.err.println("El tipo de servicio " + tipoServicio + " no corresponde a un valor de TipoServicio.");
+                   // System.err.println("El tipo de servicio " + tipoServicio + " no corresponde a un valor de TipoServicio.");
                 }
             }
 
@@ -234,6 +249,9 @@ public class GestorPrecios {
             System.err.println("Error al leer los precios: " + e.getMessage());
         }
     }
+
+
+
 
     public static String verPrecios() {
         StringBuilder sb = new StringBuilder();
