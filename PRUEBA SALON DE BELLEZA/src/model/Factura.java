@@ -39,9 +39,9 @@ public class Factura implements CrearID {
 
         this.codigoFactura = this.generarIDEunico(); // aca usamos el metodo de la interfaz directamente
         this.tipoPago = tipoPago;
-        this.precioFinal = 0.0;
-        this.descuento = 0.0;
-        this.ajuste = 0.0;
+
+        this.descuento = descuento;
+        this.ajuste = ajuste;
         this.turnosPorCliente = new ArrayList<>();
         this.cliente = cliente;
 
@@ -50,6 +50,7 @@ public class Factura implements CrearID {
         LocalTime horaActual = LocalTime.now();
         this.hora = convertirHoraAString(horaActual);
         this.gestores = Arrays.asList(new GestorDepilacion(), new GestorManicura(), new GestorPestania());
+        this.precioFinal = calcularPrecioFinal();
     }
 
     //////////////////////////////////////////////////////// metodos extr ////////////////////////////////////////////////////
@@ -225,6 +226,7 @@ public class Factura implements CrearID {
 
     private String mostrarAjuste() {
         return ajuste == 0 ? "Sin ajuste" : String.format("%+.2f", ajuste);
+        // muestra si se le sumo o resto un ajuste al total
     }
 
 }
