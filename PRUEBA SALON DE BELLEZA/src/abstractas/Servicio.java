@@ -43,6 +43,11 @@ public abstract class Servicio implements CrearID {
         return Objects.equals(codigo_servicio, servicio.codigo_servicio);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(codigo_servicio);
+    }
+
     ////////////////////////////////////////////////////////GET Y SET ////////////////////////////////////////////////////
     public String getCodigo_servicio() {return codigo_servicio;}
 

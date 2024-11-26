@@ -1,8 +1,8 @@
 [ {
-  "nombre" : null,
-  "apellido" : null,
-  "dni" : "12345678",
-  "genero" : null,
-  "telefono" : null,
-  "contraseña" : "12345678"
+  "nombre" : "Agustina",
+  "apellido" : "Massuco",
+  "dni" : "41715115",
+  "genero" : "F",
+  "telefono" : "2236693137",
+  "contraseña" : "3234dsas"
 } ]

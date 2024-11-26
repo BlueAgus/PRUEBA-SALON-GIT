@@ -260,6 +260,8 @@ public class MenuAdministrador {
                         System.out.println("Saliendo...");
                         break;
                     case 1:
+                       // System.out.println("\nIngrese los datos del nuevo Profesional: \n");
+
                         profesionales.agregarPersona();
                         break;
                     case 2:
@@ -338,10 +340,10 @@ public class MenuAdministrador {
                 System.out.println("2.Eliminar");
                 System.out.println("3.Buscar por su dni ");
                 System.out.println("4.Modificar datos ");
-                System.out.println("5.Mostrar todos lo clientes");
+                System.out.println("5.Mostrar todos los clientes");
                 System.out.println("0. Volver al Menú anterior");
                 System.out.println("---------------------------------");
-                System.out.print("Ingrese una opción: ");
+                System.out.print("Ingrese una opción: \n");
 
                 opcion = scanner.nextInt();
                 scanner.nextLine();
@@ -599,13 +601,13 @@ public class MenuAdministrador {
 
                         System.out.println("\n");
                         System.out.println("Estos son los servicios disponibles en Queens: ");
-                        System.out.println("SERVICIOS DE DEPILACION-----------------------");
+                        System.out.println("SERVICIOS DE DEPILACION\n-----------------------\n");
                         depilacion.mostrarServicios();
                         System.out.println("---------------------------------------------");
-                        System.out.println("SERVICIOS DE MANICURA-----------------------");
+                        System.out.println("SERVICIOS DE MANICURA\n-----------------------\n");
                         manicura.mostrarManicura();
                         System.out.println("---------------------------------------------");
-                        System.out.println("SERVICIOS DE PESTAÑAS-----------------------");
+                        System.out.println("SERVICIOS DE PESTAÑAS\n-----------------------\n");
                         pestania.mostrarServicios();
                         System.out.println("---------------------------------------------");
 
@@ -978,7 +980,7 @@ public class MenuAdministrador {
                         if (facturas.getArchivoFacturas().isEmpty()) {
                             System.out.println("No hay historial de facturas");
                         } else {
-                            System.out.println(facturas.getCaja());
+                            System.out.println(facturas.getCaja().getLista().toString());
                         }
 
                         break;
@@ -992,138 +994,11 @@ public class MenuAdministrador {
                         }
                         break;
                     case 7:
-                        int opc = 0;
-                        while (true) {
-
-                            System.out.println("\n\n1- Ganancia de un día específico");
-                            System.out.println("2- Ganancia de un mes específico");
-                            System.out.println("3- Ganancia de un año específico");
-                            System.out.println("0. Volver al Menú anterior");
-                            System.out.print("Ingrese una opción: ");
-                            try {
-                                opc = scanner.nextInt();
-                                scanner.nextLine();
-
-                                if (opc < 0 || opc > 3) {
-                                    System.out.println("Opcion no valida");
-                                } else {
-                                    break;
-                                }
-                            } catch (InputMismatchException e) {
-                                System.out.println("OPCION INVALIDA");
-                                scanner.nextLine();
-                            }
-                        }
-
-                        switch (opc) {
-                            case 1:
-                                LocalDate fecha = null;
-                                boolean valido = false;
-                                while (!valido) {
-                                    System.out.println("Ingrese la fecha (YYYY-MM-DD): (o escriba 'salir' para cancelar)");
-
-                                    // Lo guarda en un string para verificar que no haya escrito "salir"
-                                    String fechaIngresada = scanner.nextLine();
-
-                                    if (fechaIngresada.equalsIgnoreCase("salir")) {
-                                        System.out.println("Operación cancelada por el usuario.");
-                                        break;
-                                    }
-
-                                    try {
-                                        // Convierte el string al formato correcto reemplazando los ":" por "-"
-                                        String fechaFormateada = fechaIngresada.replace(":", "-");
-                                        fecha = LocalDate.parse(fechaFormateada);
-
-                                        if (fecha.isAfter(LocalDate.now())) {
-                                            System.out.println("Error: La fecha debe ser anterior.");
-                                        } else if (fecha.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                                            System.out.println("Error: No hay ganancia los dias domingos.");
-                                        } else {
-                                            valido = true;
-                                        }
-                                    } catch (DateTimeParseException e) {
-                                        System.out.println("Formato de fecha inválido. Por favor, use el formato YYYY:MM:DD");
-                                    }
-                                }
-                                String f = convertirFechaAString(fecha);
-
-                                if (fecha == null) {
-                                    break;
-                                } else {
-                                    System.out.println("Ganancia del día: " + fecha + ": $ " + facturas.gananciaXdia(f));
-                                }
-                                break;
-                            case 2:
-                                int mes = 0;
-                                int año = 0;
-
-                                while (true) {
-                                    try {
-                                        System.out.println("Ingrese el mes: ");
-                                        mes = scanner.nextInt();
-                                        scanner.nextLine();
-
-                                        System.out.println("Ingrese el año: ");
-                                        año = scanner.nextInt();
-                                        scanner.nextLine();
-
-                                        if (mes < 0 || mes > 12 || año < 2024 || año > 2050) {
-                                            System.out.println("Error en la fecha!");
-                                        } else {
-                                            LocalDate fechaHoy = LocalDate.now();
-
-                                            LocalDate fechaIngresada = LocalDate.of(año, mes, 1);
-
-                                            // Verificar si la fecha ingresada es posterior a la actual
-                                            if (fechaIngresada.isAfter(fechaHoy)) {
-                                                System.out.println("La fecha ingresada es posterior a hoy.");
-                                            } else {
-                                                facturas.gananciaXmes(mes, año);
-                                                break;
-                                            }
-                                        }
-                                    } catch (InputMismatchException e) {
-                                        System.out.println("Opcion invalida, ingrese una opcion valida");
-                                        scanner.nextLine();
-                                    }
-
-
-                                }
-                                System.out.println("Ganancia: " + Month.of(mes).getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault()) + " " + año + ": " + facturas.gananciaXmes(mes, año));
-                                break;
-                            case 3:
-                                int año1 = 0;
-
-                                while (true) {
-                                    try {
-
-                                        System.out.println("Ingrese el año: ");
-                                        año1 = scanner.nextInt();
-                                        scanner.nextLine();
-
-                                        if (año1 < 2024 || año1 > 2050) {
-                                            System.out.println("Error en la fecha!");
-                                        } else {
-                                            facturas.gananciaXaño(año1);
-                                            break;
-                                        }
-                                    } catch (InputMismatchException e) {
-                                        System.out.println("Opcion invalida, ingrese una opcion valida");
-                                        scanner.nextLine();
-                                    }
-                                }
-                                System.out.println("Ganancia del año " + año1 + " $" + facturas.gananciaXaño(año1));
-                                break;
-                            case 0:
-                                break;
-                        }
+                    menuGanancias(facturas);
                     case 8:
-                        GestorPrecios.verPrecios();
+                        System.out.println(GestorPrecios.verPrecios());
+
                         break;
-                    
-
-
                     default:
                         System.out.println("Opción no válida.");
                 }
@@ -1134,6 +1009,136 @@ public class MenuAdministrador {
         } while (opcion != 0);
     }
 
+
+    public void menuGanancias(GestorFactura facturas){
+
+        int opc = 0;
+        while (true) {
+
+            System.out.println("\n\n1- Ganancia de un día específico");
+            System.out.println("2- Ganancia de un mes específico");
+            System.out.println("3- Ganancia de un año específico");
+            System.out.println("0. Volver al Menú anterior");
+            System.out.print("Ingrese una opción: ");
+            try {
+                opc = scanner.nextInt();
+                scanner.nextLine();
+
+                if (opc < 0 || opc > 3) {
+                    System.out.println("Opcion no valida");
+                } else {
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("OPCION INVALIDA");
+                scanner.nextLine();
+            }
+        }
+
+        switch (opc) {
+            case 1:
+                LocalDate fecha = null;
+                boolean valido = false;
+                while (!valido) {
+                    System.out.println("Ingrese la fecha (YYYY-MM-DD): (o escriba 'salir' para cancelar)");
+
+                    // Lo guarda en un string para verificar que no haya escrito "salir"
+                    String fechaIngresada = scanner.nextLine();
+
+                    if (fechaIngresada.equalsIgnoreCase("salir")) {
+                        System.out.println("Operación cancelada por el usuario.");
+                        break;
+                    }
+
+                    try {
+                        // Convierte el string al formato correcto reemplazando los ":" por "-"
+                        String fechaFormateada = fechaIngresada.replace(":", "-");
+                        fecha = LocalDate.parse(fechaFormateada);
+
+                        if (fecha.isAfter(LocalDate.now())) {
+                            System.out.println("Error: La fecha debe ser anterior.");
+                        } else if (fecha.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                            System.out.println("Error: No hay ganancia los dias domingos.");
+                        } else {
+                            valido = true;
+                        }
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Formato de fecha inválido. Por favor, use el formato YYYY:MM:DD");
+                    }
+                }
+                String f = convertirFechaAString(fecha);
+
+                if (fecha == null) {
+                    break;
+                } else {
+                    System.out.println("Ganancia del día: " + fecha + ": $ " + facturas.gananciaXdia(f));
+                }
+                break;
+            case 2:
+                int mes = 0;
+                int año = 0;
+
+                while (true) {
+                    try {
+                        System.out.println("Ingrese el mes: ");
+                        mes = scanner.nextInt();
+                        scanner.nextLine();
+
+                        System.out.println("Ingrese el año: ");
+                        año = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (mes < 0 || mes > 12 || año < 2024 || año > 2050) {
+                            System.out.println("Error en la fecha!");
+                        } else {
+                            LocalDate fechaHoy = LocalDate.now();
+
+                            LocalDate fechaIngresada = LocalDate.of(año, mes, 1);
+
+                            // Verificar si la fecha ingresada es posterior a la actual
+                            if (fechaIngresada.isAfter(fechaHoy)) {
+                                System.out.println("La fecha ingresada es posterior a hoy.");
+                            } else {
+                                facturas.gananciaXmes(mes, año);
+                                break;
+                            }
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Opcion invalida, ingrese una opcion valida");
+                        scanner.nextLine();
+                    }
+
+
+                }
+                System.out.println("Ganancia: " + Month.of(mes).getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault()) + " " + año + ": " + facturas.gananciaXmes(mes, año));
+                break;
+            case 3:
+                int año1 = 0;
+
+                while (true) {
+                    try {
+
+                        System.out.println("Ingrese el año: ");
+                        año1 = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (año1 < 2024 || año1 > 2050) {
+                            System.out.println("Error en la fecha!");
+                        } else {
+                            facturas.gananciaXaño(año1);
+                            break;
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Opcion invalida, ingrese una opcion valida");
+                        scanner.nextLine();
+                    }
+                }
+                System.out.println("Ganancia del año " + año1 + " $" + facturas.gananciaXaño(año1));
+                break;
+            case 0:
+                break;
+        }
+    }
     public void buscarFacturas(GestorFactura facturas, GestorCliente clientes) {
 
         Scanner scanner = new Scanner(System.in);

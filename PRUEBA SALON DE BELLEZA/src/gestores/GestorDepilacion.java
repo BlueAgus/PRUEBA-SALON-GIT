@@ -3,6 +3,7 @@ package gestores;
 import Interfaces.IBuscarPorCodigo;
 import abstractas.Servicio;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import enumeraciones.TipoDepilacion;
 import enumeraciones.TipoServicio;
@@ -25,7 +26,7 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
 
     private static final Scanner scanner = new Scanner(System.in);
     private List<Depilacion> almacenServicios;
-    Gson gson = new Gson();
+    Gson gson =  new GsonBuilder().setPrettyPrinting().create();
     private static String archivoDepilacion = "depilacion.json";
 
     ////////////////////////////////////////////////////////AGREGAR, ELIMINAR, BUSCAR Y MODIFICAR ////////////////////////////////////////////////////
@@ -46,6 +47,18 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
         GestorPrecios.modificarPrecio(Depilacion.class, tipoDepilacion, precio);
         //Cuando se instancie depilacion llamara a calcular precio y obtendra el precio ingresado arriba
         Depilacion depilacion = new Depilacion(duracion, tipoDepilacion);
+
+
+        boolean servicioDuplicado = almacenServicios.stream()
+                .filter(Depilacion.class::isInstance) // Filtrar solo objetos de tipo Depilacion
+                .map(Depilacion.class::cast)         // Convertir a Depilacion
+                .anyMatch(s -> s.getTipoDepilacion() == tipoDepilacion && s.getTipoService() == tipoService);
+
+        if (servicioDuplicado) {
+            System.out.println("El servicio ya existe: " + depilacion.getClass().getSimpleName() +" con "+depilacion.getTipoDepilacion());
+            System.out.println("Intente de nuevo...");
+            return;
+        }
 
         almacenServicios.add(depilacion);
         System.out.println(depilacion);
@@ -398,7 +411,7 @@ public class GestorDepilacion implements IBuscarPorCodigo<Servicio> {
 
     public void mostrarServicios() {
         if(almacenServicios.isEmpty()){
-            System.out.println("No hay servicios de pestañas");
+            System.out.println("No hay servicios de depilacion");
         }else{
             for (Depilacion d : almacenServicios) {
                 System.out.println("- " + d.getCodigo_servicio() + ": " + d.getTipoService() + " " + d.getTipoDepilacion() + "--PRECIO: " + d.getPrecio());

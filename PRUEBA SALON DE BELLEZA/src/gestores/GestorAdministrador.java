@@ -363,7 +363,7 @@ public class GestorAdministrador {
         boolean dnivalido = false;
 
         while (!dnivalido) {
-            System.out.println("Ingrese el DNI: ");
+            System.out.print("Ingrese el DNI: ");
             dni = scanner.nextLine();
 
             // no esté vacío
@@ -431,7 +431,7 @@ public class GestorAdministrador {
     public String pedirGenero() throws GeneroInvalidoException {
         String genero;
         while (true) {
-            System.out.println("Ingrese el GÉNERO (M, F, O): ");
+            System.out.print("Ingrese el GÉNERO (M, F, O): ");
             genero = scanner.next().toUpperCase();  // Capturamos la entrada como String
 
             // Verificar que la entrada tiene exactamente un carácter

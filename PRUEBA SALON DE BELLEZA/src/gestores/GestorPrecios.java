@@ -72,9 +72,9 @@ public class GestorPrecios {
     public static double obtenerPrecio(Class<?> claseServicio, Enum<?> tipo) {
         Map<Enum<?>, Double> mapaPrecios = precios.get(claseServicio);
 
-        /*if (mapaPrecios == null || !mapaPrecios.containsKey(tipo)) {
+        if (mapaPrecios == null || !mapaPrecios.containsKey(tipo)) {
             throw new IllegalArgumentException("No se encontró un precio para el tipo " + tipo + " en la clase " + claseServicio.getName());
-        }*/
+        }
 
         return mapaPrecios.get(tipo); // Ahora sabemos que el valor no será null
     }

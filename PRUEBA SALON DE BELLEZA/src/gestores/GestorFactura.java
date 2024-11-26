@@ -3,6 +3,7 @@ package gestores;
 import Interfaces.IBuscarPorCodigo;
 import abstractas.Servicio;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import enumeraciones.TipoDePago;
@@ -39,7 +40,7 @@ public class GestorFactura {
 
     public GestorFactura(GestorTurno gestorTurno, List<IBuscarPorCodigo<? extends Servicio>> gestores, GestorCliente gestorCliente, GestorProfesional gestorProfesional) {
         this.caja = new GestorGenerico<>();
-        this.gson = new Gson();
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.gestorTurno = gestorTurno;
         this.gestores=gestores;
         this.gestorCliente = gestorCliente;

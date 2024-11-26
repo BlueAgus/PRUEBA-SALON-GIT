@@ -1,6 +1,7 @@
 package gestores;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import excepciones.DNInoEncontradoException;
 import excepciones.DNIyaCargadoException;
@@ -18,7 +19,7 @@ import java.util.*;
 public class GestorCliente {
     public List<Cliente> clientes;
     private static final Scanner scanner = new Scanner(System.in);
-    Gson gson = new Gson();
+    Gson gson =new GsonBuilder().setPrettyPrinting().create();
     private static String archivoClientes= "clientes.json";
 
     public GestorCliente() {
@@ -303,7 +304,7 @@ public class GestorCliente {
         boolean dnivalido = false;
 
         while (!dnivalido) {
-            System.out.println("Ingrese el DNI: ");
+            System.out.print("Ingrese el DNI: ");
             dni = scanner.nextLine();
 
             // no esté vacío

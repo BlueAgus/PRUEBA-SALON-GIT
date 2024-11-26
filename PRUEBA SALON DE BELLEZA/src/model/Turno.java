@@ -103,25 +103,30 @@ public class Turno implements CrearID {
     }
 
     //////////////////////////////////////////////////////// TO STRING ////////////////////////////////////////////////////
-  
+
     public String toString(TipoServicio tipoServicio, GestorCliente gestorCliente, GestorProfesional gestorProfesional) {
         try {
+            String clienteInfo = gestorCliente.buscarPersona(dni_cliente) != null
+                    ? gestorCliente.buscarPersona(dni_cliente).getNombre() + " " + gestorCliente.buscarPersona(dni_cliente).getApellido()
+                    : "Cliente no encontrado";
+
+            String profesionalInfo = gestorProfesional.buscarPersona(dni_profesional) != null
+                    ? gestorProfesional.buscarPersona(dni_profesional).getNombre() + " " + gestorProfesional.buscarPersona(dni_profesional).getApellido()
+                    : "Profesional no encontrado";
+
+            String servicioInfo = tipoServicio != null ? tipoServicio.getDeclaringClass().getSimpleName() : "Servicio no encontrado";
 
             return "\n        TURNO: " +
                     "\n| FECHA : " + fecha +
                     "\n| HORARIO : " + horario +
-                    "\n| SERVICIO : " + tipoServicio +
-                    "\n| PROFESIONAL :" + gestorProfesional.buscarPersona(dni_profesional).getNombre() +" "+ gestorProfesional.buscarPersona(dni_profesional).getApellido() +
-                    "\n| CLIENTE : " + gestorCliente.buscarPersona(dni_cliente).getNombre() + gestorCliente.buscarPersona(dni_cliente).getApellido() + " DNI : " + gestorCliente.buscarPersona(dni_cliente).getDni();
-        } catch (CodigoNoEncontradoException e) {
-            return "Error: Servicio no encontrado para el código: " + codigo_servicio;
-        } catch (DNInoEncontradoException e) {
-            return "Error: Cliente o profesional no encontrado.";
+                    "\n| PROFESIONAL : " + profesionalInfo +
+                    "\n| CLIENTE : " + clienteInfo + " DNI : " + dni_cliente +
+                    "\n| SERVICIO : " + servicioInfo;
         } catch (Exception e) {
             return "Error inesperado al generar los detalles del turno.";
         }
-
     }
+
 
 
     public String toString(GestorCliente gestorCliente, GestorProfesional gestorProfesional) {

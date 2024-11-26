@@ -3,9 +3,11 @@ package gestores;
 import Interfaces.IBuscarPorCodigo;
 import abstractas.Servicio;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import enumeraciones.TipoManicura;
+import enumeraciones.TipoServicio;
 import excepciones.CodigoNoEncontradoException;
 import model.*;
 
@@ -23,7 +25,7 @@ import java.util.Scanner;
 public class GestorManicura implements IBuscarPorCodigo<Servicio> {
     private static Scanner scanner = new Scanner(System.in);
     private List<Manicura> almacenServicios;
-    Gson gson = new Gson();
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static String archivoManicura = "manicura.json";
 
 
@@ -41,8 +43,10 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
 
     public void agregarServicio() {
+        TipoServicio tipoService = TipoServicio.MANICURA;
         System.out.println("\n");
         System.out.println("Vamos a cargar un servicio...");
+
         TipoManicura tipoManicura = pedirTipoManicura();
 
         System.out.print("Introduce el precio del servicio: ");
@@ -53,12 +57,23 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
 
         boolean tieneDisenio = precioDisenio > 0;
         GestorPrecios.modificarPrecio(Manicura.class, tipoManicura, precio);
+
         if(tieneDisenio){
             GestorPrecios.setPrecioDisenio(precioDisenio);
         }
         //Ingresamos el precio al gestor que despues sera calculado en la llamada de este en las clases
-
         Manicura manicura = new Manicura(duracion, tipoManicura, tieneDisenio); //saque esto (, precio, disenio);
+
+        boolean servicioDuplicado = almacenServicios.stream()
+                .filter(Manicura.class::isInstance)
+                .map(Manicura.class::cast)
+                .anyMatch(s -> s.getTipoManicura() == tipoManicura && s.getTipoService() == tipoService);
+
+        if (servicioDuplicado) {
+            System.out.println("El servicio ya existe: " + manicura.getClass().getSimpleName() +" con "+manicura.getTipoManicura());
+            System.out.println("Intente de nuevo...");
+            return;
+        }
         almacenServicios.add(manicura);
         System.out.println(manicura);
         verificarCarga(manicura);
@@ -403,13 +418,36 @@ public class GestorManicura implements IBuscarPorCodigo<Servicio> {
     ////////////////////////////////////////GET ////////////////////////////////////////////////////
     public void mostrarManicura() {
         if(almacenServicios.isEmpty()){
-            System.out.println("No hay servicios de pestañas");
-        }else{
-            for (Manicura m : almacenServicios)
-                System.out.println(m);
+            System.out.println("No hay servicios de manicura");
+        }else {
+
+            for (Manicura d : almacenServicios) {
+
+                if(d.isDisenio()) {
+                    String tipoPestaniasStr = switch (d.getTipoManicura()) {
+                        case GEL -> "3D con diseño.";
+                        case SEMIPERMANENTE -> "2D con diseño.";
+                        case ESCULPIDAS -> "CLÁSICAS con diseño.";
+                    };
+
+                    System.out.println("- " + d.getCodigo_servicio() + ": " + d.getTipoService() + " " + tipoPestaniasStr + "--PRECIO: " + d.getPrecio());
+                }
+
+                String tipoPestaniasStr = switch (d.getTipoManicura()) {
+                    case GEL -> "3D ";
+                    case SEMIPERMANENTE -> "2D ";
+                    case ESCULPIDAS -> "CLÁSICAS ";
+                };
+                System.out.println("- " + d.getCodigo_servicio() + ": " + d.getTipoService() + " " + tipoPestaniasStr + "--PRECIO: " + d.getPrecio());
+
+            }
+            //System.out.println("Precio diseño extra en el servicio: " + GestorPrecios.getPrecioDisenio());
+
+
         }
 
     }
+
 
     public void mostrarServicios() {
         for (Manicura d : almacenServicios) {

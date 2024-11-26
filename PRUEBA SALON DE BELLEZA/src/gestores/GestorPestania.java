@@ -3,8 +3,10 @@ package gestores;
 import Interfaces.IBuscarPorCodigo;
 import abstractas.Servicio;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import enumeraciones.TipoPestanias;
+import enumeraciones.TipoServicio;
 import excepciones.CodigoNoEncontradoException;
 import model.ConvertirFechaHoras;
 import model.Manicura;
@@ -23,7 +25,7 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
 
     private static final Scanner scanner = new Scanner(System.in);
     private List<Pestanias> almacenServicios;
-    Gson gson = new Gson();
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static String archivoPestania = "pestania.json";
 
     ////////////////////////////////////////////////////////AGREGAR, ELIMINAR, BUSCAR Y MODIFICAR ////////////////////////////////////////////////////
@@ -34,7 +36,7 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
     }
 
     public void agregarServicio() {
-
+        TipoServicio tipoService = TipoServicio.PESTANIAS;
         double precio = pedirPrecio();
         TipoPestanias tipoPestanias = pedirTipoPestanias();
         String duracion = pedirDuracion();
@@ -45,6 +47,16 @@ public class GestorPestania implements IBuscarPorCodigo<Servicio> {
         //Cuando se instancie pestanias llamara a calcular precio y obtendra el precio ingresado arriba
         Pestanias pestanias = new Pestanias(duracion, tipoPestanias);
 
+        boolean servicioDuplicado = almacenServicios.stream()
+                .filter(Pestanias.class::isInstance) // Filtrar solo objetos de tipo Depilacion
+                .map(Pestanias.class::cast)         // Convertir a Depilacion
+                .anyMatch(s -> s.getTipoPestanias() == tipoPestanias && s.getTipoService() == tipoService);
+
+        if (servicioDuplicado) {
+            System.out.println("El servicio ya existe: " + pestanias.getClass().getSimpleName() +" con "+pestanias.getTipoPestanias());
+            System.out.println("Intente de nuevo...");
+            return;
+        }
         almacenServicios.add(pestanias);
         System.out.println(pestanias);
         verificarCarga(pestanias);

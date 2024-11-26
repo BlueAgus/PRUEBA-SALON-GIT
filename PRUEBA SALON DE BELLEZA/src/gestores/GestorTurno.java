@@ -121,40 +121,37 @@ public class GestorTurno {
     }
 
     public TipoServicio buscarTipoServicio(String codServicio) {
-
         try {
             Depilacion depilacion = gestorDepilacion.buscarPorCodigo(codServicio);
             if (depilacion != null) {
                 return depilacion.getTipoService();
             }
         } catch (CodigoNoEncontradoException e) {
-
-
+            System.out.println("Depilación no encontrada para el código: " + codServicio);
         }
+
         try {
             Manicura manicura = gestorManicura.buscarPorCodigo(codServicio);
             if (manicura != null) {
                 return manicura.getTipoService();
             }
         } catch (CodigoNoEncontradoException e) {
-
-
+            System.out.println("Manicura no encontrada para el código: " + codServicio);
         }
 
         try {
             Pestanias pestanias = gestorPestania.buscarPorCodigo(codServicio);
             if (pestanias != null) {
                 return pestanias.getTipoService();
-
             }
         } catch (CodigoNoEncontradoException e) {
-
-
+            System.out.println("Pestanias no encontrada para el código: " + codServicio);
         }
 
+        System.out.println("Ningún servicio encontrado para el código: " + codServicio);
         return null;
-
     }
+
 
     public String buscarCodigoTurno() {
 
@@ -363,7 +360,7 @@ public class GestorTurno {
         }
         return turnosVigentes;
     }
-
+/*
     public void mostrarHistorialTurnos() {
         int i = 0;
         if (listaTurnos.getMapa().isEmpty()) {
@@ -383,7 +380,30 @@ public class GestorTurno {
             }
         }
 
+    }*/
+
+    public void mostrarHistorialTurnos() {
+        int i = 0;
+        if (listaTurnos.getMapa().isEmpty()) {
+            System.out.println("No hay historial de turnos");
+            return;
+        }
+
+        for (List<Turno> list : listaTurnos.getMapa().values()) {
+            for (Turno t : list) {
+                try {
+                    LocalDate fecha = ConvertirFechaHoras.convertirStringAFecha(t.getFecha());
+                    TipoServicio tipoServicio = buscarTipoServicio(t.getCodigo_servicio());
+                    System.out.println(i + "-" + t.toString(tipoServicio, gestorCliente, gestorProfesional));
+                    i++;
+                } catch (Exception e) {
+                    System.out.println("Error al procesar el turno: " + t);
+                    e.printStackTrace();
+                }
+            }
+        }
     }
+
 
     ///turnos vigentes del cliente
     public List<Turno> buscarTurnosXdniClienteVigentes(String dniCliente) {
